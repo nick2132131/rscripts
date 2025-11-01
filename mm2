@@ -1,4 +1,4 @@
-local ScreenGui = Instance.new("ScreenGui")
+local jd7hufe29c87c76d = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local Visuals = Instance.new("TextLabel")
 local VisualsDD = Instance.new("TextButton")
@@ -164,11 +164,12 @@ local UICorner_67 = Instance.new("UICorner")
 
 --Properties:
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGui.ResetOnSpawn = false
+jd7hufe29c87c76d.Name = "jd7hufe29c87c76d"
+jd7hufe29c87c76d.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+jd7hufe29c87c76d.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+jd7hufe29c87c76d.ResetOnSpawn = false
 
-Frame.Parent = ScreenGui
+Frame.Parent = jd7hufe29c87c76d
 Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Frame.BackgroundTransparency = 1.000
 Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -212,7 +213,6 @@ VisualsDDFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 VisualsDDFrame.BorderSizePixel = 0
 VisualsDDFrame.Position = UDim2.new(0, 0, 1, 0)
 VisualsDDFrame.Size = UDim2.new(0, 200, 0, 529)
-VisualsDDFrame.Visible = false
 
 ESPLabel.Name = "ESPLabel"
 ESPLabel.Parent = VisualsDDFrame
@@ -578,7 +578,6 @@ PlayerDDFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 PlayerDDFrame.BorderSizePixel = 0
 PlayerDDFrame.Position = UDim2.new(0, 0, 0.959999979, 0)
 PlayerDDFrame.Size = UDim2.new(0, 200, 0, 532)
-PlayerDDFrame.Visible = false
 
 PlayerModsLabel.Name = "PlayerModsLabel"
 PlayerModsLabel.Parent = PlayerDDFrame
@@ -929,7 +928,6 @@ TeleportDDFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 TeleportDDFrame.BorderSizePixel = 0
 TeleportDDFrame.Position = UDim2.new(0, 0, 0.960000753, 0)
 TeleportDDFrame.Size = UDim2.new(0, 200, 0, 532)
-TeleportDDFrame.Visible = false
 
 PlayerTpLabel.Name = "PlayerTpLabel"
 PlayerTpLabel.Parent = TeleportDDFrame
@@ -1161,7 +1159,6 @@ OtherDDFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 OtherDDFrame.BorderSizePixel = 0
 OtherDDFrame.Position = UDim2.new(0, 0, 0.959999382, 0)
 OtherDDFrame.Size = UDim2.new(0, 200, 0, 532)
-OtherDDFrame.Visible = false
 
 KeybindsLabel.Name = "KeybindsLabel"
 KeybindsLabel.Parent = OtherDDFrame
@@ -1351,7 +1348,7 @@ UICorner_67.Parent = Reload
 
 -- Scripts:
 
-local function YPNHT_fake_script() -- Visuals.Drag 
+local function YGQX_fake_script() -- Visuals.Drag 
 	local script = Instance.new('LocalScript', Visuals)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -1394,8 +1391,8 @@ local function YPNHT_fake_script() -- Visuals.Drag
 		end
 	end)
 end
-coroutine.wrap(YPNHT_fake_script)()
-local function NXLI_fake_script() -- VisualsDD.LocalScript 
+coroutine.wrap(YGQX_fake_script)()
+local function MFIHC_fake_script() -- VisualsDD.LocalScript 
 	local script = Instance.new('LocalScript', VisualsDD)
 
 	local dd = script.Parent.Parent.VisualsDDFrame
@@ -1438,8 +1435,8 @@ local function NXLI_fake_script() -- VisualsDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(NXLI_fake_script)()
-local function BQNYYN_fake_script() -- RoleEsp.AllRoleScript 
+coroutine.wrap(MFIHC_fake_script)()
+local function WFFJ_fake_script() -- RoleEsp.AllRoleScript 
 	local script = Instance.new('LocalScript', RoleEsp)
 
 	-- Services
@@ -1544,11 +1541,11 @@ local function BQNYYN_fake_script() -- RoleEsp.AllRoleScript
 	end
 	
 	-- Reference to the button and frame
-	local Button = script.Parent
-	local Frame = Button:WaitForChild("Frame")
+	local RESPBtn = script.Parent
+	local Frame = RESPBtn:WaitForChild("Frame")
 	
 	-- Button click logic
-	Button.MouseButton1Click:Connect(function()
+	RESPBtn.MouseButton1Click:Connect(function()
 		espEnabled = not espEnabled
 		Frame.BackgroundColor3 = espEnabled and activeColor or inactiveColor
 	
@@ -1575,8 +1572,8 @@ local function BQNYYN_fake_script() -- RoleEsp.AllRoleScript
 	end)
 	
 end
-coroutine.wrap(BQNYYN_fake_script)()
-local function NCMIBIS_fake_script() -- NameEsp.NameScript 
+coroutine.wrap(WFFJ_fake_script)()
+local function UHOJBC_fake_script() -- NameEsp.NameScript 
 	local script = Instance.new('LocalScript', NameEsp)
 
 	local Players = game:GetService("Players")
@@ -1621,13 +1618,13 @@ local function NCMIBIS_fake_script() -- NameEsp.NameScript
 		Hero = Color3.fromRGB(255, 170, 32)
 	}
 	
-	local Button = script.Parent
-	local frame = Button.Frame
+	local NESPBtn = script.Parent
+	local frame = NESPBtn.Frame
 	
 	local activeColor = Color3.fromRGB(8, 197, 20)
 	local inactiveColor = Color3.fromRGB(217, 0, 4)
 	
-	Button.MouseButton1Click:Connect(function()
+	NESPBtn.MouseButton1Click:Connect(function()
 		nameESPEnabled = not nameESPEnabled
 		frame.BackgroundColor3 = nameESPEnabled and activeColor or inactiveColor
 	end)
@@ -1684,8 +1681,8 @@ local function NCMIBIS_fake_script() -- NameEsp.NameScript
 	end)
 	
 end
-coroutine.wrap(NCMIBIS_fake_script)()
-local function WWFXMDQ_fake_script() -- MurdEsp.MurdScript 
+coroutine.wrap(UHOJBC_fake_script)()
+local function KIBHC_fake_script() -- MurdEsp.MurdScript 
 	local script = Instance.new('LocalScript', MurdEsp)
 
 	-- Services
@@ -1754,11 +1751,11 @@ local function WWFXMDQ_fake_script() -- MurdEsp.MurdScript
 	end
 	
 	-- Reference to the button and frame
-	local Button = script.Parent
-	local Frame = Button:WaitForChild("Frame")
+	local MESPBtn = script.Parent
+	local Frame = MESPBtn:WaitForChild("Frame")
 	
 	-- Button click logic
-	Button.MouseButton1Click:Connect(function()
+	MESPBtn.MouseButton1Click:Connect(function()
 		espEnabled = not espEnabled
 		if espEnabled == true then
 			Frame.BackgroundColor3 = activeColor
@@ -1787,8 +1784,8 @@ local function WWFXMDQ_fake_script() -- MurdEsp.MurdScript
 		end
 	end)
 end
-coroutine.wrap(WWFXMDQ_fake_script)()
-local function IOMPH_fake_script() -- SheriffEsp.SheriffScript 
+coroutine.wrap(KIBHC_fake_script)()
+local function GNOZGHF_fake_script() -- SheriffEsp.SheriffScript 
 	local script = Instance.new('LocalScript', SheriffEsp)
 
 	-- Services
@@ -1884,11 +1881,11 @@ local function IOMPH_fake_script() -- SheriffEsp.SheriffScript
 	end
 	
 	-- Reference to the button and frame
-	local Button = script.Parent
-	local Frame = Button:WaitForChild("Frame")
+	local SESPBtn = script.Parent
+	local Frame = SESPBtn:WaitForChild("Frame")
 	
 	-- Button click logic
-	Button.MouseButton1Click:Connect(function()
+	SESPBtn.MouseButton1Click:Connect(function()
 		espEnabled = not espEnabled
 		Frame.BackgroundColor3 = espEnabled and activeColor or inactiveColor
 	
@@ -1916,14 +1913,14 @@ local function IOMPH_fake_script() -- SheriffEsp.SheriffScript
 	end)
 	
 end
-coroutine.wrap(IOMPH_fake_script)()
-local function QQKXLVV_fake_script() -- GunEsp.GunEspScript 
+coroutine.wrap(GNOZGHF_fake_script)()
+local function AKGD_fake_script() -- GunEsp.GunEspScript 
 	local script = Instance.new('LocalScript', GunEsp)
 
 	local Workspace = game:GetService("Workspace")
 	
-	local button = script.Parent
-	local frame = button:WaitForChild("Frame")
+	local GESPBtn = script.Parent
+	local frame = GESPBtn:WaitForChild("Frame")
 	
 	local GunESPEnabled = false
 	local GunConnections = {}
@@ -2006,7 +2003,7 @@ local function QQKXLVV_fake_script() -- GunEsp.GunEspScript
 		removeAllGunESP()
 	end
 	
-	button.MouseButton1Click:Connect(function()
+	GESPBtn.MouseButton1Click:Connect(function()
 		GunESPEnabled = not GunESPEnabled
 		frame.BackgroundColor3 = GunESPEnabled and activeColor or inactiveColor
 	
@@ -2018,15 +2015,15 @@ local function QQKXLVV_fake_script() -- GunEsp.GunEspScript
 	end)
 	
 end
-coroutine.wrap(QQKXLVV_fake_script)()
-local function XVIRAXK_fake_script() -- CoinEsp.CoinEspScript 
+coroutine.wrap(AKGD_fake_script)()
+local function POPVEJO_fake_script() -- CoinEsp.CoinEspScript 
 	local script = Instance.new('LocalScript', CoinEsp)
 
 	local Workspace = game:GetService("Workspace")
 	local RunService = game:GetService("RunService")
 	
-	local button = script.Parent
-	local frame = button:WaitForChild("Frame")
+	local CESPBtn = script.Parent
+	local frame = CESPBtn:WaitForChild("Frame")
 	
 	local CoinESPEnabled = false
 	local CoinConnections = {}
@@ -2096,7 +2093,7 @@ local function XVIRAXK_fake_script() -- CoinEsp.CoinEspScript
 		removeAllESP()
 	end
 	
-	button.MouseButton1Click:Connect(function()
+	CESPBtn.MouseButton1Click:Connect(function()
 		CoinESPEnabled = not CoinESPEnabled
 		frame.BackgroundColor3 = CoinESPEnabled and activeColor or inactiveColor
 	
@@ -2108,8 +2105,8 @@ local function XVIRAXK_fake_script() -- CoinEsp.CoinEspScript
 	end)
 	
 end
-coroutine.wrap(XVIRAXK_fake_script)()
-local function HRSK_fake_script() -- Tracers.TracerScript 
+coroutine.wrap(POPVEJO_fake_script)()
+local function SRCRE_fake_script() -- Tracers.TracerScript 
 	local script = Instance.new('LocalScript', Tracers)
 
 	-- Services
@@ -2140,11 +2137,11 @@ local function HRSK_fake_script() -- Tracers.TracerScript
 		Innocent = Color3.fromRGB(0, 255, 0)
 	}
 	
-	local Button = script.Parent
-		local Frame = Button:WaitForChild("Frame")
+	local TBtn = script.Parent
+	local Frame = TBtn:WaitForChild("Frame")
 	
 	-- Button click logic
-	Button.MouseButton1Click:Connect(function()
+	TBtn.MouseButton1Click:Connect(function()
 		tracerESPEnabled = not tracerESPEnabled
 		if tracerESPEnabled == true then
 			Frame.BackgroundColor3 = activeColor
@@ -2211,8 +2208,8 @@ local function HRSK_fake_script() -- Tracers.TracerScript
 		end
 	end)
 end
-coroutine.wrap(HRSK_fake_script)()
-local function TDSIXY_fake_script() -- XRayBtn.XRayScript 
+coroutine.wrap(SRCRE_fake_script)()
+local function BUWYFR_fake_script() -- XRayBtn.XRayScript 
 	local script = Instance.new('LocalScript', XRayBtn)
 
 	local Players = game:GetService("Players")
@@ -2321,8 +2318,8 @@ local function TDSIXY_fake_script() -- XRayBtn.XRayScript
 	-- Initialize slider
 	updateSlider((1 - TransparencyAmount) / 0.9 * (sliderFrame.Parent.AbsoluteSize.X - sliderKnob.AbsoluteSize.X))
 end
-coroutine.wrap(TDSIXY_fake_script)()
-local function DPEH_fake_script() -- XRayDD.LocalScript 
+coroutine.wrap(BUWYFR_fake_script)()
+local function NWSZDX_fake_script() -- XRayDD.LocalScript 
 	local script = Instance.new('LocalScript', XRayDD)
 
 	local dd = script.Parent.Parent.XRay.XRayDDFrame
@@ -2365,8 +2362,8 @@ local function DPEH_fake_script() -- XRayDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(DPEH_fake_script)()
-local function HFST_fake_script() -- Player.Drag 
+coroutine.wrap(NWSZDX_fake_script)()
+local function WIWRD_fake_script() -- Player.Drag 
 	local script = Instance.new('LocalScript', Player)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -2409,8 +2406,8 @@ local function HFST_fake_script() -- Player.Drag
 		end
 	end)
 end
-coroutine.wrap(HFST_fake_script)()
-local function OVQQ_fake_script() -- PlayerDD.LocalScript 
+coroutine.wrap(WIWRD_fake_script)()
+local function IDIUBBO_fake_script() -- PlayerDD.LocalScript 
 	local script = Instance.new('LocalScript', PlayerDD)
 
 	local dd = script.Parent.Parent.PlayerDDFrame
@@ -2453,8 +2450,8 @@ local function OVQQ_fake_script() -- PlayerDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(OVQQ_fake_script)()
-local function VXUC_fake_script() -- InfiniteJump.LocalScript 
+coroutine.wrap(IDIUBBO_fake_script)()
+local function UNNFM_fake_script() -- InfiniteJump.LocalScript 
 	local script = Instance.new('LocalScript', InfiniteJump)
 
 	local button = script.Parent
@@ -2485,37 +2482,22 @@ local function VXUC_fake_script() -- InfiniteJump.LocalScript
 		end
 	end)
 end
-coroutine.wrap(VXUC_fake_script)()
-local function FOSO_fake_script() -- GodMode.GodModeScript 
+coroutine.wrap(UNNFM_fake_script)()
+local function KUXPBC_fake_script() -- GodMode.GodModeScript 
 	local script = Instance.new('LocalScript', GodMode)
 
 	local Players = game:GetService("Players")
 	local LocalPlayer = Players.LocalPlayer
 	local RunService = game:GetService("RunService")
 	
-	local button = script.Parent
-	local frame = button:WaitForChild("Frame")
+	local Gbutton = script.Parent
+	local frame = Gbutton:WaitForChild("Frame")
 	local originalColor = frame.BackgroundColor3
 	local godmodeColor = Color3.fromRGB(8, 197, 20)
 	local godmodeEnabled = false
 	
+	local healthConnection
 	local forcefield
-	local originalMetatable = getrawmetatable(game)
-	local oldIndex, oldNewIndex = originalMetatable.__index, originalMetatable.__newindex
-	setreadonly(originalMetatable, false)
-	
-	-- Godmode Metatable Hook
-	local function hookHumanoid(humanoid)
-		local mt = getrawmetatable(game)
-		setreadonly(mt, false)
-	
-		mt.__newindex = newcclosure(function(self, key, value)
-			if godmodeEnabled and typeof(self) == "Instance" and self:IsA("Humanoid") and key == "Health" then
-				return -- cancel any changes to Health
-			end
-			return oldNewIndex(self, key, value)
-		end)
-	end
 	
 	local function enableGodmode(character)
 		local humanoid = character:WaitForChild("Humanoid", 5)
@@ -2523,9 +2505,22 @@ local function FOSO_fake_script() -- GodMode.GodModeScript
 	
 		humanoid.MaxHealth = 1e6
 		humanoid.Health = humanoid.MaxHealth
-		hookHumanoid(humanoid)
 	
-		-- ForceField for visual protection
+		-- Disconnect old connection
+		if healthConnection then
+			healthConnection:Disconnect()
+		end
+	
+		-- Keep health at max
+		healthConnection = humanoid.HealthChanged:Connect(function()
+			if humanoid.Health < humanoid.MaxHealth then
+				humanoid.Health = humanoid.MaxHealth
+			end
+		end)
+	
+		humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
+	
+		-- Add ForceField for extra protection
 		if not forcefield then
 			forcefield = Instance.new("ForceField")
 			forcefield.Visible = false
@@ -2538,21 +2533,21 @@ local function FOSO_fake_script() -- GodMode.GodModeScript
 		if humanoid then
 			humanoid.MaxHealth = 100
 			humanoid.Health = 100
+			humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
+		end
+	
+		if healthConnection then
+			healthConnection:Disconnect()
+			healthConnection = nil
 		end
 	
 		if forcefield then
 			forcefield:Destroy()
 			forcefield = nil
 		end
-	
-		-- Restore metatable
-		local mt = getrawmetatable(game)
-		setreadonly(mt, false)
-		mt.__newindex = oldNewIndex
-		setreadonly(mt, true)
 	end
 	
-	button.MouseButton1Click:Connect(function()
+	Gbutton.MouseButton1Click:Connect(function()
 		godmodeEnabled = not godmodeEnabled
 		frame.BackgroundColor3 = godmodeEnabled and godmodeColor or originalColor
 	
@@ -2568,14 +2563,14 @@ local function FOSO_fake_script() -- GodMode.GodModeScript
 	
 	LocalPlayer.CharacterAdded:Connect(function(character)
 		if godmodeEnabled then
-			task.wait(0.1)
+			task.wait(0.1) -- wait for Humanoid to load
 			enableGodmode(character)
 		end
 	end)
 	
 end
-coroutine.wrap(FOSO_fake_script)()
-local function LANH_fake_script() -- FlyBtn.FlyScript 
+coroutine.wrap(KUXPBC_fake_script)()
+local function KYERMS_fake_script() -- FlyBtn.FlyScript 
 	local script = Instance.new('LocalScript', FlyBtn)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -2801,8 +2796,8 @@ local function LANH_fake_script() -- FlyBtn.FlyScript
 	-- Initialize slider
 	updateSlider((flySpeed - 10) / (100 - 10) * (sliderFrame.Parent.AbsoluteSize.X - sliderKnob.AbsoluteSize.X))
 end
-coroutine.wrap(LANH_fake_script)()
-local function MUXP_fake_script() -- FlyDD.LocalScript 
+coroutine.wrap(KYERMS_fake_script)()
+local function HJWHXEB_fake_script() -- FlyDD.LocalScript 
 	local script = Instance.new('LocalScript', FlyDD)
 
 	local dd = script.Parent.Parent.Fly.FlyDDFrame
@@ -2847,8 +2842,8 @@ local function MUXP_fake_script() -- FlyDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(MUXP_fake_script)()
-local function QJXHOWW_fake_script() -- NoClip.NoClipScript 
+coroutine.wrap(HJWHXEB_fake_script)()
+local function PNJXO_fake_script() -- NoClip.NoClipScript 
 	local script = Instance.new('LocalScript', NoClip)
 
 	local RunService = game:GetService("RunService")
@@ -2925,8 +2920,8 @@ local function QJXHOWW_fake_script() -- NoClip.NoClipScript
 	end)
 	
 end
-coroutine.wrap(QJXHOWW_fake_script)()
-local function DYFFEL_fake_script() -- Fling.FlingScript 
+coroutine.wrap(PNJXO_fake_script)()
+local function HAIJGZI_fake_script() -- Fling.FlingScript 
 	local script = Instance.new('LocalScript', Fling)
 
 	local Frame = script.Parent.Parent
@@ -3004,8 +2999,8 @@ local function DYFFEL_fake_script() -- Fling.FlingScript
 	end
 	coroutine.wrap(FFJFK_fake_script)()
 end
-coroutine.wrap(DYFFEL_fake_script)()
-local function GJOR_fake_script() -- Float.FloatScript 
+coroutine.wrap(HAIJGZI_fake_script)()
+local function FZUBGHW_fake_script() -- Float.FloatScript 
 	local script = Instance.new('LocalScript', Float)
 
 	local Players = game:GetService("Players")
@@ -3053,8 +3048,8 @@ local function GJOR_fake_script() -- Float.FloatScript
 		end
 	end)
 end
-coroutine.wrap(GJOR_fake_script)()
-local function FSQPPH_fake_script() -- Reset.ResetScript 
+coroutine.wrap(FZUBGHW_fake_script)()
+local function TBZN_fake_script() -- Reset.ResetScript 
 	local script = Instance.new('LocalScript', Reset)
 
 	local player = game.Players.LocalPlayer
@@ -3070,8 +3065,8 @@ local function FSQPPH_fake_script() -- Reset.ResetScript
 		end
 	end)
 end
-coroutine.wrap(FSQPPH_fake_script)()
-local function LXRVL_fake_script() -- FlingUser.FlingUserScript 
+coroutine.wrap(TBZN_fake_script)()
+local function AWNTDG_fake_script() -- FlingUser.FlingUserScript 
 	local script = Instance.new('LocalScript', FlingUser)
 
 	local Frame = script.Parent.Parent
@@ -3215,8 +3210,8 @@ local function LXRVL_fake_script() -- FlingUser.FlingUserScript
 	end
 	coroutine.wrap(FFJFK_fake_script)()
 end
-coroutine.wrap(LXRVL_fake_script)()
-local function BCKREI_fake_script() -- Teleport.Drag 
+coroutine.wrap(AWNTDG_fake_script)()
+local function AHMZVBW_fake_script() -- Teleport.Drag 
 	local script = Instance.new('LocalScript', Teleport)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3259,8 +3254,8 @@ local function BCKREI_fake_script() -- Teleport.Drag
 		end
 	end)
 end
-coroutine.wrap(BCKREI_fake_script)()
-local function YLZYMFD_fake_script() -- TeleportDD.LocalScript 
+coroutine.wrap(AHMZVBW_fake_script)()
+local function PBII_fake_script() -- TeleportDD.LocalScript 
 	local script = Instance.new('LocalScript', TeleportDD)
 
 	local dd = script.Parent.Parent.TeleportDDFrame
@@ -3303,53 +3298,74 @@ local function YLZYMFD_fake_script() -- TeleportDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(YLZYMFD_fake_script)()
-local function NLVWGTD_fake_script() -- GunDropStatus.GunDropStatusScript 
+coroutine.wrap(PBII_fake_script)()
+local function KVMY_fake_script() -- GunDropStatus.GunDropStatusScript 
 	local script = Instance.new('LocalScript', GunDropStatus)
 
-	local Workspace = game:GetService("Workspace")
-	local RunService = game:GetService("RunService")
+	local function GunDropStatusScript()
+		local script = Instance.new('LocalScript', GunDropStatus)
 	
-	local parent = script.Parent
-	local greenColor = Color3.fromRGB(0, 255, 0)
-	local redColor = Color3.fromRGB(255, 0, 0)
+		local Workspace = game:GetService("Workspace")
+		local parent = script.Parent
 	
-	local function checkGunDrop()
-		local gunDropFound = false
-		for _, descendant in pairs(Workspace:GetDescendants()) do
-			if descendant.Name == "GunDrop" and descendant:IsA("Model") then
-				gunDropFound = true
-				break
+		local greenColor = Color3.fromRGB(0, 255, 0)
+		local redColor = Color3.fromRGB(255, 0, 0)
+	
+		local gunDropExists = false
+	
+		-- Efficient single check
+		local function updateStatus(found)
+			if found then
+				parent.Text = "Gun Drop Status: Available"
+				parent.TextColor3 = greenColor
+			else
+				parent.Text = "Gun Drop Status: Not Available"
+				parent.TextColor3 = redColor
 			end
 		end
 	
-		if gunDropFound then
-			parent.Text = "Gun Drop Status: Available"
-			parent.TextColor3 = greenColor
-		else
-			parent.Text = "Gun Drop Status: Not Available"
-			parent.TextColor3 = redColor
+		local function findGunDrop()
+			for _, descendant in ipairs(Workspace:GetChildren()) do
+				if descendant.Name == "GunDrop" and descendant:IsA("Model") then
+					return true
+				end
+			end
+			return false
 		end
+	
+		-- Initial check
+		gunDropExists = findGunDrop()
+		updateStatus(gunDropExists)
+	
+		-- Only react to new or removed descendants
+		Workspace.DescendantAdded:Connect(function(desc)
+			if desc.Name == "GunDrop" and desc:IsA("Model") then
+				if not gunDropExists then
+					gunDropExists = true
+					updateStatus(true)
+				end
+			end
+		end)
+	
+		Workspace.DescendantRemoving:Connect(function(desc)
+			if desc.Name == "GunDrop" and desc:IsA("Model") then
+				task.wait() -- short delay to ensure removal processed
+				gunDropExists = findGunDrop()
+				updateStatus(gunDropExists)
+			end
+		end)
 	end
-	
-	checkGunDrop()
-	
-	RunService.Heartbeat:Connect(function()
-		checkGunDrop()
-	end)
-	
-	Workspace.DescendantAdded:Connect(checkGunDrop)
-	Workspace.DescendantRemoving:Connect(checkGunDrop)
+	coroutine.wrap(GunDropStatusScript)()
 end
-coroutine.wrap(NLVWGTD_fake_script)()
-local function CFJK_fake_script() -- UserTp.UserTpScript 
+coroutine.wrap(KVMY_fake_script)()
+local function STKU_fake_script() -- UserTp.UserTpScript 
 	local script = Instance.new('LocalScript', UserTp)
 
 	local Players = game:GetService("Players")
 	local Workspace = game:GetService("Workspace")
 	
-	local button = script.Parent
-	local userBox = button:WaitForChild("UserBox")
+	local UTPBtn = script.Parent
+	local userBox = UTPBtn:WaitForChild("UserBox")
 	
 	local function tpToUser()
 		local localPlayer = Players.LocalPlayer
@@ -3372,10 +3388,10 @@ local function CFJK_fake_script() -- UserTp.UserTpScript
 		end
 	end
 	
-	button.MouseButton1Click:Connect(tpToUser)
+	UTPBtn.MouseButton1Click:Connect(tpToUser)
 end
-coroutine.wrap(CFJK_fake_script)()
-local function BIGRE_fake_script() -- TpMap.ToMapScript 
+coroutine.wrap(STKU_fake_script)()
+local function ZTJJJU_fake_script() -- TpMap.ToMapScript 
 	local script = Instance.new('LocalScript', TpMap)
 
 	local Players = game:GetService("Players")
@@ -3408,9 +3424,9 @@ local function BIGRE_fake_script() -- TpMap.ToMapScript
 		return nil
 	end
 	
-	local Button = script.Parent
+	local MTPBtn = script.Parent
 	
-	Button.MouseButton1Click:Connect(function()
+	MTPBtn.MouseButton1Click:Connect(function()
 	
 		local map = findCurrentMap()
 		if map then
@@ -3420,8 +3436,8 @@ local function BIGRE_fake_script() -- TpMap.ToMapScript
 		end
 	end)
 end
-coroutine.wrap(BIGRE_fake_script)()
-local function FDVREL_fake_script() -- TpAboveMap.AboveScript 
+coroutine.wrap(ZTJJJU_fake_script)()
+local function RYOMMZJ_fake_script() -- TpAboveMap.AboveScript 
 	local script = Instance.new('LocalScript', TpAboveMap)
 
 	local Players = game:GetService("Players")
@@ -3454,9 +3470,9 @@ local function FDVREL_fake_script() -- TpAboveMap.AboveScript
 		return nil
 	end
 	
-	local Button = script.Parent
+	local TPAMBtn = script.Parent
 	
-	Button.MouseButton1Click:Connect(function()
+	TPAMBtn.MouseButton1Click:Connect(function()
 	
 		local map = findCurrentMap()
 		if map then
@@ -3467,16 +3483,15 @@ local function FDVREL_fake_script() -- TpAboveMap.AboveScript
 		end
 	end)
 end
-coroutine.wrap(FDVREL_fake_script)()
-local function EVTBQFL_fake_script() -- SheriffTp.SheriffTpScript 
+coroutine.wrap(RYOMMZJ_fake_script)()
+local function NLKP_fake_script() -- SheriffTp.SheriffTpScript 
 	local script = Instance.new('LocalScript', SheriffTp)
 
 	local Players = game:GetService("Players")
-	local Workspace = game:GetService("Workspace")
 	
-	local button = script.Parent
+	local STPBtn = script.Parent
 	
-	local function tpToSheriff()
+	local function tpToGun()
 		local localPlayer = Players.LocalPlayer
 		local character = localPlayer.Character
 		if not character or not character:FindFirstChild("HumanoidRootPart") then return end
@@ -3485,27 +3500,49 @@ local function EVTBQFL_fake_script() -- SheriffTp.SheriffTpScript
 		for _, player in pairs(Players:GetPlayers()) do
 			if player ~= localPlayer then
 				local targetChar = player.Character
-				if targetChar and targetChar:FindFirstChild("Role") and targetChar.Role.Value:lower() == "sheriff" then
-					local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
-					if targetHRP then
-						hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
-						break
+				if targetChar then
+					local hasGun = false
+	
+					-- Check if they have a tool named "Gun" equipped
+					for _, tool in ipairs(targetChar:GetChildren()) do
+						if tool:IsA("Tool") and tool.Name == "Gun" then
+							hasGun = true
+							break
+						end
+					end
+	
+					-- Also check their Backpack
+					if not hasGun and player:FindFirstChild("Backpack") then
+						for _, tool in ipairs(player.Backpack:GetChildren()) do
+							if tool:IsA("Tool") and tool.Name == "Gun" then
+								hasGun = true
+								break
+							end
+						end
+					end
+	
+					if hasGun then
+						local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
+						if targetHRP then
+							hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
+							break
+						end
 					end
 				end
 			end
 		end
 	end
 	
-	button.MouseButton1Click:Connect(tpToSheriff)
+	STPBtn.MouseButton1Click:Connect(tpToGun)
 end
-coroutine.wrap(EVTBQFL_fake_script)()
-local function SGUKRY_fake_script() -- RandomTp.RandomTpScript 
+coroutine.wrap(NLKP_fake_script)()
+local function JHZVLLM_fake_script() -- RandomTp.RandomTpScript 
 	local script = Instance.new('LocalScript', RandomTp)
 
 	local Players = game:GetService("Players")
 	local Workspace = game:GetService("Workspace")
 	
-	local button = script.Parent
+	local RTPBtn = script.Parent
 	
 	local function tpToRandom()
 		local localPlayer = Players.LocalPlayer
@@ -3527,16 +3564,16 @@ local function SGUKRY_fake_script() -- RandomTp.RandomTpScript
 		end
 	end
 	
-	button.MouseButton1Click:Connect(tpToRandom)
+	RTPBtn.MouseButton1Click:Connect(tpToRandom)
 end
-coroutine.wrap(SGUKRY_fake_script)()
-local function HEOQB_fake_script() -- MurdTp.MurdererTpScript 
+coroutine.wrap(JHZVLLM_fake_script)()
+local function CHXDKUP_fake_script() -- MurdTp.MurdererTpScript 
 	local script = Instance.new('LocalScript', MurdTp)
 
 	local Players = game:GetService("Players")
 	local Workspace = game:GetService("Workspace")
 	
-	local button = script.Parent
+	local MTPBtn = script.Parent
 	
 	local function tpToMurd()
 		local localPlayer = Players.LocalPlayer
@@ -3558,10 +3595,10 @@ local function HEOQB_fake_script() -- MurdTp.MurdererTpScript
 		end
 	end
 	
-	button.MouseButton1Click:Connect(tpToMurd)
+	MTPBtn.MouseButton1Click:Connect(tpToMurd)
 end
-coroutine.wrap(HEOQB_fake_script)()
-local function PZWFXFE_fake_script() -- LobbyTp.LobbyScript 
+coroutine.wrap(CHXDKUP_fake_script)()
+local function PYYFO_fake_script() -- LobbyTp.LobbyScript 
 	local script = Instance.new('LocalScript', LobbyTp)
 
 	local Players = game:GetService("Players")
@@ -3578,9 +3615,9 @@ local function PZWFXFE_fake_script() -- LobbyTp.LobbyScript
 		end
 	end
 	
-	local Button = script.Parent
+	local LTPBtn = script.Parent
 	
-	Button.MouseButton1Click:Connect(function()
+	LTPBtn.MouseButton1Click:Connect(function()
 	
 		local lobby = Workspace:FindFirstChild("Lobby")
 		if lobby and lobby:IsA("Model") then
@@ -3590,8 +3627,8 @@ local function PZWFXFE_fake_script() -- LobbyTp.LobbyScript
 		end
 	end)
 end
-coroutine.wrap(PZWFXFE_fake_script)()
-local function BXYJHAY_fake_script() -- GrabGun.GrabGunScript 
+coroutine.wrap(PYYFO_fake_script)()
+local function DYIEB_fake_script() -- GrabGun.GrabGunScript 
 	local script = Instance.new('LocalScript', GrabGun)
 
 	local Players = game:GetService("Players")
@@ -3626,8 +3663,8 @@ local function BXYJHAY_fake_script() -- GrabGun.GrabGunScript
 		end)
 	end
 end
-coroutine.wrap(BXYJHAY_fake_script)()
-local function RNFCP_fake_script() -- AutoGrabGun.AutoGunScript 
+coroutine.wrap(DYIEB_fake_script)()
+local function UJHZKAZ_fake_script() -- AutoGrabGun.AutoGunScript 
 	local script = Instance.new('LocalScript', AutoGrabGun)
 
 	local Players = game:GetService("Players")
@@ -3674,8 +3711,8 @@ local function RNFCP_fake_script() -- AutoGrabGun.AutoGunScript
 		frame.BackgroundColor3 = AutoGrabGun and activeColor or inactiveColor
 	end)
 end
-coroutine.wrap(RNFCP_fake_script)()
-local function BIZSL_fake_script() -- Other.Drag 
+coroutine.wrap(UJHZKAZ_fake_script)()
+local function ETPHSNK_fake_script() -- Other.Drag 
 	local script = Instance.new('LocalScript', Other)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3718,8 +3755,8 @@ local function BIZSL_fake_script() -- Other.Drag
 		end
 	end)
 end
-coroutine.wrap(BIZSL_fake_script)()
-local function FTEO_fake_script() -- OtherDD.LocalScript 
+coroutine.wrap(ETPHSNK_fake_script)()
+function JWYH_fake_script() -- OtherDD.LocalScript 
 	local script = Instance.new('LocalScript', OtherDD)
 
 	local dd = script.Parent.Parent.OtherDDFrame
@@ -3762,8 +3799,8 @@ local function FTEO_fake_script() -- OtherDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(FTEO_fake_script)()
-local function XLTZC_fake_script() -- KeyBTN.MenuKeybindScript 
+coroutine.wrap(JWYH_fake_script)()
+function QTCPQM_fake_script() -- KeyBTN.MenuKeybindScript 
 	local script = Instance.new('LocalScript', KeyBTN)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3799,102 +3836,157 @@ local function XLTZC_fake_script() -- KeyBTN.MenuKeybindScript
 		button.TextSize = 10
 	end)
 end
-coroutine.wrap(XLTZC_fake_script)()
-local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
-local UserInputService = game:GetService("UserInputService")
+coroutine.wrap(QTCPQM_fake_script)()
+function BVQJQM_fake_script() -- KeyBTN_2.GetGunKeybindScript 
+	local script = Instance.new('LocalScript', KeyBTN_2)
 
-local LocalPlayer = Players.LocalPlayer
-local GunName = "GunDrop"
-
-local button = script.Parent
-local currentKeybind = Enum.KeyCode.G
-local isKeybindMode = false
-
-button.Text = currentKeybind.Name
-
-local function grabGun()
-	local character = LocalPlayer.Character
-	if not character then return end
-	local HRP = character:FindFirstChild("HumanoidRootPart")
-	if not HRP then return end
-
-	local gun = Workspace:FindFirstChild(GunName, true)
-	if gun then
-		local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
-		if not targetPart then return end
-
-		local originalCFrame = HRP.CFrame
-		HRP.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
-
-		task.wait() -- small wait is enough
-		HRP.CFrame = originalCFrame
-	end
-end
-
-UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
-	if gameProcessedEvent then return end
-
-	if isKeybindMode then
-		if input.KeyCode ~= Enum.KeyCode.Unknown then
-			currentKeybind = input.KeyCode
-			isKeybindMode = false
-			button.Text = currentKeybind.Name
-			button.TextSize = 16
+	local Players = game:GetService("Players")
+	local Workspace = game:GetService("Workspace")
+	local RunService = game:GetService("RunService")
+	local UserInputService = game:GetService("UserInputService")
+	
+	local LocalPlayer = Players.LocalPlayer
+	local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	local HRP = Character:WaitForChild("HumanoidRootPart")
+	local GunName = "GunDrop"
+	
+	local button = script.Parent
+	local screenGui = button:FindFirstAncestorOfClass("ScreenGui")
+	local currentKeybind = Enum.KeyCode.G
+	local isKeybindMode = false
+	
+	button.Text = currentKeybind.Name
+	
+	function grabGun()
+		if not LocalPlayer.Character or not HRP then return end
+	
+		local gun = Workspace:FindFirstChild(GunName, true)
+		if gun then
+			local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
+			if not targetPart then return end
+	
+			local originalCFrame = HRP.CFrame
+			HRP.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+	
+			task.wait(0.0001)
+			HRP.CFrame = originalCFrame
 		end
-	elseif input.KeyCode == currentKeybind then
-		grabGun()
 	end
-end)
-
-button.MouseButton1Click:Connect(function()
-	isKeybindMode = true
-	button.Text = "Press Any key"
-	button.TextSize = 10
-end)
-
-local function UODE_fake_script() -- ServerLabel.ServerBtnScript 
+	
+	UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+		if gameProcessedEvent then return end
+	
+		if isKeybindMode then
+			if input.KeyCode ~= Enum.KeyCode.Unknown then
+				currentKeybind = input.KeyCode
+				isKeybindMode = false
+				button.Text = currentKeybind.Name
+				button.TextSize = 16
+			end
+		elseif input.KeyCode == currentKeybind then
+			grabGun()
+		end
+	end)
+	
+	button.MouseButton1Click:Connect(function()
+		isKeybindMode = true
+		button.Text = "Press Any key"
+		button.TextSize = 10
+	end)
+	
+end
+coroutine.wrap(BVQJQM_fake_script)()
+function ETVP_fake_script() -- ServerLabel.ServerBtnScript 
 	local script = Instance.new('LocalScript', ServerLabel)
 
-	local TeleportService = game:GetService("TeleportService")
-	local Players = game:GetService("Players")
-	local localPlayer = Players.LocalPlayer
-	local placeId = game.PlaceId
-	local jobId = game.JobId -- Store current server JobId
+		local TeleportService = game:GetService("TeleportService")
+		local Players = game:GetService("Players")
+		local LocalPlayer = Players.LocalPlayer
+		local placeId = game.PlaceId
+		local jobId = game.JobId
 	
-	local randomServerButton = script.Parent.JoinRandomBtn
-	local rejoinServerButton = script.Parent.RjBtn
+		local randomServerButton = script.Parent:WaitForChild("JoinRandomBtn")
+		local rejoinServerButton = script.Parent:WaitForChild("RjBtn", 1) or script.Parent
 	
-	-- Function to join a random server
-	local function joinRandomServer()
-		local success, result = pcall(function()
-			TeleportService:Teleport(placeId, localPlayer)
+		-- // Reload on teleport //
+		TeleportService.TeleportInitFailed:Connect(function()
+			task.wait(5)
+			pcall(function()
+			        loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
+			end)
 		end)
-		if not success then
-			warn("Failed to join random server: " .. tostring(result))
-		end
-	end
 	
-	-- Function to rejoin the current server
-	local function rejoinServer()
-		if jobId == "" then
-			warn("Cannot rejoin: This is a local or reserved server.")
-			return
+		-- // Auto-queue your script on teleport //
+		function queueReload()
+			local queued = [[
+	            task.wait(5)
+	            loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
+	        ]]
+			if syn and syn.queue_on_teleport then
+				syn.queue_on_teleport(queued)
+			elseif queue_on_teleport then
+				queue_on_teleport(queued)
+			elseif fluxus and fluxus.queue_on_teleport then
+				fluxus.queue_on_teleport(queued)
+			end
 		end
-		local success, result = pcall(function()
-			TeleportService:TeleportToPlaceInstance(placeId, jobId, localPlayer)
+	
+		-- // Buttons //
+		function joinRandomServer()
+			queueReload()
+			local success, result = pcall(function()
+				TeleportService:Teleport(placeId, LocalPlayer)
+			end)
+			if not success then
+				warn("Failed to join random server: " .. tostring(result))
+				game.StarterGui:SetCore("SendNotification", {
+					Title = "Teleport Error",
+					Text = tostring(result),
+					Duration = 5
+				})
+			end
+		end
+	
+		function rejoinServer()
+			if jobId == "" then
+				warn("Cannot rejoin: This is a local or reserved server.")
+				game.StarterGui:SetCore("SendNotification", {
+					Title = "Rejoin Error",
+					Text = "Cannot rejoin: local/reserved server.",
+					Duration = 5
+				})
+				return
+			end
+			queueReload()
+			local success, result = pcall(function()
+				TeleportService:TeleportToPlaceInstance(placeId, jobId, LocalPlayer)
+			end)
+			if not success then
+				warn("Failed to rejoin server: " .. tostring(result))
+				game.StarterGui:SetCore("SendNotification", {
+					Title = "Rejoin Error",
+					Text = tostring(result),
+					Duration = 5
+				})
+			end
+		end
+	
+		-- // Connections //
+		local connections = {}
+		table.insert(connections, randomServerButton.MouseButton1Click:Connect(joinRandomServer))
+		table.insert(connections, rejoinServerButton.MouseButton1Click:Connect(rejoinServer))
+	
+		-- // Cleanup //
+		script.AncestryChanged:Connect(function()
+			if not script.Parent then
+				for _, conn in ipairs(connections) do
+					conn:Disconnect()
+				end
+			end
 		end)
-		if not success then
-			warn("Failed to rejoin server: " .. tostring(result))
-		end
-	end
-	
-	-- Connect buttons to functions
-	randomServerButton.MouseButton1Click:Connect(joinRandomServer)
-	rejoinServerButton.MouseButton1Click:Connect(rejoinServer)
 end
-coroutine.wrap(UODE_fake_script)()
-local function PRSKJH_fake_script() -- OtherLabel_2.OtherBtnScript 
+coroutine.wrap(ETVP_fake_script)()
+function HYJE_fake_script() -- OtherLabel_2.OtherBtnScript 
 	local script = Instance.new('LocalScript', OtherLabel_2)
 
 	local IYBtn = script.Parent.IY
@@ -3922,7 +4014,9 @@ local function PRSKJH_fake_script() -- OtherLabel_2.OtherBtnScript
 	end)
 	
 	RldBtn.MouseButton1Click:Connect(function()
+	
 		local success, err = pcall(function()
+		    jd7hufe29c87c76d:Destroy()
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
 		end)
 	
@@ -3931,4 +4025,4 @@ local function PRSKJH_fake_script() -- OtherLabel_2.OtherBtnScript
 		end
 	end)
 end
-coroutine.wrap(PRSKJH_fake_script)()
+coroutine.wrap(HYJE_fake_script)()
