@@ -3844,7 +3844,7 @@ local function ServerTeleportScript()
     local function queueReload()
         local queued = [[
             task.wait(5)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/bgsi/refs/heads/main/mm2"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
         ]]
         if syn and syn.queue_on_teleport then
             syn.queue_on_teleport(queued)
