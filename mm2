@@ -3112,8 +3112,7 @@ local function HBJXZ_fake_script() -- FlingUser.FlingUserScript
 				local targetChar = targetPlayer.Character
 				if targetChar and targetChar:FindFirstChild("HumanoidRootPart") then
 					local targetHRP = targetChar.HumanoidRootPart
-					hrp.CFrame = targetHRP.CFrame + Vector3.new(0, -0.15, 0)
-	
+					hrp.CFrame = targetHRP.CFrame + Vector3.new(0, -0.05, 0)
 					local distance = (targetHRP.Position - originalPosVector).Magnitude
 					if distance >= 300 then
 						hiddenfling = false
@@ -3126,7 +3125,7 @@ local function HBJXZ_fake_script() -- FlingUser.FlingUserScript
 							wait(0.1) 
 						end
 						
-						wait(0.5)
+						wait(1)
 						hrp.Anchored = false
 					end
 				else
@@ -3390,7 +3389,7 @@ local function KVSV_fake_script() -- TpAboveMap.AboveScript
 	
 	local mapNames = {
 		"MilBase", "Hospital3", "Workplace", "ResearchFacility", "House2", "Mansion2",
-		"BioLab", "Office3", "PoliceStation", "Factory", "Bank2", "Hotel"
+		"BioLab", "Office3", "PoliceStation", "Factory", "Bank2", "Hotel", "Mineshaft"
 	}
 	
 	local function teleportTo(position)
@@ -3427,37 +3426,62 @@ local function KVSV_fake_script() -- TpAboveMap.AboveScript
 	end)
 end
 coroutine.wrap(KVSV_fake_script)()
+
 local function OMZJC_fake_script() -- SheriffTp.SheriffTpScript 
-	local script = Instance.new('LocalScript', SheriffTp)
+	local script = Instance.new('LocalScript', RandomTp)
 
 	local Players = game:GetService("Players")
-	local Workspace = game:GetService("Workspace")
-	
+
 	local button = script.Parent
-	
-	local function tpToSheriff()
+
+	local function tpToGun()
 		local localPlayer = Players.LocalPlayer
 		local character = localPlayer.Character
 		if not character or not character:FindFirstChild("HumanoidRootPart") then return end
 		local hrp = character.HumanoidRootPart
-	
+
 		for _, player in pairs(Players:GetPlayers()) do
 			if player ~= localPlayer then
 				local targetChar = player.Character
-				if targetChar and targetChar:FindFirstChild("Role") and targetChar.Role.Value:lower() == "sheriff" then
-					local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
-					if targetHRP then
-						hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
-						break
+				if targetChar then
+					local hasGun = false
+
+					-- Check if they have a tool named "Gun" equipped
+					for _, tool in ipairs(targetChar:GetChildren()) do
+						if tool:IsA("Tool") and tool.Name == "Gun" then
+							hasGun = true
+							break
+						end
+					end
+
+					-- Also check their Backpack
+					if not hasGun and player:FindFirstChild("Backpack") then
+						for _, tool in ipairs(player.Backpack:GetChildren()) do
+							if tool:IsA("Tool") and tool.Name == "Gun" then
+								hasGun = true
+								break
+							end
+						end
+					end
+
+					if hasGun then
+						local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
+						if targetHRP then
+							hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
+							break
+						end
 					end
 				end
 			end
 		end
 	end
-	
-	button.MouseButton1Click:Connect(tpToSheriff)
+
+	button.MouseButton1Click:Connect(tpToGun)
 end
+
 coroutine.wrap(OMZJC_fake_script)()
+
+
 local function BNDI_fake_script() -- RandomTp.RandomTpScript 
 	local script = Instance.new('LocalScript', RandomTp)
 
@@ -3489,34 +3513,56 @@ local function BNDI_fake_script() -- RandomTp.RandomTpScript
 	button.MouseButton1Click:Connect(tpToRandom)
 end
 coroutine.wrap(BNDI_fake_script)()
-local function BBZOZX_fake_script() -- MurdTp.MurdererTpScript 
+
+local function BBZOZX_fake_script() -- MurdTp.MurdererTpScript
 	local script = Instance.new('LocalScript', MurdTp)
 
 	local Players = game:GetService("Players")
-	local Workspace = game:GetService("Workspace")
-	
+
 	local button = script.Parent
-	
+
 	local function tpToMurd()
 		local localPlayer = Players.LocalPlayer
 		local character = localPlayer.Character
 		if not character or not character:FindFirstChild("HumanoidRootPart") then return end
 		local hrp = character.HumanoidRootPart
-	
+
 		for _, player in pairs(Players:GetPlayers()) do
 			if player ~= localPlayer then
 				local targetChar = player.Character
-				if targetChar and targetChar:FindFirstChild("Role") and targetChar.Role.Value:lower() == "murd" then
-					local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
-					if targetHRP then
-						hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
-						break
+				if targetChar then
+					local hasKnife = false
+
+					-- Check if they have a tool named "Knife" equipped
+					for _, tool in ipairs(targetChar:GetChildren()) do
+						if tool:IsA("Tool") and tool.Name == "Knife" then
+							hasKnife = true
+							break
+						end
+					end
+
+					-- Also check their Backpack
+					if not hasKnife and player:FindFirstChild("Backpack") then
+						for _, tool in ipairs(player.Backpack:GetChildren()) do
+							if tool:IsA("Tool") and tool.Name == "Knife" then
+								hasKnife = true
+								break
+							end
+						end
+					end
+
+					if hasKnife then
+						local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
+						if targetHRP then
+							hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
+							break
+						end
 					end
 				end
 			end
 		end
 	end
-	
+
 	button.MouseButton1Click:Connect(tpToMurd)
 end
 coroutine.wrap(BBZOZX_fake_script)()
@@ -3843,8 +3889,8 @@ local function ServerTeleportScript()
     -- // Auto-queue your script on teleport //
     local function queueReload()
         local queued = [[
-            task.wait(5)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
+            task.wait(15)
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/bgsi/refs/heads/main/mm2"))()
         ]]
         if syn and syn.queue_on_teleport then
             syn.queue_on_teleport(queued)
