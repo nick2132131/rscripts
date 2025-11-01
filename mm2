@@ -2107,107 +2107,127 @@ local function POPVEJO_fake_script() -- CoinEsp.CoinEspScript
 end
 coroutine.wrap(POPVEJO_fake_script)()
 local function SRCRE_fake_script() -- Tracers.TracerScript 
-	local script = Instance.new('LocalScript', Tracers)
+-- Services
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
 
-	-- Services
-	local Players = game:GetService("Players")
-	local RunService = game:GetService("RunService")
-	local Camera = workspace.CurrentCamera
-	local LocalPlayer = Players.LocalPlayer
-	
-	-- Variables
-	local Tracers = {}
-	local tracerESPEnabled = false
-	local activeColor = Color3.new(0.0313725, 0.772549, 0.0784314)
-	local inactiveColor = Color3.new(0.670588, 0.0784314, 0.0901961)
-	
-	local function GetRole(player)
-		if player.Backpack:FindFirstChild("Gun") or (player.Character and player.Character:FindFirstChild("Gun")) then
-			return "Sheriff"
-		elseif player.Backpack:FindFirstChild("Knife") or (player.Character and player.Character:FindFirstChild("Knife")) then
-			return "Murderer"
-		else
-			return "Innocent"
+-- Variables
+local Tracers = {}
+local tracerESPEnabled = false
+local activeColor = Color3.new(0.0313725, 0.772549, 0.0784314)
+local inactiveColor = Color3.new(0.670588, 0.0784314, 0.0901961)
+
+local OriginalSheriff = nil
+
+local function DetectOriginalSheriff()
+	for _, plr in ipairs(Players:GetPlayers()) do
+		if plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun")) then
+			if not OriginalSheriff then
+				OriginalSheriff = plr
+			end
 		end
 	end
-	
-	local RoleColors = {
-		Murderer = Color3.fromRGB(255, 0, 0),
-		Sheriff = Color3.fromRGB(0, 100, 255),
-		Innocent = Color3.fromRGB(0, 255, 0)
-	}
-	
-	local TBtn = script.Parent
-	local Frame = TBtn:WaitForChild("Frame")
-	
-	-- Button click logic
-	TBtn.MouseButton1Click:Connect(function()
-		tracerESPEnabled = not tracerESPEnabled
-		if tracerESPEnabled == true then
-			Frame.BackgroundColor3 = activeColor
+end
+
+local function GetRole(player)
+	if player.Backpack:FindFirstChild("Knife") or (player.Character and player.Character:FindFirstChild("Knife")) then
+		return "Murderer"
+	elseif player.Backpack:FindFirstChild("Gun") or (player.Character and player.Character:FindFirstChild("Gun")) then
+		if OriginalSheriff and player ~= OriginalSheriff then
+			return "Hero"
 		else
-			if tracerESPEnabled == false then
-				Frame.BackgroundColor3 = inactiveColor
-			end
+			return "Sheriff"
 		end
-	end)
-	
-	-- Update loop
-	RunService.RenderStepped:Connect(function()
-		local localChar = LocalPlayer.Character
-		local localHRP = localChar and localChar:FindFirstChild("HumanoidRootPart")
-	
-		if not tracerESPEnabled or not localHRP then
-			for _, v in pairs(Tracers) do
-				v.Visible = false
-			end
-			return
+	else
+		return "Innocent"
+	end
+end
+
+local RoleColors = {
+	Murderer = Color3.fromRGB(255, 0, 0),
+	Sheriff = Color3.fromRGB(0, 100, 255),
+	Innocent = Color3.fromRGB(0, 255, 0),
+	Hero = Color3.fromRGB(255, 170, 32)
+}
+
+local TBtn = script.Parent
+local Frame = TBtn:WaitForChild("Frame")
+
+-- Button click logic
+TBtn.MouseButton1Click:Connect(function()
+	tracerESPEnabled = not tracerESPEnabled
+	if tracerESPEnabled == true then
+		Frame.BackgroundColor3 = activeColor
+	else
+		if tracerESPEnabled == false then
+			Frame.BackgroundColor3 = inactiveColor
 		end
+	end
+end)
+
+-- Update loop
+RunService.RenderStepped:Connect(function()
+	DetectOriginalSheriff()
 	
-		for _, player in ipairs(Players:GetPlayers()) do
-			if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-				local targetHRP = player.Character.HumanoidRootPart
-				local screenPos, onScreen = Camera:WorldToViewportPoint(targetHRP.Position)
-	
-				if not onScreen or screenPos.Z < 0 then
-					if Tracers[player] then
-						Tracers[player].Visible = false
-					end
-					continue
-				end
-	
-				if not Tracers[player] then
-					local line = Drawing.new("Line")
-					line.Thickness = 1.5
-					line.Transparency = 1
-					Tracers[player] = line
-				end
-	
-				local role = GetRole(player)
-				local color = RoleColors[role] or Color3.new(1, 1, 1)
-	
-				local fromScreen = Camera:WorldToViewportPoint(localHRP.Position)
-				local toScreen = Camera:WorldToViewportPoint(targetHRP.Position)
-	
-				Tracers[player].From = Vector2.new(fromScreen.X, fromScreen.Y)
-				Tracers[player].To = Vector2.new(toScreen.X, toScreen.Y)
-				Tracers[player].Color = color
-				Tracers[player].Visible = true
-			else
+	local localChar = LocalPlayer.Character
+	local localHRP = localChar and localChar:FindFirstChild("HumanoidRootPart")
+
+	if not tracerESPEnabled or not localHRP then
+		for _, v in pairs(Tracers) do
+			v.Visible = false
+		end
+		return
+	end
+
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+			local targetHRP = player.Character.HumanoidRootPart
+			local screenPos, onScreen = Camera:WorldToViewportPoint(targetHRP.Position)
+
+			if not onScreen or screenPos.Z < 0 then
 				if Tracers[player] then
 					Tracers[player].Visible = false
 				end
+				continue
+			end
+
+			if not Tracers[player] then
+				local line = Drawing.new("Line")
+				line.Thickness = 1.5
+				line.Transparency = 1
+				Tracers[player] = line
+			end
+
+			local role = GetRole(player)
+			local color = RoleColors[role] or Color3.new(1, 1, 1)
+
+			local fromScreen = Camera:WorldToViewportPoint(localHRP.Position)
+			local toScreen = Camera:WorldToViewportPoint(targetHRP.Position)
+
+			Tracers[player].From = Vector2.new(fromScreen.X, fromScreen.Y)
+			Tracers[player].To = Vector2.new(toScreen.X, toScreen.Y)
+			Tracers[player].Color = color
+			Tracers[player].Visible = true
+		else
+			if Tracers[player] then
+				Tracers[player].Visible = false
 			end
 		end
-	end)
+	end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+	if Tracers[player] then
+		Tracers[player]:Remove()
+		Tracers[player] = nil
+	end
 	
-	Players.PlayerRemoving:Connect(function(player)
-		if Tracers[player] then
-			Tracers[player]:Remove()
-			Tracers[player] = nil
-		end
-	end)
-end
+	if player == OriginalSheriff then
+		OriginalSheriff = nil 
+	end
+end)
 coroutine.wrap(SRCRE_fake_script)()
 local function BUWYFR_fake_script() -- XRayBtn.XRayScript 
 	local script = Instance.new('LocalScript', XRayBtn)
