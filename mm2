@@ -163,7 +163,6 @@ local FPS = Instance.new("TextLabel")
 local UICorner_67 = Instance.new("UICorner")
 local HumanoidHealth = Instance.new("TextLabel")
 local UICorner_68 = Instance.new("UICorner")
-local Ping = Instance.new("TextLabel")
 local UICorner_69 = Instance.new("UICorner")
 local Fun = Instance.new("TextLabel")
 local FunDD = Instance.new("TextButton")
@@ -1380,23 +1379,6 @@ HumanoidHealth.TextSize = 17.000
 HumanoidHealth.TextWrapped = true
 
 UICorner_68.Parent = HumanoidHealth
-
-Ping.Name = "Ping"
-Ping.Parent = OtherLabel_2
-Ping.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
-Ping.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Ping.BorderSizePixel = 0
-Ping.Position = UDim2.new(-0.000558522821, 0, 6.67364359, 0)
-Ping.Size = UDim2.new(0, 177, 0, 33)
-Ping.ZIndex = 0
-Ping.Font = Enum.Font.SourceSans
-Ping.Text = "Ping : [Loading..] ms"
-Ping.TextColor3 = Color3.fromRGB(255, 255, 255)
-Ping.TextScaled = true
-Ping.TextSize = 17.000
-Ping.TextWrapped = true
-
-UICorner_69.Parent = Ping
 
 Fun.Name = "Fun"
 Fun.Parent = Frame
@@ -4631,42 +4613,6 @@ function KOCHC_fake_script() -- HumanoidHealth.HealthScript
 	
 end
 coroutine.wrap(KOCHC_fake_script)()
-function YTHF_fake_script() -- Ping.PingScript 
-	local script = Instance.new('LocalScript', Ping)
-
-	local player = game.Players.LocalPlayer
-	local label = script.Parent
-	
-	local function updatePing()
-		local raw = player:GetNetworkPing()
-		if not raw then
-			label.Text = "Ping: N/A"
-			label.TextColor3 = Color3.new(1,1,1)
-			return
-		end
-	
-		local ping = math.floor(raw * 1000)
-		label.Text = string.format("(avg) %d ms", ping)
-	
-		if ping > 200 then
-			label.TextColor3 = Color3.new(1, 0, 0)
-		elseif ping > 100 then
-			label.TextColor3 = Color3.new(1, 1, 0)
-		elseif ping > 60 then
-			label.TextColor3 = Color3.new(0.784, 1, 0)
-		else
-			label.TextColor3 = Color3.new(0.05, 1, 0)
-		end
-	end
-	
-	task.spawn(function()
-		while task.wait(1) do
-			pcall(updatePing)
-		end
-	end)
-	
-end
-coroutine.wrap(YTHF_fake_script)()
 function ASLYVOH_fake_script() -- Fun.Drag 
 	local script = Instance.new('LocalScript', Fun)
 
