@@ -3219,7 +3219,7 @@ local function LBQOJMQ_fake_script() -- FlingUser.FlingUserScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://122436767928678",
+			Icon = "rbxassetid://113521459196979",
 			Duration = dur or 3
 		})
 	end
@@ -3422,7 +3422,7 @@ local function PKKYTPQ_fake_script() -- GunDropStatus.GunDropStatusScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://122436767928678",
+			Icon = "rbxassetid://113521459196979",
 			Duration = dur or 3
 		})
 	end
@@ -3780,7 +3780,7 @@ function KEMVVQ_fake_script() -- GrabGun.GrabGunScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://122436767928678",
+			Icon = "rbxassetid://113521459196979",
 			Duration = dur or 3
 		})
 	end
@@ -3961,7 +3961,7 @@ function OHYJF_fake_script() -- KeyBTN.MenuKeybindScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://122436767928678",
+			Icon = "rbxassetid://113521459196979",
 			Duration = dur or 3
 		})
 	end
@@ -4006,7 +4006,7 @@ function JVFOCT_fake_script() -- KeyBTN_2.GetGunKeybindScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://122436767928678",
+			Icon = "rbxassetid://113521459196979",
 			Duration = dur or 3
 		})
 	end
@@ -4165,7 +4165,7 @@ function RYJV_fake_script() -- OtherLabel_2.OtherBtnScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://122436767928678",
+			Icon = "rbxassetid://113521459196979",
 			Duration = dur or 3
 		})
 	end
@@ -4273,7 +4273,7 @@ function CKXSHON_fake_script() -- jd7hufe29c87c76d.load
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://122436767928678",
+			Icon = "rbxassetid://113521459196979",
 			Duration = dur or 3
 		})
 	end
