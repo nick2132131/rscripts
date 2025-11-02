@@ -159,13 +159,19 @@ local Dex = Instance.new("TextButton")
 local UICorner_65 = Instance.new("UICorner")
 local IY = Instance.new("TextButton")
 local UICorner_66 = Instance.new("UICorner")
-local FunLabel = Instance.new("TextLabel")
+local FPS = Instance.new("TextLabel")
 local UICorner_67 = Instance.new("UICorner")
-local UIPadding_8 = Instance.new("UIPadding")
+local HumanoidHealth = Instance.new("TextLabel")
+local UICorner_68 = Instance.new("UICorner")
+local Fun = Instance.new("TextLabel")
+local FunDD = Instance.new("TextButton")
+local FunDDFrame = Instance.new("Frame")
 local FakeLag = Instance.new("TextButton")
 local Frame_17 = Instance.new("Frame")
-local UICorner_68 = Instance.new("UICorner")
+local UICorner_69 = Instance.new("UICorner")
 local LagValue = Instance.new("TextBox")
+local KillAll = Instance.new("TextButton")
+local UICorner_70 = Instance.new("UICorner")
 
 jd7hufe29c87c76d.Name = "jd7hufe29c87c76d"
 jd7hufe29c87c76d.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -664,7 +670,7 @@ FlyDDFrame.BorderSizePixel = 0
 FlyDDFrame.Position = UDim2.new(0, 0, 0.941732883, 0)
 FlyDDFrame.Size = UDim2.new(0, 179, 0, 0)
 FlyDDFrame.Visible = false
-FlyDDFrame.ZIndex = 0
+FlyDDFrame.ZIndex = 324
 
 FlyBtn.Name = "FlyBtn"
 FlyBtn.Parent = FlyDDFrame
@@ -1131,7 +1137,7 @@ Other.Parent = Frame
 Other.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 Other.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Other.BorderSizePixel = 0
-Other.Position = UDim2.new(0.49001056, 0, 0, 0)
+Other.Position = UDim2.new(0.599894822, 0, 0, 0)
 Other.Size = UDim2.new(0, 200, 0, 50)
 Other.Font = Enum.Font.SourceSans
 Other.Text = "Other"
@@ -1334,29 +1340,83 @@ IY.TextXAlignment = Enum.TextXAlignment.Left
 
 UICorner_66.Parent = IY
 
-FunLabel.Name = "FunLabel"
-FunLabel.Parent = OtherDDFrame
-FunLabel.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
-FunLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-FunLabel.BorderSizePixel = 0
-FunLabel.Position = UDim2.new(0.0399999991, 0, 0.721887231, 0)
-FunLabel.Size = UDim2.new(0, 179, 0, 35)
-FunLabel.Font = Enum.Font.SourceSans
-FunLabel.Text = "Fun"
-FunLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-FunLabel.TextSize = 20.000
+FPS.Name = "FPS"
+FPS.Parent = OtherLabel_2
+FPS.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+FPS.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FPS.BorderSizePixel = 0
+FPS.Position = UDim2.new(-0.00614511501, 0, 3.78992271, 0)
+FPS.Size = UDim2.new(0, 177, 0, 33)
+FPS.ZIndex = 0
+FPS.Font = Enum.Font.SourceSans
+FPS.Text = "Loading.."
+FPS.TextColor3 = Color3.fromRGB(255, 255, 255)
+FPS.TextScaled = true
+FPS.TextSize = 17.000
+FPS.TextWrapped = true
 
-UICorner_67.Parent = FunLabel
+UICorner_67.Parent = FPS
 
-UIPadding_8.Parent = FunLabel
-UIPadding_8.PaddingTop = UDim.new(0.0500000007, 1)
+HumanoidHealth.Name = "HumanoidHealth"
+HumanoidHealth.Parent = OtherLabel_2
+HumanoidHealth.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+HumanoidHealth.BorderColor3 = Color3.fromRGB(0, 0, 0)
+HumanoidHealth.BorderSizePixel = 0
+HumanoidHealth.Position = UDim2.new(-0.00614511501, 0, 5.21627903, 0)
+HumanoidHealth.Size = UDim2.new(0, 177, 0, 33)
+HumanoidHealth.ZIndex = 0
+HumanoidHealth.Font = Enum.Font.SourceSans
+HumanoidHealth.Text = "Humanoid Health : Loading.."
+HumanoidHealth.TextColor3 = Color3.fromRGB(255, 255, 255)
+HumanoidHealth.TextScaled = true
+HumanoidHealth.TextSize = 17.000
+HumanoidHealth.TextWrapped = true
+
+UICorner_68.Parent = HumanoidHealth
+
+Fun.Name = "Fun"
+Fun.Parent = Frame
+Fun.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Fun.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Fun.BorderSizePixel = 0
+Fun.Position = UDim2.new(0.485278636, 0, 0, 0)
+Fun.Size = UDim2.new(0, 200, 0, 50)
+Fun.Font = Enum.Font.SourceSans
+Fun.Text = "Fun"
+Fun.TextColor3 = Color3.fromRGB(255, 255, 255)
+Fun.TextSize = 23.000
+Fun.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
+Fun.TextStrokeTransparency = 0.900
+
+FunDD.Name = "FunDD"
+FunDD.Parent = Fun
+FunDD.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+FunDD.BackgroundTransparency = 1.000
+FunDD.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FunDD.BorderSizePixel = 0
+FunDD.Position = UDim2.new(0.764999986, 0, 0.100000001, 0)
+FunDD.Size = UDim2.new(0, 41, 0, 39)
+FunDD.Font = Enum.Font.SourceSans
+FunDD.Text = "-"
+FunDD.TextColor3 = Color3.fromRGB(255, 255, 255)
+FunDD.TextScaled = true
+FunDD.TextSize = 14.000
+FunDD.TextWrapped = true
+
+FunDDFrame.Name = "FunDDFrame"
+FunDDFrame.Parent = Fun
+FunDDFrame.BackgroundColor3 = Color3.fromRGB(47, 47, 47)
+FunDDFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FunDDFrame.BorderSizePixel = 0
+FunDDFrame.Position = UDim2.new(0, 0, 1, 0)
+FunDDFrame.Size = UDim2.new(0, 200, 0, 529)
 
 FakeLag.Name = "FakeLag"
-FakeLag.Parent = FunLabel
+FakeLag.Parent = FunDDFrame
 FakeLag.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 FakeLag.BorderColor3 = Color3.fromRGB(0, 0, 0)
 FakeLag.BorderSizePixel = 0
-FakeLag.Position = UDim2.new(0, 0, 1.34396291, 0)
+FakeLag.Position = UDim2.new(0.0549999997, 0, 0.0168241858, 0)
 FakeLag.Size = UDim2.new(0, 177, 0, 33)
 FakeLag.Font = Enum.Font.SourceSans
 FakeLag.Text = "    Fake Lag"
@@ -1371,23 +1431,53 @@ Frame_17.BorderSizePixel = 0
 Frame_17.Position = UDim2.new(0.839999974, 0, 0.181818187, 0)
 Frame_17.Size = UDim2.new(0, 21, 0, 21)
 
-UICorner_68.Parent = Frame_17
+UICorner_69.Parent = Frame_17
 
 LagValue.Name = "LagValue"
-LagValue.Parent = FunLabel
+LagValue.Parent = FakeLag
 LagValue.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 LagValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
 LagValue.BorderSizePixel = 0
-LagValue.Position = UDim2.new(0.0113627687, 0, 2.36434197, 0)
+LagValue.Position = UDim2.new(0.0135029079, 0, 1.01481926, 0)
 LagValue.Size = UDim2.new(0, 172, 0, 19)
-LagValue.ClearTextOnFocus = false
 LagValue.Font = Enum.Font.SourceSans
 LagValue.PlaceholderText = "Lag Amount"
 LagValue.Text = ""
 LagValue.TextColor3 = Color3.fromRGB(0, 0, 0)
 LagValue.TextSize = 14.000
 
-local function EEQN_fake_script() -- Visuals.Drag 
+KillAll.Name = "KillAll"
+KillAll.Parent = FunDDFrame
+KillAll.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+KillAll.BorderColor3 = Color3.fromRGB(0, 0, 0)
+KillAll.BorderSizePixel = 0
+KillAll.Position = UDim2.new(0.0549999997, 0, 0.137807176, 0)
+KillAll.Size = UDim2.new(0, 177, 0, 33)
+KillAll.Font = Enum.Font.SourceSans
+KillAll.Text = "    Kill All (knife needed)"
+KillAll.TextColor3 = Color3.fromRGB(255, 255, 255)
+KillAll.TextSize = 18.000
+KillAll.TextXAlignment = Enum.TextXAlignment.Left
+
+UICorner_70.Parent = KillAll
+
+local function XJXRVJZ_fake_script() -- jd7hufe29c87c76d.iojvfv893buv 
+	local script = Instance.new('LocalScript', jd7hufe29c87c76d)
+
+	local function notif(str, dur)
+		game.StarterGui:SetCore("SendNotification", {
+			Title = "Lunar Notify",
+			Text = str,
+			Icon = "rbxassetid://77980660684977",
+			Duration = dur or 3
+		})
+	end
+	if script.Parent then
+		notif("Loaded Lunar Hub.", 3)
+	end
+end
+coroutine.wrap(XJXRVJZ_fake_script)()
+local function VQLM_fake_script() -- Visuals.Drag 
 	local script = Instance.new('LocalScript', Visuals)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -1430,8 +1520,8 @@ local function EEQN_fake_script() -- Visuals.Drag
 		end
 	end)
 end
-coroutine.wrap(EEQN_fake_script)()
-local function BTLYY_fake_script() -- VisualsDD.LocalScript 
+coroutine.wrap(VQLM_fake_script)()
+local function YCGTI_fake_script() -- VisualsDD.LocalScript 
 	local script = Instance.new('LocalScript', VisualsDD)
 
 	local dd = script.Parent.Parent.VisualsDDFrame
@@ -1474,8 +1564,8 @@ local function BTLYY_fake_script() -- VisualsDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(BTLYY_fake_script)()
-local function TNGPK_fake_script() -- RoleEsp.AllRoleScript 
+coroutine.wrap(YCGTI_fake_script)()
+local function LBORTLB_fake_script() -- RoleEsp.AllRoleScript 
 	local script = Instance.new('LocalScript', RoleEsp)
 
 	-- Services
@@ -1617,8 +1707,8 @@ local function TNGPK_fake_script() -- RoleEsp.AllRoleScript
 	end)
 	
 end
-coroutine.wrap(TNGPK_fake_script)()
-local function FYSC_fake_script() -- NameEsp.NameScript 
+coroutine.wrap(LBORTLB_fake_script)()
+local function KUBMLG_fake_script() -- NameEsp.NameScript 
 	local script = Instance.new('LocalScript', NameEsp)
 
 	-- Services
@@ -1766,224 +1856,233 @@ local function FYSC_fake_script() -- NameEsp.NameScript
 	end)
 	
 end
-coroutine.wrap(FYSC_fake_script)()
-local function IXCLH_fake_script() -- MurdEsp.MurdScript 
+coroutine.wrap(KUBMLG_fake_script)()
+local function PUVKWCX_fake_script() -- MurdEsp.MurdScript 
 	local script = Instance.new('LocalScript', MurdEsp)
 
-	local Players = game:GetService("Players")
-	local button = script.Parent
+	local script = Instance.new('LocalScript', script.Parent)
 	
-	local function getHumanoidRootPart(player)
-		local character = player.Character
-		if not character then return nil end
-		return character:FindFirstChild("HumanoidRootPart")
+	local Players = game:GetService("Players")
+	local RunService = game:GetService("RunService")
+	
+	local espEnabled = false
+	local espBoxes = {}
+	local activeColor = Color3.fromRGB(8, 197, 20)
+	local inactiveColor = Color3.fromRGB(217, 0, 4)
+	
+	local function GetRole(player)
+		if not player.Backpack then return "Innocent" end
+		local hasGun = player.Backpack:FindFirstChild("Gun") or (player.Character and player.Character:FindFirstChild("Gun"))
+		local hasKnife = player.Backpack:FindFirstChild("Knife") or (player.Character and player.Character:FindFirstChild("Knife"))
+		if hasKnife then
+			return "Murderer"
+		elseif hasGun then
+			return "Sheriff"
+		else
+			return "Innocent"
+		end
 	end
 	
-	local function tpToMurderer()
-		local localPlayer = Players.LocalPlayer
-		local hrp = getHumanoidRootPart(localPlayer)
+	local function createESP(player, color)
+		local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
 		if not hrp then return end
+		if not espBoxes[player] then
+			local box = Instance.new("BoxHandleAdornment")
+			box.Name = "ESPBox"
+			box.Size = Vector3.new(4, 6, 1)
+			box.AlwaysOnTop = true
+			box.ZIndex = 10
+			box.Transparency = 0.5
+			box.Adornee = hrp
+			box.Color3 = color
+			box.Parent = hrp
+			espBoxes[player] = box
+		else
+			local box = espBoxes[player]
+			box.Adornee = hrp
+			box.Color3 = color
+			if box.Parent ~= hrp then box.Parent = hrp end
+		end
+	end
 	
-		for _, player in ipairs(Players:GetPlayers()) do
-			if player ~= localPlayer and player.Character then
-				local targetChar = player.Character
-				local hasKnife = false
-	
-				-- Check if they have the Knife equipped
-				for _, tool in ipairs(targetChar:GetChildren()) do
-					if tool:IsA("Tool") and tool.Name == "Knife" then
-						hasKnife = true
-						break
-					end
-				end
-	
-				-- Check Backpack for Knife if not equipped
-				if not hasKnife and player:FindFirstChild("Backpack") then
-					for _, tool in ipairs(player.Backpack:GetChildren()) do
-						if tool:IsA("Tool") and tool.Name == "Knife" then
-							hasKnife = true
-							break
-						end
-					end
-				end
-	
-				if hasKnife then
-					local targetHRP = getHumanoidRootPart(player)
-					if targetHRP then
-						-- Teleport above murderer
-						hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
-						return -- Stop after teleporting
-					end
+	local function updateESP()
+		for _, player in pairs(Players:GetPlayers()) do
+			if player ~= Players.LocalPlayer then
+				local role = GetRole(player)
+				local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+				if (role == "Murderer") and hrp then
+					local color = (role == "Murderer") and Color3.fromRGB(255, 0, 0)
+					createESP(player, color)
+				elseif espBoxes[player] then
+					espBoxes[player]:Destroy()
+					espBoxes[player] = nil
 				end
 			end
 		end
 	end
 	
-	-- Button click connects to teleport
-	button.MouseButton1Click:Connect(tpToMurderer)
+	local MESPBtn = script.Parent
+	local Frame = MESPBtn:WaitForChild("Frame")
+	MESPBtn.MouseButton1Click:Connect(function()
+		espEnabled = not espEnabled
+		Frame.BackgroundColor3 = espEnabled and activeColor or inactiveColor
+		if espEnabled then
+			RunService:BindToRenderStep("MESPUpdate", Enum.RenderPriority.Camera.Value+1, updateESP)
+		else
+			RunService:UnbindFromRenderStep("MESPUpdate")
+			for _, v in pairs(espBoxes) do v:Destroy() end
+			espBoxes = {}
+		end
+	end)
 	
-	-- Optional: rebind after respawn so button keeps working
-	Players.LocalPlayer.CharacterAdded:Connect(function()
-		button.MouseButton1Click:Connect(tpToMurderer)
+	Players.PlayerRemoving:Connect(function(player)
+		if espBoxes[player] then
+			espBoxes[player]:Destroy()
+			espBoxes[player] = nil
+		end
 	end)
 	
 end
-coroutine.wrap(IXCLH_fake_script)()
-local function SECC_fake_script() -- SheriffEsp.SheriffScript 
+coroutine.wrap(PUVKWCX_fake_script)()
+local function ZLQLYS_fake_script() -- SheriffEsp.SheriffScript 
 	local script = Instance.new('LocalScript', SheriffEsp)
 
-	local function WOBBQNJ_fake_script() -- SheriffEsp.SheriffScript 
-		local script = Instance.new('LocalScript', script.Parent)
+	local script = Instance.new('LocalScript', script.Parent)
 	
-		-- Services
-		local Players = game:GetService("Players")
-		local RunService = game:GetService("RunService")
+	local Players = game:GetService("Players")
+	local RunService = game:GetService("RunService")
 	
-		-- Variables
-		local espEnabled = false
-		local espBoxes = {}
-		local activeColor = Color3.fromRGB(8, 197, 20)
-		local inactiveColor = Color3.fromRGB(217, 0, 4)
+	local espEnabled = false
+	local espBoxes = {}
+	local activeColor = Color3.fromRGB(8, 197, 20)
+	local inactiveColor = Color3.fromRGB(217, 0, 4)
 	
-		-- Track the original sheriff
-		local OriginalSheriff = nil
+	local OriginalSheriff = nil
 	
-		-- Role Detection
-		local function DetectOriginalSheriff()
-			if OriginalSheriff and OriginalSheriff.Parent then return end -- already set and alive
-			for _, plr in ipairs(Players:GetPlayers()) do
-				local hasGun = plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun"))
-				if hasGun then
-					OriginalSheriff = plr
-					break
-				end
-			end
-		end
-	
-		local function GetRole(player)
-			if not player.Backpack then return "Innocent" end
-			local hasGun = player.Backpack:FindFirstChild("Gun") or (player.Character and player.Character:FindFirstChild("Gun"))
-			local hasKnife = player.Backpack:FindFirstChild("Knife") or (player.Character and player.Character:FindFirstChild("Knife"))
-			if hasKnife then
-				return "Murderer"
-			elseif hasGun then
-				if OriginalSheriff and player ~= OriginalSheriff then
-					return "Hero"
-				else
-					return "Sheriff"
-				end
-			else
-				return "Innocent"
-			end
-		end
-	
-		-- Create Box ESP
-		local function createESP(player, color)
-			local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-			if not hrp then return end
-			if not espBoxes[player] then
-				local box = Instance.new("BoxHandleAdornment")
-				box.Name = "ESPBox"
-				box.Size = Vector3.new(4, 6, 1)
-				box.AlwaysOnTop = true
-				box.ZIndex = 10
-				box.Transparency = 0.5
-				box.Adornee = hrp
-				box.Color3 = color
-				box.Parent = hrp
-				espBoxes[player] = box
-			else
-				local box = espBoxes[player]
-				box.Adornee = hrp
-				box.Color3 = color
-				if box.Parent ~= hrp then box.Parent = hrp end
-			end
-		end
-	
-		-- Update ESP loop
-		local function updateESP()
-			DetectOriginalSheriff()
-			for _, player in pairs(Players:GetPlayers()) do
-				if player ~= Players.LocalPlayer then
-					local role = GetRole(player)
-					local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-					if (role == "Sheriff" or role == "Hero") and hrp then
-						local color = (role == "Sheriff") and Color3.fromRGB(0,0,255) or Color3.fromRGB(255,170,32)
-						createESP(player, color)
-					elseif espBoxes[player] then
-						espBoxes[player]:Destroy()
-						espBoxes[player] = nil
-					end
-				end
-			end
-		end
-	
-		-- Track deaths, respawns, and gun removal
-		local function TrackCharacter(player)
-			local function TrackChar(char)
-				local humanoid = char:FindFirstChildOfClass("Humanoid")
-				if humanoid then
-					humanoid.Died:Connect(function()
-						if player == OriginalSheriff then
-							OriginalSheriff = nil
-							updateESP()
-						end
-					end)
-				end
-			end
-			if player.Character then TrackChar(player.Character) end
-			player.CharacterAdded:Connect(TrackChar)
-	
-			-- Reset OriginalSheriff if gun removed
-			local backpack = player:WaitForChild("Backpack")
-			backpack.ChildRemoved:Connect(function(child)
-				if child.Name == "Gun" and player == OriginalSheriff then
-					OriginalSheriff = nil
-					updateESP()
-				end
-			end)
-		end
-	
-		-- Apply tracking to all current players
+	local function DetectOriginalSheriff()
+		if OriginalSheriff and OriginalSheriff.Parent then return end 
 		for _, plr in ipairs(Players:GetPlayers()) do
-			TrackCharacter(plr)
+			local hasGun = plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun"))
+			if hasGun then
+				OriginalSheriff = plr
+				break
+	     	end
 		end
+	end
 	
-		-- Track new players
-		Players.PlayerAdded:Connect(TrackCharacter)
-	
-		-- Button logic
-		local SESPBtn = script.Parent
-		local Frame = SESPBtn:WaitForChild("Frame")
-		SESPBtn.MouseButton1Click:Connect(function()
-			espEnabled = not espEnabled
-			Frame.BackgroundColor3 = espEnabled and activeColor or inactiveColor
-			if espEnabled then
-				RunService:BindToRenderStep("ESPUpdateSheriffHero", Enum.RenderPriority.Camera.Value+1, updateESP)
+	local function GetRole(player)
+		if not player.Backpack then return "Innocent" end
+		local hasGun = player.Backpack:FindFirstChild("Gun") or (player.Character and player.Character:FindFirstChild("Gun"))
+		local hasKnife = player.Backpack:FindFirstChild("Knife") or (player.Character and player.Character:FindFirstChild("Knife"))
+		if hasKnife then
+			return "Murderer"
+		elseif hasGun then
+			if OriginalSheriff and player ~= OriginalSheriff then
+				return "Hero"
 			else
-				RunService:UnbindFromRenderStep("ESPUpdateSheriffHero")
-				for _, v in pairs(espBoxes) do v:Destroy() end
-				espBoxes = {}
+				return "Sheriff"
 			end
-		end)
+		else
+			return "Innocent"
+		end
+	end
 	
-		-- Cleanup when player leaves
-		Players.PlayerRemoving:Connect(function(player)
-			if espBoxes[player] then
-				espBoxes[player]:Destroy()
-				espBoxes[player] = nil
+	local function createESP(player, color)
+		local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+		if not hrp then return end
+		if not espBoxes[player] then
+			local box = Instance.new("BoxHandleAdornment")
+		    box.Name = "ESPBox"
+			box.Size = Vector3.new(4, 6, 1)
+			box.AlwaysOnTop = true
+			box.ZIndex = 10
+			box.Transparency = 0.5
+			box.Adornee = hrp
+			box.Color3 = color
+			box.Parent = hrp
+			espBoxes[player] = box
+		else
+			local box = espBoxes[player]
+			box.Adornee = hrp
+			box.Color3 = color
+			if box.Parent ~= hrp then box.Parent = hrp end
+		end
+	end
+	
+	local function updateESP()
+		DetectOriginalSheriff()
+		for _, player in pairs(Players:GetPlayers()) do
+			if player ~= Players.LocalPlayer then
+				local role = GetRole(player)
+				local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+				if (role == "Sheriff" or role == "Hero") and hrp then
+				local color = (role == "Sheriff") and Color3.fromRGB(0,0,255) or Color3.fromRGB(255,170,32)
+					createESP(player, color)
+				elseif espBoxes[player] then
+					espBoxes[player]:Destroy()
+					espBoxes[player] = nil
+				end
+		    end
+		end
+	end
+	
+	local function TrackCharacter(player)
+		local function TrackChar(char)
+			local humanoid = char:FindFirstChildOfClass("Humanoid")
+			if humanoid then
+				humanoid.Died:Connect(function()
+					if player == OriginalSheriff then
+						OriginalSheriff = nil
+						updateESP()
+					end
+				end)
 			end
-			if player == OriginalSheriff then
+		end
+		if player.Character then TrackChar(player.Character) end
+		player.CharacterAdded:Connect(TrackChar)
+		local backpack = player:WaitForChild("Backpack")
+		backpack.ChildRemoved:Connect(function(child)
+			if child.Name == "Gun" and player == OriginalSheriff then
 				OriginalSheriff = nil
 				updateESP()
 			end
 		end)
 	end
-	coroutine.wrap(WOBBQNJ_fake_script)()
+	
+	for _, plr in ipairs(Players:GetPlayers()) do
+		TrackCharacter(plr)
+	end
+	
+	Players.PlayerAdded:Connect(TrackCharacter)
+	
+	local SESPBtn = script.Parent
+	local Frame = SESPBtn:WaitForChild("Frame")
+	SESPBtn.MouseButton1Click:Connect(function()
+		espEnabled = not espEnabled
+		Frame.BackgroundColor3 = espEnabled and activeColor or inactiveColor
+		if espEnabled then
+			RunService:BindToRenderStep("ESPUpdateSheriffHero", Enum.RenderPriority.Camera.Value+1, updateESP)
+		else
+			RunService:UnbindFromRenderStep("ESPUpdateSheriffHero")
+			for _, v in pairs(espBoxes) do v:Destroy() end
+			espBoxes = {}
+		end
+	end)
+	
+	Players.PlayerRemoving:Connect(function(player)
+		if espBoxes[player] then
+			espBoxes[player]:Destroy()
+			espBoxes[player] = nil
+		end
+		if player == OriginalSheriff then
+			OriginalSheriff = nil
+			updateESP()
+		end
+	end)
 	
 end
-coroutine.wrap(SECC_fake_script)()
-local function BINAI_fake_script() -- GunEsp.GunEspScript 
+coroutine.wrap(ZLQLYS_fake_script)()
+local function ADSQXLV_fake_script() -- GunEsp.GunEspScript 
 	local script = Instance.new('LocalScript', GunEsp)
 
 	local Workspace = game:GetService("Workspace")
@@ -2084,12 +2183,11 @@ local function BINAI_fake_script() -- GunEsp.GunEspScript
 	end)
 	
 end
-coroutine.wrap(BINAI_fake_script)()
-local function IOML_fake_script() -- CoinEsp.CoinEspScript 
+coroutine.wrap(ADSQXLV_fake_script)()
+local function YZDU_fake_script() -- CoinEsp.CoinEspScript 
 	local script = Instance.new('LocalScript', CoinEsp)
 
 	local Workspace = game:GetService("Workspace")
-	local RunService = game:GetService("RunService")
 	
 	local CESPBtn = script.Parent
 	local frame = CESPBtn:WaitForChild("Frame")
@@ -2103,8 +2201,24 @@ local function IOML_fake_script() -- CoinEsp.CoinEspScript
 	ESPFolder.Name = "CoinESPFolder"
 	ESPFolder.Parent = Workspace
 	
+	local function isCoinPart(instance)
+		if not instance:IsA("BasePart") then return false end
+		local current = instance
+		while current do
+			local lowerName = current.Name:lower()
+			if lowerName == "coin" or lowerName == "candy" then
+				return true
+			end
+			current = current.Parent
+		end
+		return false
+	end
+	
 	local function createCoinESP(part)
-		if part:FindFirstChild("CoinESPHighlight") then return end
+		if part:GetAttribute("CoinESP") or not isCoinPart(part) then return end
+	
+		part:SetAttribute("CoinESP", true)
+	
 		local highlight = Instance.new("Highlight")
 		highlight.Name = "CoinESPHighlight"
 		highlight.Adornee = part
@@ -2117,49 +2231,60 @@ local function IOML_fake_script() -- CoinEsp.CoinEspScript
 	
 	local function removeAllESP()
 		for _, h in ipairs(ESPFolder:GetChildren()) do
+			local adornee = h.Adornee
+			if adornee and adornee.Parent then
+				adornee:SetAttribute("CoinESP", nil)
+			end
 			h:Destroy()
 		end
 	end
 	
-	local function enableCoinESP()
-		removeAllESP() -- clean start
-	
-		-- highlight all existing coins
-		for _, obj in ipairs(Workspace:GetDescendants()) do
-			if not CoinESPEnabled then break end
-			if obj:IsA("BasePart") and obj.Name:lower() == "coin_server" then
-				createCoinESP(obj)
-			elseif obj:IsA("Model") and obj.Name:lower() == "coin_server" then
-				for _, part in ipairs(obj:GetDescendants()) do
-					if part:IsA("BasePart") then
-						createCoinESP(part)
-					end
-				end
-			end
-		end
-	
-		-- only respond to new coins appearing
-		local conn = Workspace.DescendantAdded:Connect(function(obj)
-			if not CoinESPEnabled then return end
-			if obj:IsA("BasePart") and obj.Name:lower() == "coin_server" then
-				createCoinESP(obj)
-			elseif obj:IsA("Model") and obj.Name:lower() == "coin_server" then
-				for _, part in ipairs(obj:GetDescendants()) do
-					if part:IsA("BasePart") then
-						createCoinESP(part)
-					end
-				end
-			end
-		end)
-		table.insert(CoinConnections, conn)
-	end
-	
 	local function disableCoinESP()
 		for _, conn in ipairs(CoinConnections) do
-			conn:Disconnect()
+			if conn then
+				conn:Disconnect()
+			end
 		end
 		CoinConnections = {}
 		removeAllESP()
+	end
+	
+	local function enableCoinESP()
+		disableCoinESP()
+	
+		task.spawn(function()
+			local descendants = Workspace:GetDescendants()
+			for _, obj in ipairs(descendants) do
+				if not CoinESPEnabled then break end
+				if obj:IsA("BasePart") and isCoinPart(obj) then
+					createCoinESP(obj)
+				end
+			end
+		end)
+	
+		local addedConn = Workspace.DescendantAdded:Connect(function(obj)
+			if not CoinESPEnabled then return end
+			if obj:IsA("BasePart") and isCoinPart(obj) then
+				createCoinESP(obj)
+			end
+		end)
+	
+		local parentConn = Workspace.DescendantRemoving:Connect(function(obj)
+			if not CoinESPEnabled then return end
+			if obj:IsA("BasePart") and obj:GetAttribute("CoinESP") then
+				obj:SetAttribute("CoinESP", nil)
+				local highlight = ESPFolder:FindFirstChild("CoinESPHighlight", true)
+				if highlight and highlight.Adornee == obj then
+					highlight:Destroy()
+				end
+			end
+			if obj:IsA("BasePart") and isCoinPart(obj) then
+				createCoinESP(obj)
+			end
+		end)
+	
+		table.insert(CoinConnections, addedConn)
+		table.insert(CoinConnections, parentConn)
 	end
 	
 	CESPBtn.MouseButton1Click:Connect(function()
@@ -2173,9 +2298,15 @@ local function IOML_fake_script() -- CoinEsp.CoinEspScript
 		end
 	end)
 	
+	script.AncestryChanged:Connect(function()
+		if not script.Parent then
+			disableCoinESP()
+			ESPFolder:Destroy()
+		end
+	end)
 end
-coroutine.wrap(IOML_fake_script)()
-local function JBJJGW_fake_script() -- Tracers.TracerScript 
+coroutine.wrap(YZDU_fake_script)()
+local function IBWFV_fake_script() -- Tracers.TracerScript 
 	local script = Instance.new('LocalScript', Tracers)
 
 	-- Services
@@ -2319,8 +2450,8 @@ local function JBJJGW_fake_script() -- Tracers.TracerScript
 	end)
 	
 end
-coroutine.wrap(JBJJGW_fake_script)()
-local function HYGEUBE_fake_script() -- XRayBtn.XRayScript 
+coroutine.wrap(IBWFV_fake_script)()
+local function MSXZKCT_fake_script() -- XRayBtn.XRayScript 
 	local script = Instance.new('LocalScript', XRayBtn)
 
 	local Players = game:GetService("Players")
@@ -2391,14 +2522,12 @@ local function HYGEUBE_fake_script() -- XRayBtn.XRayScript
 		local clampedX = math.clamp(positionX, minX, maxX)
 		sliderKnob.Position = UDim2.new(0, clampedX, -0.7, 0)
 	
-		-- Map knob position to transparency (0.1 to 1)
 		local t = clampedX / maxX
-		TransparencyAmount = 1 - (t * 0.9) -- Range from 0.1 to 1
+		TransparencyAmount = 1 - (t * 0.9) 
 		opacityLabel.Text = string.format("Opacity: %.0f%%", (1 - TransparencyAmount) * 100)
 	
-		-- Resize sliderInFrame to match knob position
-		local minSize = 0 * sliderFrame.Parent.AbsoluteSize.X -- 10% at min transparency
-		local newSizeX = minSize + clampedX - -5 -- Grow to knob's X position
+		local minSize = 0 * sliderFrame.Parent.AbsoluteSize.X 
+		local newSizeX = minSize + clampedX - -5 
 		sliderFrame.Size = UDim2.new(0, newSizeX, 0, sliderFrame.Size.Y.Offset)
 	
 		if XrayEnabled then
@@ -2429,8 +2558,8 @@ local function HYGEUBE_fake_script() -- XRayBtn.XRayScript
 	-- Initialize slider
 	updateSlider((1 - TransparencyAmount) / 0.9 * (sliderFrame.Parent.AbsoluteSize.X - sliderKnob.AbsoluteSize.X))
 end
-coroutine.wrap(HYGEUBE_fake_script)()
-local function NFVNH_fake_script() -- XRayDD.LocalScript 
+coroutine.wrap(MSXZKCT_fake_script)()
+local function NTBO_fake_script() -- XRayDD.LocalScript 
 	local script = Instance.new('LocalScript', XRayDD)
 
 	local dd = script.Parent.Parent.XRay.XRayDDFrame
@@ -2473,8 +2602,8 @@ local function NFVNH_fake_script() -- XRayDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(NFVNH_fake_script)()
-local function HVKXT_fake_script() -- Player.Drag 
+coroutine.wrap(NTBO_fake_script)()
+local function XNWIGHV_fake_script() -- Player.Drag 
 	local script = Instance.new('LocalScript', Player)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -2517,8 +2646,8 @@ local function HVKXT_fake_script() -- Player.Drag
 		end
 	end)
 end
-coroutine.wrap(HVKXT_fake_script)()
-local function HZNA_fake_script() -- PlayerDD.LocalScript 
+coroutine.wrap(XNWIGHV_fake_script)()
+local function MJQLH_fake_script() -- PlayerDD.LocalScript 
 	local script = Instance.new('LocalScript', PlayerDD)
 
 	local dd = script.Parent.Parent.PlayerDDFrame
@@ -2561,8 +2690,8 @@ local function HZNA_fake_script() -- PlayerDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(HZNA_fake_script)()
-local function VBQV_fake_script() -- InfiniteJump.LocalScript 
+coroutine.wrap(MJQLH_fake_script)()
+local function PFYMHJ_fake_script() -- InfiniteJump.LocalScript 
 	local script = Instance.new('LocalScript', InfiniteJump)
 
 	local button = script.Parent
@@ -2593,95 +2722,92 @@ local function VBQV_fake_script() -- InfiniteJump.LocalScript
 		end
 	end)
 end
-coroutine.wrap(VBQV_fake_script)()
-local function MBXYEH_fake_script() -- GodMode.GodModeScript 
+coroutine.wrap(PFYMHJ_fake_script)()
+local function QHJPDR_fake_script() -- GodMode.GodModeScript 
 	local script = Instance.new('LocalScript', GodMode)
 
-	local Players = game:GetService("Players")
-	local LocalPlayer = Players.LocalPlayer
-	local RunService = game:GetService("RunService")
-	
-	local Gbutton = script.Parent
-	local frame = Gbutton:WaitForChild("Frame")
-	local originalColor = frame.BackgroundColor3
-	local godmodeColor = Color3.fromRGB(8, 197, 20)
-	local godmodeEnabled = false
-	
-	local healthConnection
-	local forcefield
-	
-	local function enableGodmode(character)
-		local humanoid = character:WaitForChild("Humanoid", 5)
-		if not humanoid then return end
-	
-		humanoid.MaxHealth = 1e6
-		humanoid.Health = humanoid.MaxHealth
-	
-		-- Disconnect old connection
-		if healthConnection then
-			healthConnection:Disconnect()
-		end
-	
-		-- Keep health at max
-		healthConnection = humanoid.HealthChanged:Connect(function()
-			if humanoid.Health < humanoid.MaxHealth then
-				humanoid.Health = humanoid.MaxHealth
-			end
-		end)
-	
-		humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
-	
-		-- Add ForceField for extra protection
-		if not forcefield then
-			forcefield = Instance.new("ForceField")
-			forcefield.Visible = false
-			forcefield.Parent = character
-		end
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+local button = script.Parent
+local frame = button:WaitForChild("Frame")
+local originalColor = frame.BackgroundColor3
+local godmodeColor = Color3.fromRGB(8, 197, 20)
+local godmodeEnabled = false
+
+local healthConnection
+local forcefield
+
+local function enableGodmode(character)
+	local humanoid = character:WaitForChild("Humanoid", 5)
+	if not humanoid then return end
+
+	humanoid.MaxHealth = 1e6
+	humanoid.Health = humanoid.MaxHealth
+
+	if healthConnection then
+		healthConnection:Disconnect()
 	end
-	
-	local function disableGodmode(character)
-		local humanoid = character:FindFirstChild("Humanoid")
-		if humanoid then
-			humanoid.MaxHealth = 100
-			humanoid.Health = 100
-			humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
-		end
-	
-		if healthConnection then
-			healthConnection:Disconnect()
-			healthConnection = nil
-		end
-	
-		if forcefield then
-			forcefield:Destroy()
-			forcefield = nil
-		end
-	end
-	
-	Gbutton.MouseButton1Click:Connect(function()
-		godmodeEnabled = not godmodeEnabled
-		frame.BackgroundColor3 = godmodeEnabled and godmodeColor or originalColor
-	
-		local character = LocalPlayer.Character
-		if character then
-			if godmodeEnabled then
-				enableGodmode(character)
-			else
-				disableGodmode(character)
-			end
+
+	healthConnection = humanoid.HealthChanged:Connect(function()
+		if humanoid.Health < humanoid.MaxHealth then
+			humanoid.Health = humanoid.MaxHealth
 		end
 	end)
-	
-	LocalPlayer.CharacterAdded:Connect(function(character)
-		if godmodeEnabled then
-			task.wait(0.1) -- wait for Humanoid to load
-			enableGodmode(character)
-		end
-	end)
-	
+
+	humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
+
+	if not forcefield then
+		forcefield = Instance.new("ForceField")
+		forcefield.Visible = false
+		forcefield.Parent = character
+	end
 end
-coroutine.wrap(MBXYEH_fake_script)()
-local function HGVXAOF_fake_script() -- FlyBtn.FlyScript 
+
+local function disableGodmode(character)
+	local humanoid = character:FindFirstChild("Humanoid")
+	if humanoid then
+		humanoid.MaxHealth = 100
+		humanoid.Health = 100
+		humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, true)
+	end
+
+	if healthConnection then
+		healthConnection:Disconnect()
+		healthConnection = nil
+	end
+
+	if forcefield then
+		forcefield:Destroy()
+		forcefield = nil
+	end
+end
+
+button.MouseButton1Click:Connect(function()
+	godmodeEnabled = not godmodeEnabled
+	frame.BackgroundColor3 = godmodeEnabled and godmodeColor or originalColor
+
+	local character = LocalPlayer.Character
+	if character then
+		if godmodeEnabled then
+			enableGodmode(character)
+		else
+			disableGodmode(character)
+		end
+	end
+end)
+
+LocalPlayer.CharacterAdded:Connect(function(character)
+	if godmodeEnabled then
+		task.wait(0.1) 
+		enableGodmode(character)
+	end
+end)
+
+end
+coroutine.wrap(QHJPDR_fake_script)()
+local function OVTD_fake_script() -- FlyBtn.FlyScript 
 	local script = Instance.new('LocalScript', FlyBtn)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -2907,8 +3033,8 @@ local function HGVXAOF_fake_script() -- FlyBtn.FlyScript
 	-- Initialize slider
 	updateSlider((flySpeed - 10) / (100 - 10) * (sliderFrame.Parent.AbsoluteSize.X - sliderKnob.AbsoluteSize.X))
 end
-coroutine.wrap(HGVXAOF_fake_script)()
-local function NYWT_fake_script() -- FlyDD.LocalScript 
+coroutine.wrap(OVTD_fake_script)()
+local function NQAFNE_fake_script() -- FlyDD.LocalScript 
 	local script = Instance.new('LocalScript', FlyDD)
 
 	local dd = script.Parent.Parent.Fly.FlyDDFrame
@@ -2953,8 +3079,8 @@ local function NYWT_fake_script() -- FlyDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(NYWT_fake_script)()
-local function BQCGHEA_fake_script() -- NoClip.NoClipScript 
+coroutine.wrap(NQAFNE_fake_script)()
+local function SRDC_fake_script() -- NoClip.NoClipScript 
 	local script = Instance.new('LocalScript', NoClip)
 
 	local RunService = game:GetService("RunService")
@@ -3031,8 +3157,8 @@ local function BQCGHEA_fake_script() -- NoClip.NoClipScript
 	end)
 	
 end
-coroutine.wrap(BQCGHEA_fake_script)()
-local function EDBN_fake_script() -- Fling.FlingScript 
+coroutine.wrap(SRDC_fake_script)()
+local function UIQVJ_fake_script() -- Fling.FlingScript 
 	local script = Instance.new('LocalScript', Fling)
 
 	local Frame = script.Parent.Parent
@@ -3110,8 +3236,8 @@ local function EDBN_fake_script() -- Fling.FlingScript
 	end
 	coroutine.wrap(FFJFK_fake_script)()
 end
-coroutine.wrap(EDBN_fake_script)()
-local function FJTKV_fake_script() -- Float.FloatScript 
+coroutine.wrap(UIQVJ_fake_script)()
+local function QHBFUN_fake_script() -- Float.FloatScript 
 	local script = Instance.new('LocalScript', Float)
 
 	local Players = game:GetService("Players")
@@ -3159,8 +3285,8 @@ local function FJTKV_fake_script() -- Float.FloatScript
 		end
 	end)
 end
-coroutine.wrap(FJTKV_fake_script)()
-local function MKBHVI_fake_script() -- Reset.ResetScript 
+coroutine.wrap(QHBFUN_fake_script)()
+local function WTBXI_fake_script() -- Reset.ResetScript 
 	local script = Instance.new('LocalScript', Reset)
 
 	local player = game.Players.LocalPlayer
@@ -3176,8 +3302,8 @@ local function MKBHVI_fake_script() -- Reset.ResetScript
 		end
 	end)
 end
-coroutine.wrap(MKBHVI_fake_script)()
-local function LBQOJMQ_fake_script() -- FlingUser.FlingUserScript 
+coroutine.wrap(WTBXI_fake_script)()
+local function NGEKYY_fake_script() -- FlingUser.FlingUserScript 
 	local script = Instance.new('LocalScript', FlingUser)
 
 	local Players = game:GetService("Players")
@@ -3199,12 +3325,6 @@ local function LBQOJMQ_fake_script() -- FlingUser.FlingUserScript
 					table.insert(Found, v)
 				end
 			end
-		elseif strl == "me" then
-			for _, v in pairs(Players:GetPlayers()) do
-				if v.Name == lp.Name then
-					table.insert(Found, v)
-				end
-			end
 		else
 			for _, v in pairs(Players:GetPlayers()) do
 				if v.Name:lower():sub(1, #String) == String:lower() then
@@ -3219,7 +3339,7 @@ local function LBQOJMQ_fake_script() -- FlingUser.FlingUserScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://113521459196979",
+			Icon = "rbxassetid://77980660684977",
 			Duration = dur or 3
 		})
 	end
@@ -3309,6 +3429,10 @@ local function LBQOJMQ_fake_script() -- FlingUser.FlingUserScript
 		local Target = gplr(input)
 		if Target[1] then
 			local targetPlayer = Target[1]
+			if targetPlayer == lp then
+				notif("You Can't fling yourself.")
+				return
+			end
 			if isTrustableHumanoid(targetPlayer.Character) then
 				fling(targetPlayer)
 				notif("Flinging " .. targetPlayer.Name .. "!", 3)
@@ -3320,8 +3444,8 @@ local function LBQOJMQ_fake_script() -- FlingUser.FlingUserScript
 		end
 	end)
 end
-coroutine.wrap(LBQOJMQ_fake_script)()
-local function MMOXKRI_fake_script() -- Teleport.Drag 
+coroutine.wrap(NGEKYY_fake_script)()
+local function KDUIT_fake_script() -- Teleport.Drag 
 	local script = Instance.new('LocalScript', Teleport)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3364,8 +3488,8 @@ local function MMOXKRI_fake_script() -- Teleport.Drag
 		end
 	end)
 end
-coroutine.wrap(MMOXKRI_fake_script)()
-local function VRIT_fake_script() -- TeleportDD.LocalScript 
+coroutine.wrap(KDUIT_fake_script)()
+function ZMYRCZ_fake_script() -- TeleportDD.LocalScript 
 	local script = Instance.new('LocalScript', TeleportDD)
 
 	local dd = script.Parent.Parent.TeleportDDFrame
@@ -3408,8 +3532,8 @@ local function VRIT_fake_script() -- TeleportDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(VRIT_fake_script)()
-local function PKKYTPQ_fake_script() -- GunDropStatus.GunDropStatusScript 
+coroutine.wrap(ZMYRCZ_fake_script)()
+function PWGV_fake_script() -- GunDropStatus.GunDropStatusScript 
 	local script = Instance.new('LocalScript', GunDropStatus)
 
 	local Workspace = game:GetService("Workspace")
@@ -3417,17 +3541,15 @@ local function PKKYTPQ_fake_script() -- GunDropStatus.GunDropStatusScript
 	
 	local greenColor = Color3.fromRGB(0, 255, 0)
 	local redColor = Color3.fromRGB(255, 0, 0)
-	local StarterGui = game:GetService("StarterGui")
+	
 	local function notif(str, dur)
-		StarterGui:SetCore("SendNotification", {
+		game.StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://113521459196979",
+			Icon = "rbxassetid://77980660684977",
 			Duration = dur or 3
 		})
 	end
-	
-	local gunDropExists = false
 	
 	local function updateStatus(found)
 		if found then
@@ -3441,38 +3563,30 @@ local function PKKYTPQ_fake_script() -- GunDropStatus.GunDropStatusScript
 	end
 	
 	local function findGunDrop()
-		    for _, descendant in ipairs(Workspace:GetChildren()) do
-			    if descendant.Name == "GunDrop" and descendant:IsA("Model") then
-			    return true	
-		    else
-			    return false
-		    end
-		end
+		return Workspace:FindFirstChild("GunDrop", true) ~= nil
 	end
 	
-	
-	gunDropExists = findGunDrop()
+	local gunDropExists = findGunDrop()
 	updateStatus(gunDropExists)
 	
 	Workspace.DescendantAdded:Connect(function(desc)
-		if desc.Name == "GunDrop" and desc:IsA("Model") then
-			if not gunDropExists then
-				gunDropExists = true
-				updateStatus(true)		
-			end
+		if desc.Name == "GunDrop" then
+			gunDropExists = true
+			updateStatus(true)
 		end
 	end)
 	
 	Workspace.DescendantRemoving:Connect(function(desc)
-		if desc.Name == "GunDrop" and desc:IsA("Model") then
-			task.wait() 
+		if desc.Name == "GunDrop" then
+			task.wait()
 			gunDropExists = findGunDrop()
 			updateStatus(gunDropExists)
 		end
 	end)
+	
 end
-coroutine.wrap(PKKYTPQ_fake_script)()
-local function BGRYCZX_fake_script() -- UserTp.UserTpScript 
+coroutine.wrap(PWGV_fake_script)()
+function FZHWFW_fake_script() -- UserTp.UserTpScript 
 	local script = Instance.new('LocalScript', UserTp)
 
 	local Players = game:GetService("Players")
@@ -3504,8 +3618,8 @@ local function BGRYCZX_fake_script() -- UserTp.UserTpScript
 	
 	UTPBtn.MouseButton1Click:Connect(tpToUser)
 end
-coroutine.wrap(BGRYCZX_fake_script)()
-local function LECK_fake_script() -- TpMap.ToMapScript 
+coroutine.wrap(FZHWFW_fake_script)()
+function JZUHBL_fake_script() -- TpMap.ToMapScript 
 	local script = Instance.new('LocalScript', TpMap)
 
 	local Players = game:GetService("Players")
@@ -3550,8 +3664,8 @@ local function LECK_fake_script() -- TpMap.ToMapScript
 		end
 	end)
 end
-coroutine.wrap(LECK_fake_script)()
-local function SKZF_fake_script() -- TpAboveMap.AboveScript 
+coroutine.wrap(JZUHBL_fake_script)()
+function IHQD_fake_script() -- TpAboveMap.AboveScript 
 	local script = Instance.new('LocalScript', TpAboveMap)
 
 	local Players = game:GetService("Players")
@@ -3597,8 +3711,8 @@ local function SKZF_fake_script() -- TpAboveMap.AboveScript
 		end
 	end)
 end
-coroutine.wrap(SKZF_fake_script)()
-function NGHIR_fake_script() -- SheriffTp.SheriffTpScript 
+coroutine.wrap(IHQD_fake_script)()
+function RGJOFOW_fake_script() -- SheriffTp.SheriffTpScript 
 	local script = Instance.new('LocalScript', SheriffTp)
 
 	local Players = game:GetService("Players")
@@ -3649,8 +3763,8 @@ function NGHIR_fake_script() -- SheriffTp.SheriffTpScript
 	
 	STPBtn.MouseButton1Click:Connect(tpToGun)
 end
-coroutine.wrap(NGHIR_fake_script)()
-function WAGC_fake_script() -- RandomTp.RandomTpScript 
+coroutine.wrap(RGJOFOW_fake_script)()
+function GTKVYEH_fake_script() -- RandomTp.RandomTpScript 
 	local script = Instance.new('LocalScript', RandomTp)
 
 	local Players = game:GetService("Players")
@@ -3680,60 +3794,65 @@ function WAGC_fake_script() -- RandomTp.RandomTpScript
 	
 	RTPBtn.MouseButton1Click:Connect(tpToRandom)
 end
-coroutine.wrap(WAGC_fake_script)()
-function OWDY_fake_script() -- MurdTp.MurdererTpScript 
+coroutine.wrap(GTKVYEH_fake_script)()
+function CWGHNRH_fake_script() -- MurdTp.MurdererTpScript 
 	local script = Instance.new('LocalScript', MurdTp)
 
 	local Players = game:GetService("Players")
-	
 	local button = script.Parent
 	
-	local function tpToMurd()
-	    local localPlayer = Players.LocalPlayer
-		local character = localPlayer.Character
-		if not character or not character:FindFirstChild("HumanoidRootPart") then return end
-			local hrp = character.HumanoidRootPart
+	local function getHumanoidRootPart(player)
+		local character = player.Character
+		if not character then return nil end
+		return character:FindFirstChild("HumanoidRootPart")
+	end
 	
-			for _, player in pairs(Players:GetPlayers()) do
-				if player ~= localPlayer then
-					local targetChar = player.Character
-					if targetChar then
-						local hasKnife = false
+	local function tpToMurderer()
+		local localPlayer = Players.LocalPlayer
+		local hrp = getHumanoidRootPart(localPlayer)
+		if not hrp then return end
 	
-						-- Check if they have a tool named "Knife" equipped
-						for _, tool in ipairs(targetChar:GetChildren()) do
-							if tool:IsA("Tool") and tool.Name == "Knife" then
-								hasKnife = true
-								break
-							end
+		for _, player in ipairs(Players:GetPlayers()) do
+			if player ~= localPlayer and player.Character then
+				local targetChar = player.Character
+				local hasKnife = false
+	
+				for _, tool in ipairs(targetChar:GetChildren()) do
+					if tool:IsA("Tool") and tool.Name == "Knife" then
+						hasKnife = true
+						break
+					end
+				end
+	
+				if not hasKnife and player:FindFirstChild("Backpack") then
+					for _, tool in ipairs(player.Backpack:GetChildren()) do
+						if tool:IsA("Tool") and tool.Name == "Knife" then
+							hasKnife = true
+							break
 						end
+					end
+				end
 	
-						-- Also check their Backpack
-						if not hasKnife and player:FindFirstChild("Backpack") then
-							for _, tool in ipairs(player.Backpack:GetChildren()) do
-								if tool:IsA("Tool") and tool.Name == "Knife" then
-									hasKnife = true
-									break
-								end
-							end
-						end
-	
-						if hasKnife then
-							local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
-							if targetHRP then
-								hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
-								break
-							end
-						end
+				if hasKnife then
+					local targetHRP = getHumanoidRootPart(player)
+					if targetHRP then
+						hrp.CFrame = targetHRP.CFrame + Vector3.new(0, 3, 0)
+						return
 					end
 				end
 			end
 		end
+	end
 	
-	button.MouseButton1Click:Connect(tpToMurd)
+	button.MouseButton1Click:Connect(tpToMurderer)
+	
+	Players.LocalPlayer.CharacterAdded:Connect(function()
+		button.MouseButton1Click:Connect(tpToMurderer)
+	end)
+	
 end
-coroutine.wrap(OWDY_fake_script)()
-function SSGOIYD_fake_script() -- LobbyTp.LobbyScript 
+coroutine.wrap(CWGHNRH_fake_script)()
+function XHHY_fake_script() -- LobbyTp.LobbyScript 
 	local script = Instance.new('LocalScript', LobbyTp)
 
 	local Players = game:GetService("Players")
@@ -3762,55 +3881,68 @@ function SSGOIYD_fake_script() -- LobbyTp.LobbyScript
 		end
 	end)
 end
-coroutine.wrap(SSGOIYD_fake_script)()
-function KEMVVQ_fake_script() -- GrabGun.GrabGunScript 
-	local script = Instance.new('LocalScript', GrabGun)
-
-	local Players = game:GetService("Players")
-	local Workspace = game:GetService("Workspace")
-	local RunService = game:GetService("RunService")
-	local StarterGui = game:GetService("StarterGui")
-	
-	local LocalPlayer = Players.LocalPlayer
-	local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-	local HRP = Character:WaitForChild("HumanoidRootPart")
-	local GunName = "GunDrop"
-	
-	local function notif(str, dur)
-		StarterGui:SetCore("SendNotification", {
-			Title = "Lunar Notify",
-			Text = str,
-			Icon = "rbxassetid://113521459196979",
-			Duration = dur or 3
-		})
-	end
-	
-	local function grabGun()
-		if not Character or not HRP then notif("No character found.", 3) return end
-	
-		local gun = Workspace:FindFirstChild(GunName, true)
-		if gun then
-			local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
-			if not targetPart then return end
-	
-			local originalCFrame = HRP.CFrame
-			HRP.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
-	
-			task.wait(0.0001)
-			HRP.CFrame = originalCFrame
-		    notif("Grabbed Gun.", 3)
-		end
-	end
-	
-	local grabButton = script.Parent.Parent:WaitForChild("GrabGun", 1) 
-	if grabButton then
-		grabButton.MouseButton1Click:Connect(function()
-			grabGun()
-		end)
-	end
+coroutine.wrap(XHHY_fake_script)()
+function LQMU_fake_script() -- GrabGun.GrabGunScript 
+    local script = Instance.new('LocalScript', GrabGun)
+    local Players = game:GetService("Players")
+    local Workspace = game:GetService("Workspace")
+    local RunService = game:GetService("RunService")
+    
+    local LocalPlayer = Players.LocalPlayer
+    local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local HRP = Character:WaitForChild("HumanoidRootPart")
+    local GunName = "GunDrop"
+    
+    local function notif(str, dur)
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "Lunar Notify",
+            Text = str,
+            Icon = "rbxassetid://77980660684977",
+            Duration = dur or 3
+        })
+    end
+    
+    local function grabGun()
+        Character = LocalPlayer.Character
+        if not Character then 
+            notif("No character found.", 3) 
+            return 
+        end
+        
+        HRP = Character:FindFirstChild("HumanoidRootPart")
+        if not HRP then 
+            notif("No HumanoidRootPart found.", 3) 
+            return 
+        end
+    
+        local gun = Workspace:FindFirstChild(GunName, true)
+        if gun then
+            local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
+            if not targetPart then 
+                notif("Gun has no valid part.", 3)
+                return 
+            end
+    
+            local originalCFrame = HRP.CFrame
+            HRP.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+    
+            task.wait(0.0001)
+            HRP.CFrame = originalCFrame
+            notif("Grabbed Gun.", 3)
+        else
+            notif("Gun not found in workspace.", 3)
+        end
+    end
+    
+    local grabButton = script.Parent.Parent:WaitForChild("GrabGun", 1) 
+    if grabButton then
+        grabButton.MouseButton1Click:Connect(function()
+            grabGun()
+        end)
+    end
 end
-coroutine.wrap(KEMVVQ_fake_script)()
-function TUFQUUX_fake_script() -- AutoGrabGun.AutoGunScript 
+coroutine.wrap(LQMU_fake_script)()
+function QVSUDHC_fake_script() -- AutoGrabGun.AutoGunScript 
 	local script = Instance.new('LocalScript', AutoGrabGun)
 
 	local Players = game:GetService("Players")
@@ -3847,6 +3979,7 @@ function TUFQUUX_fake_script() -- AutoGrabGun.AutoGunScript
 		end
 	end)
 	
+	
 	local activeColor = Color3.new(0.0313725, 0.772549, 0.0784314)
 	local inactiveColor = Color3.fromRGB(217, 0, 4)
 	local frame = script.Parent.Frame
@@ -3857,8 +3990,8 @@ function TUFQUUX_fake_script() -- AutoGrabGun.AutoGunScript
 		frame.BackgroundColor3 = AutoGrabGun and activeColor or inactiveColor
 	end)
 end
-coroutine.wrap(TUFQUUX_fake_script)()
-function NUACXJT_fake_script() -- Other.Drag 
+coroutine.wrap(QVSUDHC_fake_script)()
+function DHHZA_fake_script() -- Other.Drag 
 	local script = Instance.new('LocalScript', Other)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3901,8 +4034,8 @@ function NUACXJT_fake_script() -- Other.Drag
 		end
 	end)
 end
-coroutine.wrap(NUACXJT_fake_script)()
-function INBXCCO_fake_script() -- OtherDD.LocalScript 
+coroutine.wrap(DHHZA_fake_script)()
+function ERJZ_fake_script() -- OtherDD.LocalScript 
 	local script = Instance.new('LocalScript', OtherDD)
 
 	local dd = script.Parent.Parent.OtherDDFrame
@@ -3945,8 +4078,8 @@ function INBXCCO_fake_script() -- OtherDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(INBXCCO_fake_script)()
-function OHYJF_fake_script() -- KeyBTN.MenuKeybindScript 
+coroutine.wrap(ERJZ_fake_script)()
+function LFOP_fake_script() -- KeyBTN.MenuKeybindScript 
 	local script = Instance.new('LocalScript', KeyBTN)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3961,7 +4094,7 @@ function OHYJF_fake_script() -- KeyBTN.MenuKeybindScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://113521459196979",
+			Icon = "rbxassetid://77980660684977",
 			Duration = dur or 3
 		})
 	end
@@ -3992,8 +4125,8 @@ function OHYJF_fake_script() -- KeyBTN.MenuKeybindScript
 		button.TextSize = 10
 	end)
 end
-coroutine.wrap(OHYJF_fake_script)()
-function JVFOCT_fake_script() -- KeyBTN_2.GetGunKeybindScript 
+coroutine.wrap(LFOP_fake_script)()
+function QCXWU_fake_script() -- KeyBTN_2.GetGunKeybindScript 
 	local script = Instance.new('LocalScript', KeyBTN_2)
 
 	local Players = game:GetService("Players")
@@ -4001,12 +4134,11 @@ function JVFOCT_fake_script() -- KeyBTN_2.GetGunKeybindScript
 	local RunService = game:GetService("RunService")
 	local UserInputService = game:GetService("UserInputService")
 	
-	local StarterGui = game:GetService("StarterGui")
 	local function notif(str, dur)
-		StarterGui:SetCore("SendNotification", {
+		game.StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://113521459196979",
+			Icon = "rbxassetid://77980660684977",
 			Duration = dur or 3
 		})
 	end
@@ -4024,7 +4156,7 @@ function JVFOCT_fake_script() -- KeyBTN_2.GetGunKeybindScript
 	button.Text = currentKeybind.Name
 	
 	local function grabGun()
-		if not LocalPlayer.Character or not HRP then return end
+		if not Character or not HRP then notif("No character found.", 3) return end
 	
 		local gun = Workspace:FindFirstChild(GunName, true)
 		if gun then
@@ -4036,7 +4168,7 @@ function JVFOCT_fake_script() -- KeyBTN_2.GetGunKeybindScript
 	
 			task.wait(0.0001)
 			HRP.CFrame = originalCFrame
-			notif("Grabbed Gun.")
+			notif("Grabbed Gun.", 3)
 		end
 	end
 	
@@ -4063,98 +4195,86 @@ function JVFOCT_fake_script() -- KeyBTN_2.GetGunKeybindScript
 	end)
 	
 end
-coroutine.wrap(JVFOCT_fake_script)()
-function QKXY_fake_script() -- ServerLabel.ServerBtnScript 
+coroutine.wrap(QCXWU_fake_script)()
+function JAKPO_fake_script() -- ServerLabel.ServerBtnScript 
 	local script = Instance.new('LocalScript', ServerLabel)
 
-		local TeleportService = game:GetService("TeleportService")
-		local Players = game:GetService("Players")
-		local LocalPlayer = Players.LocalPlayer
-		local placeId = game.PlaceId
-		local jobId = game.JobId
+	local TeleportService = game:GetService("TeleportService")
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+	local placeId = game.PlaceId
+	local jobId = game.JobId
 	
-		local randomServerButton = script.Parent:WaitForChild("JoinRandomBtn")
-		local rejoinServerButton = script.Parent:WaitForChild("RjBtn", 1) or script.Parent
+	local randomServerButton = script.Parent:WaitForChild("JoinRandomBtn")
+	local rejoinServerButton = script.Parent:WaitForChild("RjBtn", 1) or script.Parent
 	
-		-- // Reload on teleport //
-		TeleportService.TeleportInitFailed:Connect(function()
-			task.wait(5)
-			pcall(function()
-			        loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
-			end)
+	local function notif(str, dur)
+	game.StarterGui:SetCore("SendNotification", {
+			Title = "Lunar Notify",
+			Text = str,
+			Icon = "rbxassetid://77980660684977",
+			Duration = dur or 3
+		})
+	end
+	
+	TeleportService.TeleportInitFailed:Connect(function()
+		task.wait(5)
+		pcall(function()
+		        loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
 		end)
+	end)
 	
-		-- // Auto-queue your script on teleport //
-		function queueReload()
-			local queued = [[
-	            task.wait(5)
-	            loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
-	        ]]
-			if syn and syn.queue_on_teleport then
-				syn.queue_on_teleport(queued)
-			elseif queue_on_teleport then
-				queue_on_teleport(queued)
-			elseif fluxus and fluxus.queue_on_teleport then
-				fluxus.queue_on_teleport(queued)
-			end
+	function queueReload()
+		local queued = [[
+	        task.wait(5)
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/mm2"))()
+	    ]]
+		if syn and syn.queue_on_teleport then
+			syn.queue_on_teleport(queued)
+		elseif queue_on_teleport then
+			queue_on_teleport(queued)
+		elseif fluxus and fluxus.queue_on_teleport then
+			fluxus.queue_on_teleport(queued)
 		end
+	end
 	
-		-- // Buttons //
-		function joinRandomServer()
-			queueReload()
-			local success, result = pcall(function()
-				TeleportService:Teleport(placeId, LocalPlayer)
-			end)
-			if not success then
-				warn("Failed to join random server: " .. tostring(result))
-				game.StarterGui:SetCore("SendNotification", {
-					Title = "Teleport Error",
-					Text = tostring(result),
-					Duration = 5
-				})
-			end
-		end
-	
-		function rejoinServer()
-			if jobId == "" then
-				warn("Cannot rejoin: This is a local or reserved server.")
-				game.StarterGui:SetCore("SendNotification", {
-					Title = "Rejoin Error",
-					Text = "Cannot rejoin: local/reserved server.",
-					Duration = 5
-				})
-				return
-			end
-			queueReload()
-			local success, result = pcall(function()
-				TeleportService:TeleportToPlaceInstance(placeId, jobId, LocalPlayer)
-			end)
-			if not success then
-				warn("Failed to rejoin server: " .. tostring(result))
-				game.StarterGui:SetCore("SendNotification", {
-					Title = "Rejoin Error",
-					Text = tostring(result),
-					Duration = 5
-				})
-			end
-		end
-	
-		-- // Connections //
-		local connections = {}
-		table.insert(connections, randomServerButton.MouseButton1Click:Connect(joinRandomServer))
-		table.insert(connections, rejoinServerButton.MouseButton1Click:Connect(rejoinServer))
-	
-		-- // Cleanup //
-		script.AncestryChanged:Connect(function()
-			if not script.Parent then
-				for _, conn in ipairs(connections) do
-					conn:Disconnect()
-				end
-			end
+	function joinRandomServer()
+		queueReload()
+		local success, result = pcall(function()
+			TeleportService:Teleport(placeId, LocalPlayer)
 		end)
+		if not success then
+			notif("Teleport Failed.")
+		end
+	end
+	
+	function rejoinServer()
+		if jobId == "" then
+			return
+	    end
+	queueReload()
+	local success, result = pcall(function()
+			TeleportService:TeleportToPlaceInstance(placeId, jobId, LocalPlayer)
+		end)
+			if not success then
+			notif("Rejoin error")
+		end
+	end
+	
+	local connections = {}
+	table.insert(connections, randomServerButton.MouseButton1Click:Connect(joinRandomServer))
+	table.insert(connections, rejoinServerButton.MouseButton1Click:Connect(rejoinServer))
+	
+	script.AncestryChanged:Connect(function()
+		if not script.Parent then
+			for _, conn in ipairs(connections) do
+				conn:Disconnect()
+			end
+		end
+	end)
 end
-coroutine.wrap(QKXY_fake_script)()
-function RYJV_fake_script() -- OtherLabel_2.OtherBtnScript 
+coroutine.wrap(JAKPO_fake_script)()
+function WLPZOJ_fake_script() -- OtherLabel_2.OtherBtnScript 
 	local script = Instance.new('LocalScript', OtherLabel_2)
 
 	local IYBtn = script.Parent.IY
@@ -4165,7 +4285,7 @@ function RYJV_fake_script() -- OtherLabel_2.OtherBtnScript
 		StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://113521459196979",
+			Icon = "rbxassetid://77980660684977",
 			Duration = dur or 3
 		})
 	end
@@ -4192,14 +4312,176 @@ function RYJV_fake_script() -- OtherLabel_2.OtherBtnScript
 		end
 	end)
 end
-coroutine.wrap(RYJV_fake_script)()
-function COCO_fake_script() -- FunLabel.FunScript 
-	local script = Instance.new('LocalScript', FunLabel)
+coroutine.wrap(WLPZOJ_fake_script)()
+function KOAIO_fake_script() -- FPS.FPSScript 
+	local script = Instance.new('LocalScript', FPS)
+
+	local RunService = game:GetService("RunService")
+	local label = script.Parent
+	
+	local fps = 0
+	local lastTime = time()
+	local frames = 0
+	
+	label.Text = "Calculating.."
+	
+	local connection = RunService.RenderStepped:Connect(function()
+		frames += 1
+		local currentTime = time()
+	
+		if currentTime - lastTime >= 0.1 then
+			fps = frames / (currentTime - lastTime)
+			frames = 0
+			lastTime = currentTime
+	
+			label.Text = math.floor(fps).. " FPS"
+	
+			if fps < 30 then
+				label.TextColor3 = Color3.new(1, 0, 0)  
+			elseif fps < 60 then
+				label.TextColor3 = Color3.new(1, 1, 0)  
+			elseif fps < 90 then
+				label.TextColor3 = Color3.new(0.784314, 1, 0) 
+			else
+				label.TextColor3 = Color3.new(0.05, 1, 0) 
+			end
+		end
+	end)
+	
+	script.AncestryChanged:Connect(function()
+		if not script.Parent then
+			connection:Disconnect()
+		end
+	end)
+end
+coroutine.wrap(KOAIO_fake_script)()
+function TFIWP_fake_script() -- HumanoidHealth.HealthScript 
+	local script = Instance.new('LocalScript', HumanoidHealth)
+
+	local player = game.Players.LocalPlayer
+	local label = script.Parent
+	
+	local function setupChar(char)
+		local humanoid = char:WaitForChild("Humanoid")
+	
+		local function updateHealth()
+			local health = humanoid.Health
+			label.Text = "Humanoid Health: " .. math.floor(health)
+			if health < 25 then
+				label.TextColor3 = Color3.new(1, 0, 0)
+			elseif health < 50 then
+				label.TextColor3 = Color3.new(1, 1, 0)
+			elseif health < 75 then
+				label.TextColor3 = Color3.new(0.784314, 1, 0)
+			else
+				label.TextColor3 = Color3.new(0.05, 1, 0)
+			end
+		end
+	
+		updateHealth()
+		humanoid.HealthChanged:Connect(updateHealth)
+	end
+	
+	setupChar(player.Character or player.CharacterAdded:Wait())
+	player.CharacterAdded:Connect(setupChar)
+	
+end
+coroutine.wrap(TFIWP_fake_script)()
+function DDLB_fake_script() -- Fun.Drag 
+	local script = Instance.new('LocalScript', Fun)
+
+	local UserInputService = game:GetService("UserInputService")
+	
+	local gui = script.Parent
+	
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+	
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+			
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input)
+		end
+	end)
+end
+coroutine.wrap(DDLB_fake_script)()
+function BPFGDTE_fake_script() -- FunDD.LocalScript 
+	local script = Instance.new('LocalScript', FunDD)
+
+	local dd = script.Parent.Parent.FunDDFrame
+	local btn = script.Parent
+	
+	local open = true
+	local Tws = game:GetService("TweenService")
+	local TweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
+	
+	local originalSize = dd.Size
+	local closedSize = UDim2.new(0, 200, 0, 0)
+	
+	local function invisChildren()
+		for _, v in pairs(dd:GetChildren()) do
+			v.Visible = false
+		end
+	end
+	
+	local function visChildren()
+		for _, v in pairs(dd:GetChildren()) do
+			v.Visible = true
+		end
+	end
+	
+	btn.MouseButton1Click:Connect(function()
+		if open then
+			local tween = Tws:Create(dd, TweenInfo, {Size = closedSize})
+			invisChildren()
+			tween:Play()
+			tween.Completed:Wait()
+			dd.Visible = false
+			open = false
+		else
+			dd.Visible = true
+			local tween = Tws:Create(dd, TweenInfo, {Size = originalSize})
+			tween:Play()
+			wait(0.5)
+			visChildren()
+			open = true
+		end
+	end)
+end
+coroutine.wrap(BPFGDTE_fake_script)()
+function VNDN_fake_script() -- FakeLag.FunScript 
+	local script = Instance.new('LocalScript', FakeLag)
 
 	local Players = game:GetService("Players")
 	
 	local player = Players.LocalPlayer
-	local LagBtn = script.Parent.FakeLag
+	local LagBtn = script.Parent
 	local LagBox = script.Parent.LagValue
 	local frame = LagBtn.Frame
 	
@@ -4264,21 +4546,82 @@ function COCO_fake_script() -- FunLabel.FunScript
 	end)
 	
 end
-coroutine.wrap(COCO_fake_script)()
-function CKXSHON_fake_script() -- jd7hufe29c87c76d.load 
-	local script = Instance.new('LocalScript', jd7hufe29c87c76d)
+coroutine.wrap(VNDN_fake_script)()
+function GJUA_fake_script() -- KillAll.KillAllScript 
+	local script = Instance.new('LocalScript', KillAll)
 
-	local StarterGui = game:GetService("StarterGui")
+	getgenv().killall = false
+	
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+	local RunService = game:GetService("RunService")
+	
+	local button = script.Parent  
+	
 	local function notif(str, dur)
-		StarterGui:SetCore("SendNotification", {
+		game.StarterGui:SetCore("SendNotification", {
 			Title = "Lunar Notify",
 			Text = str,
-			Icon = "rbxassetid://113521459196979",
+			Icon = "rbxassetid://77980660684977",
 			Duration = dur or 3
 		})
 	end
-	if script.Parent then
-		notif("Loaded Lunar Hub.", 3)
+	
+	local function equipTool(tool)
+		if tool and tool.Parent == LocalPlayer.Backpack then
+			tool.Parent = LocalPlayer.Character
+		end
 	end
+	
+	local function getKnife()
+		local char = LocalPlayer.Character
+		if not char then notif("No Character Found.") return nil end
+		local knife = char:FindFirstChildOfClass("Tool") or LocalPlayer.Backpack:FindFirstChildOfClass("Tool")
+		if knife and knife:FindFirstChild("Handle") then
+		    if knife.Name == "Knife" then
+			    equipTool(knife)
+			    return knife
+		    end
+		end
+		return nil
+	end
+	
+	local function attackPlayer(targetPlayer, knife)
+		if not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then return end
+		local rootPart = targetPlayer.Character.HumanoidRootPart
+		local handle = knife.Handle
+		if not handle then return end
+	
+		task.spawn(function()
+			knife:Activate()
+			firetouchinterest(rootPart, handle, 0)
+			firetouchinterest(rootPart, handle, 1)
+		end)
+	end
+	
+	local function startKillAll()
+		if getgenv().killall then return end 
+		getgenv().killall = true
+		notif("Killing All..")
+		spawn(function()
+			while getgenv().killall do
+				pcall(function()
+					local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+					local knife = getKnife()
+					if knife then
+						for _, player in ipairs(Players:GetPlayers()) do
+							if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+								attackPlayer(player, knife)
+								notif("Killed All.")
+							end
+						end
+					end
+				end)
+				wait(0.1) 
+			end
+		end)
+	end
+	
+	button.MouseButton1Click:Connect(startKillAll)
 end
-coroutine.wrap(CKXSHON_fake_script)()
+coroutine.wrap(GJUA_fake_script)()
