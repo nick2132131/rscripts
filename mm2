@@ -4890,7 +4890,6 @@ function QCEUG_fake_script() -- KillAll.KillAllScript
 						for _, player in ipairs(Players:GetPlayers()) do
 							if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
 								attackPlayer(player, knife)
-								notif("Killed All.")
 							end
 						end
 					end
