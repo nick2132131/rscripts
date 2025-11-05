@@ -1520,7 +1520,7 @@ UserBox_3.TextWrapped = true
 
 UICorner_74.Parent = UserBox_3
 
-local function GWYGN_fake_script() -- jd7hufe29c87c76d.iojvfv893buv 
+local function BYPCUYN_fake_script() -- jd7hufe29c87c76d.iojvfv893buv 
 	local script = Instance.new('LocalScript', jd7hufe29c87c76d)
 
 	local function notif(str, dur)
@@ -1535,8 +1535,8 @@ local function GWYGN_fake_script() -- jd7hufe29c87c76d.iojvfv893buv
 		notif("Loaded Lunar Hub.", 3)
 	end
 end
-coroutine.wrap(GWYGN_fake_script)()
-local function CEYFPO_fake_script() -- jd7hufe29c87c76d.tooltip 
+coroutine.wrap(BYPCUYN_fake_script)()
+local function QZGXF_fake_script() -- jd7hufe29c87c76d.tooltip 
 	local script = Instance.new('LocalScript', jd7hufe29c87c76d)
 
 	local Players = game:GetService("Players")
@@ -1562,7 +1562,7 @@ local function CEYFPO_fake_script() -- jd7hufe29c87c76d.tooltip
 	
 	local corner = Instance.new("UICorner")
 	corner.Parent = tooltip
-
+	
 	local descriptions = {
 		["JoinRandomBtn"] = "Join a random server (Server-Hop)",
 		["RjBtn"] = "Rejoin current server (Will not work if the server is local/reserved.)",
@@ -1649,8 +1649,8 @@ local function CEYFPO_fake_script() -- jd7hufe29c87c76d.tooltip
 	end)
 	
 end
-coroutine.wrap(CEYFPO_fake_script)()
-local function CNMCCOU_fake_script() -- Visuals.Drag 
+coroutine.wrap(QZGXF_fake_script)()
+local function YJYHMA_fake_script() -- Visuals.Drag 
 	local script = Instance.new('LocalScript', Visuals)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -1693,8 +1693,8 @@ local function CNMCCOU_fake_script() -- Visuals.Drag
 		end
 	end)
 end
-coroutine.wrap(CNMCCOU_fake_script)()
-local function VEUKU_fake_script() -- VisualsDD.LocalScript 
+coroutine.wrap(YJYHMA_fake_script)()
+local function PKQJV_fake_script() -- VisualsDD.LocalScript 
 	local script = Instance.new('LocalScript', VisualsDD)
 
 	local dd = script.Parent.Parent.VisualsDDFrame
@@ -1737,8 +1737,8 @@ local function VEUKU_fake_script() -- VisualsDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(VEUKU_fake_script)()
-local function ZIBSU_fake_script() -- RoleEsp.AllRoleScript 
+coroutine.wrap(PKQJV_fake_script)()
+local function VGLFCR_fake_script() -- RoleEsp.AllRoleScript 
 	local script = Instance.new('LocalScript', RoleEsp)
 
 	-- Services
@@ -1880,8 +1880,8 @@ local function ZIBSU_fake_script() -- RoleEsp.AllRoleScript
 	end)
 	
 end
-coroutine.wrap(ZIBSU_fake_script)()
-local function YNBU_fake_script() -- NameEsp.NameScript 
+coroutine.wrap(VGLFCR_fake_script)()
+local function ZLFNJPU_fake_script() -- NameEsp.NameScript 
 	local script = Instance.new('LocalScript', NameEsp)
 
 	-- Services
@@ -2029,8 +2029,8 @@ local function YNBU_fake_script() -- NameEsp.NameScript
 	end)
 	
 end
-coroutine.wrap(YNBU_fake_script)()
-local function PJRM_fake_script() -- MurdEsp.MurdScript 
+coroutine.wrap(ZLFNJPU_fake_script)()
+local function YJPPZVD_fake_script() -- MurdEsp.MurdScript 
 	local script = Instance.new('LocalScript', MurdEsp)
 
 	local script = Instance.new('LocalScript', script.Parent)
@@ -2116,8 +2116,8 @@ local function PJRM_fake_script() -- MurdEsp.MurdScript
 	end)
 	
 end
-coroutine.wrap(PJRM_fake_script)()
-local function PIJP_fake_script() -- SheriffEsp.SheriffScript 
+coroutine.wrap(YJPPZVD_fake_script)()
+local function CZILRAB_fake_script() -- SheriffEsp.SheriffScript 
 	local script = Instance.new('LocalScript', SheriffEsp)
 
 	local script = Instance.new('LocalScript', script.Parent)
@@ -2254,8 +2254,8 @@ local function PIJP_fake_script() -- SheriffEsp.SheriffScript
 	end)
 	
 end
-coroutine.wrap(PIJP_fake_script)()
-local function OKDRPX_fake_script() -- GunEsp.GunEspScript 
+coroutine.wrap(CZILRAB_fake_script)()
+local function MJMFGH_fake_script() -- GunEsp.GunEspScript 
 	local script = Instance.new('LocalScript', GunEsp)
 
 	local Workspace = game:GetService("Workspace")
@@ -2356,8 +2356,8 @@ local function OKDRPX_fake_script() -- GunEsp.GunEspScript
 	end)
 	
 end
-coroutine.wrap(OKDRPX_fake_script)()
-local function RZPEPX_fake_script() -- CoinEsp.CoinEspScript 
+coroutine.wrap(MJMFGH_fake_script)()
+local function BHPMDH_fake_script() -- CoinEsp.CoinEspScript 
 	local script = Instance.new('LocalScript', CoinEsp)
 
 	local Workspace = game:GetService("Workspace")
@@ -2478,8 +2478,8 @@ local function RZPEPX_fake_script() -- CoinEsp.CoinEspScript
 		end
 	end)
 end
-coroutine.wrap(RZPEPX_fake_script)()
-local function ZTRYJKI_fake_script() -- Tracers.TracerScript 
+coroutine.wrap(BHPMDH_fake_script)()
+local function OVGTE_fake_script() -- Tracers.TracerScript 
 	local script = Instance.new('LocalScript', Tracers)
 
 	-- Services
@@ -2623,8 +2623,8 @@ local function ZTRYJKI_fake_script() -- Tracers.TracerScript
 	end)
 	
 end
-coroutine.wrap(ZTRYJKI_fake_script)()
-local function GHCHOLT_fake_script() -- XRayBtn.XRayScript 
+coroutine.wrap(OVGTE_fake_script)()
+local function IJYSA_fake_script() -- XRayBtn.XRayScript 
 	local script = Instance.new('LocalScript', XRayBtn)
 
 	local Players = game:GetService("Players")
@@ -2733,8 +2733,8 @@ local function GHCHOLT_fake_script() -- XRayBtn.XRayScript
 	-- Initialize slider
 	updateSlider((1 - TransparencyAmount) / 0.9 * (sliderFrame.Parent.AbsoluteSize.X - sliderKnob.AbsoluteSize.X))
 end
-coroutine.wrap(GHCHOLT_fake_script)()
-local function OWIERM_fake_script() -- XRayDD.LocalScript 
+coroutine.wrap(IJYSA_fake_script)()
+local function DIEDZW_fake_script() -- XRayDD.LocalScript 
 	local script = Instance.new('LocalScript', XRayDD)
 
 	local dd = script.Parent.Parent.XRay.XRayDDFrame
@@ -2777,8 +2777,8 @@ local function OWIERM_fake_script() -- XRayDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(OWIERM_fake_script)()
-local function YDWTH_fake_script() -- Player.Drag 
+coroutine.wrap(DIEDZW_fake_script)()
+local function LLOA_fake_script() -- Player.Drag 
 	local script = Instance.new('LocalScript', Player)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -2821,8 +2821,8 @@ local function YDWTH_fake_script() -- Player.Drag
 		end
 	end)
 end
-coroutine.wrap(YDWTH_fake_script)()
-local function RFXOX_fake_script() -- PlayerDD.LocalScript 
+coroutine.wrap(LLOA_fake_script)()
+local function TQRZII_fake_script() -- PlayerDD.LocalScript 
 	local script = Instance.new('LocalScript', PlayerDD)
 
 	local dd = script.Parent.Parent.PlayerDDFrame
@@ -2865,8 +2865,8 @@ local function RFXOX_fake_script() -- PlayerDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(RFXOX_fake_script)()
-local function KCZILJY_fake_script() -- InfiniteJump.LocalScript 
+coroutine.wrap(TQRZII_fake_script)()
+local function SDJMPJ_fake_script() -- InfiniteJump.LocalScript 
 	local script = Instance.new('LocalScript', InfiniteJump)
 
 	local button = script.Parent
@@ -2897,8 +2897,8 @@ local function KCZILJY_fake_script() -- InfiniteJump.LocalScript
 		end
 	end)
 end
-coroutine.wrap(KCZILJY_fake_script)()
-function SNINYR_fake_script() -- GodMode.GMScript 
+coroutine.wrap(SDJMPJ_fake_script)()
+function KZSKESR_fake_script() -- GodMode.GMScript 
 	local script = Instance.new('LocalScript', GodMode)
 
 	local Players = game:GetService("Players")
@@ -3068,8 +3068,8 @@ function SNINYR_fake_script() -- GodMode.GMScript
 		end
 	end)
 end
-coroutine.wrap(SNINYR_fake_script)()
-function JOSNTT_fake_script() -- FlyBtn.FlyScript 
+coroutine.wrap(KZSKESR_fake_script)()
+function KLUZR_fake_script() -- FlyBtn.FlyScript 
 	local script = Instance.new('LocalScript', FlyBtn)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3295,8 +3295,8 @@ function JOSNTT_fake_script() -- FlyBtn.FlyScript
 	-- Initialize slider
 	updateSlider((flySpeed - 10) / (100 - 10) * (sliderFrame.Parent.AbsoluteSize.X - sliderKnob.AbsoluteSize.X))
 end
-coroutine.wrap(JOSNTT_fake_script)()
-function FWUJG_fake_script() -- FlyDD.LocalScript 
+coroutine.wrap(KLUZR_fake_script)()
+function JGCKOKE_fake_script() -- FlyDD.LocalScript 
 	local script = Instance.new('LocalScript', FlyDD)
 
 	local dd = script.Parent.Parent.Fly.FlyDDFrame
@@ -3341,8 +3341,8 @@ function FWUJG_fake_script() -- FlyDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(FWUJG_fake_script)()
-function BPGVLPQ_fake_script() -- NoClip.NoClipScript 
+coroutine.wrap(JGCKOKE_fake_script)()
+function JUOXJ_fake_script() -- NoClip.NoClipScript 
 	local script = Instance.new('LocalScript', NoClip)
 
 	local RunService = game:GetService("RunService")
@@ -3419,8 +3419,8 @@ function BPGVLPQ_fake_script() -- NoClip.NoClipScript
 	end)
 	
 end
-coroutine.wrap(BPGVLPQ_fake_script)()
-function QTTVYUO_fake_script() -- Fling.FlingScript 
+coroutine.wrap(JUOXJ_fake_script)()
+function MRWDW_fake_script() -- Fling.FlingScript 
 	local script = Instance.new('LocalScript', Fling)
 
 	local Frame = script.Parent.Parent
@@ -3498,8 +3498,8 @@ function QTTVYUO_fake_script() -- Fling.FlingScript
 	end
 	coroutine.wrap(FFJFK_fake_script)()
 end
-coroutine.wrap(QTTVYUO_fake_script)()
-function BBSS_fake_script() -- Float.FloatScript 
+coroutine.wrap(MRWDW_fake_script)()
+function XMTKWRP_fake_script() -- Float.FloatScript 
 	local script = Instance.new('LocalScript', Float)
 
 	local Players = game:GetService("Players")
@@ -3547,8 +3547,8 @@ function BBSS_fake_script() -- Float.FloatScript
 		end
 	end)
 end
-coroutine.wrap(BBSS_fake_script)()
-local function OPEXRJW_fake_script() -- Reset.ResetScript 
+coroutine.wrap(XMTKWRP_fake_script)()
+function NTWZIZD_fake_script() -- Reset.ResetScript 
 	local script = Instance.new('LocalScript', Reset)
 
 	local player = game.Players.LocalPlayer
@@ -3564,8 +3564,8 @@ local function OPEXRJW_fake_script() -- Reset.ResetScript
 		end
 	end)
 end
-coroutine.wrap(OPEXRJW_fake_script)()
-function DYELY_fake_script() -- FlingUser.FlingUserScript 
+coroutine.wrap(NTWZIZD_fake_script)()
+function JSVB_fake_script() -- FlingUser.FlingUserScript 
 	local script = Instance.new('LocalScript', FlingUser)
 
 	local Players = game:GetService("Players")
@@ -3579,13 +3579,23 @@ function DYELY_fake_script() -- FlingUser.FlingUserScript
 		local strl = String:lower()
 		if strl == "others" then
 			for _, v in pairs(Players:GetPlayers()) do
-				if v.Name ~= lp.Name then
+				if v ~= lp then
 					table.insert(Found, v)
 				end
 			end
+		elseif strl == "random" then
+			local others = {}
+			for _, v in pairs(Players:GetPlayers()) do
+				if v ~= lp then
+					table.insert(others, v)
+				end
+			end
+			if #others > 0 then
+				table.insert(Found, others[math.random(1, #others)])
+			end
 		else
 			for _, v in pairs(Players:GetPlayers()) do
-				if v.Name:lower():sub(1, #String) == String:lower() then
+				if v.Name:lower():sub(1, #strl) == strl then
 					table.insert(Found, v)
 				end
 			end
@@ -3652,12 +3662,12 @@ function DYELY_fake_script() -- FlingUser.FlingUserScript
 					hiddenfling = false
 					connection:Disconnect()
 					hrp.Anchored = true
-					notif("Flung "..targetPlayer.Name.. ".", 3)
+					notif("Flung " .. targetPlayer.Name .. ".", 3)
 					for i = 1, 10 do
 						hrp.CFrame = originalPosition
-						wait(0.1)
+						task.wait(0.1)
 					end
-					wait(0.5)
+					task.wait(0.5)
 					hrp.Anchored = false
 				end
 			else
@@ -3666,9 +3676,9 @@ function DYELY_fake_script() -- FlingUser.FlingUserScript
 				hrp.Anchored = true
 				for i = 1, 10 do
 					hrp.CFrame = originalPosition
-					wait(0.1)
+					task.wait(0.1)
 				end
-				wait(0.5)
+				task.wait(0.5)
 				hrp.Anchored = false
 				notif("Target player invalid or disconnected.", 3)
 			end
@@ -3684,26 +3694,43 @@ function DYELY_fake_script() -- FlingUser.FlingUserScript
 			notif("No username entered.", 3)
 			return
 		end
-		local Target = gplr(input)
-		if Target[1] then
-			local targetPlayer = Target[1]
-			if targetPlayer == lp then
-				notif("You Can't fling yourself.")
-				return
+	
+		local TargetList = gplr(input)
+		if #TargetList == 0 then
+			notif("No valid targets found.", 3)
+			return
+		end
+	
+		if input:lower() == "others" then
+			for _, target in ipairs(TargetList) do
+				if target ~= lp and isTrustableHumanoid(target.Character) then
+					notif("Flinging " .. target.Name .. "!", 2)
+					task.spawn(function()
+						fling(target)
+					end)
+					task.wait(0.2)
+				end
 			end
-			if isTrustableHumanoid(targetPlayer.Character) then
-				fling(targetPlayer)
-				notif("Flinging " .. targetPlayer.Name .. "!", 3)
-			else
-				notif("Target player has no valid character.", 3)
-			end
+			return
+		end
+	
+		local target = TargetList[1]
+		if target == lp then
+			notif("You can't fling yourself.", 3)
+			return
+		end
+	
+		if isTrustableHumanoid(target.Character) then
+			fling(target)
+			notif("Flinging " .. target.Name .. "!", 3)
 		else
-			notif("Invalid player.", 3)
+			notif("Target player has no valid character.", 3)
 		end
 	end)
+	
 end
-coroutine.wrap(DYELY_fake_script)()
-function YTXXYR_fake_script() -- Teleport.Drag 
+coroutine.wrap(JSVB_fake_script)()
+function VBLEIV_fake_script() -- Teleport.Drag 
 	local script = Instance.new('LocalScript', Teleport)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3746,8 +3773,8 @@ function YTXXYR_fake_script() -- Teleport.Drag
 		end
 	end)
 end
-coroutine.wrap(YTXXYR_fake_script)()
-function XEHVP_fake_script() -- TeleportDD.LocalScript 
+coroutine.wrap(VBLEIV_fake_script)()
+function UUNB_fake_script() -- TeleportDD.LocalScript 
 	local script = Instance.new('LocalScript', TeleportDD)
 
 	local dd = script.Parent.Parent.TeleportDDFrame
@@ -3790,8 +3817,8 @@ function XEHVP_fake_script() -- TeleportDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(XEHVP_fake_script)()
-function IERMYOW_fake_script() -- GunDropStatus.GunDropStatusScript 
+coroutine.wrap(UUNB_fake_script)()
+function TNKGLQK_fake_script() -- GunDropStatus.GunDropStatusScript 
 	local script = Instance.new('LocalScript', GunDropStatus)
 
 	local Workspace = game:GetService("Workspace")
@@ -3843,8 +3870,8 @@ function IERMYOW_fake_script() -- GunDropStatus.GunDropStatusScript
 	end)
 	
 end
-coroutine.wrap(IERMYOW_fake_script)()
-function ZQOVL_fake_script() -- UserTp.UserTpScript 
+coroutine.wrap(TNKGLQK_fake_script)()
+function PLZQ_fake_script() -- UserTp.UserTpScript 
 	local script = Instance.new('LocalScript', UserTp)
 
 	local Players = game:GetService("Players")
@@ -3876,8 +3903,8 @@ function ZQOVL_fake_script() -- UserTp.UserTpScript
 	
 	UTPBtn.MouseButton1Click:Connect(tpToUser)
 end
-coroutine.wrap(ZQOVL_fake_script)()
-function PAFXEF_fake_script() -- TpMap.ToMapScript 
+coroutine.wrap(PLZQ_fake_script)()
+function FPTUJDH_fake_script() -- TpMap.ToMapScript 
 	local script = Instance.new('LocalScript', TpMap)
 
 	local Players = game:GetService("Players")
@@ -3922,8 +3949,8 @@ function PAFXEF_fake_script() -- TpMap.ToMapScript
 		end
 	end)
 end
-coroutine.wrap(PAFXEF_fake_script)()
-function ENROKAY_fake_script() -- TpAboveMap.AboveScript 
+coroutine.wrap(FPTUJDH_fake_script)()
+function TDFCH_fake_script() -- TpAboveMap.AboveScript 
 	local script = Instance.new('LocalScript', TpAboveMap)
 
 	local Players = game:GetService("Players")
@@ -3969,8 +3996,8 @@ function ENROKAY_fake_script() -- TpAboveMap.AboveScript
 		end
 	end)
 end
-coroutine.wrap(ENROKAY_fake_script)()
-function RNGMTMI_fake_script() -- SheriffTp.SheriffTpScript 
+coroutine.wrap(TDFCH_fake_script)()
+function TWCV_fake_script() -- SheriffTp.SheriffTpScript 
 	local script = Instance.new('LocalScript', SheriffTp)
 
 	local Players = game:GetService("Players")
@@ -4021,8 +4048,8 @@ function RNGMTMI_fake_script() -- SheriffTp.SheriffTpScript
 	
 	STPBtn.MouseButton1Click:Connect(tpToGun)
 end
-coroutine.wrap(RNGMTMI_fake_script)()
-function RXQBH_fake_script() -- RandomTp.RandomTpScript 
+coroutine.wrap(TWCV_fake_script)()
+function UBQQ_fake_script() -- RandomTp.RandomTpScript 
 	local script = Instance.new('LocalScript', RandomTp)
 
 	local Players = game:GetService("Players")
@@ -4052,8 +4079,8 @@ function RXQBH_fake_script() -- RandomTp.RandomTpScript
 	
 	RTPBtn.MouseButton1Click:Connect(tpToRandom)
 end
-coroutine.wrap(RXQBH_fake_script)()
-function LEFB_fake_script() -- MurdTp.MurdererTpScript 
+coroutine.wrap(UBQQ_fake_script)()
+function APFQRHN_fake_script() -- MurdTp.MurdererTpScript 
 	local script = Instance.new('LocalScript', MurdTp)
 
 	local Players = game:GetService("Players")
@@ -4109,8 +4136,8 @@ function LEFB_fake_script() -- MurdTp.MurdererTpScript
 	end)
 	
 end
-coroutine.wrap(LEFB_fake_script)()
-function BNWSBZ_fake_script() -- LobbyTp.LobbyScript 
+coroutine.wrap(APFQRHN_fake_script)()
+function SOMH_fake_script() -- LobbyTp.LobbyScript 
 	local script = Instance.new('LocalScript', LobbyTp)
 
 	local Players = game:GetService("Players")
@@ -4139,8 +4166,8 @@ function BNWSBZ_fake_script() -- LobbyTp.LobbyScript
 		end
 	end)
 end
-coroutine.wrap(BNWSBZ_fake_script)()
-function SFZDGH_fake_script() -- GrabGun.GrabGunScript 
+coroutine.wrap(SOMH_fake_script)()
+function TOCHSH_fake_script() -- GrabGun.GrabGunScript 
 	local script = Instance.new('LocalScript', GrabGun)
 
 	local Players = game:GetService("Players")
@@ -4185,8 +4212,8 @@ function SFZDGH_fake_script() -- GrabGun.GrabGunScript
 		end)
 	end
 end
-coroutine.wrap(SFZDGH_fake_script)()
-function VQGI_fake_script() -- AutoGrabGun.AutoGunScript 
+coroutine.wrap(TOCHSH_fake_script)()
+function WWHD_fake_script() -- AutoGrabGun.AutoGunScript 
 	local script = Instance.new('LocalScript', AutoGrabGun)
 
 	local Players = game:GetService("Players")
@@ -4234,8 +4261,8 @@ function VQGI_fake_script() -- AutoGrabGun.AutoGunScript
 		frame.BackgroundColor3 = AutoGrabGun and activeColor or inactiveColor
 	end)
 end
-coroutine.wrap(VQGI_fake_script)()
-function AXSAUQJ_fake_script() -- Other.Drag 
+coroutine.wrap(WWHD_fake_script)()
+function ZATL_fake_script() -- Other.Drag 
 	local script = Instance.new('LocalScript', Other)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -4278,8 +4305,8 @@ function AXSAUQJ_fake_script() -- Other.Drag
 		end
 	end)
 end
-coroutine.wrap(AXSAUQJ_fake_script)()
-function LVIXDM_fake_script() -- OtherDD.LocalScript 
+coroutine.wrap(ZATL_fake_script)()
+function ZNPVYH_fake_script() -- OtherDD.LocalScript 
 	local script = Instance.new('LocalScript', OtherDD)
 
 	local dd = script.Parent.Parent.OtherDDFrame
@@ -4322,8 +4349,8 @@ function LVIXDM_fake_script() -- OtherDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(LVIXDM_fake_script)()
-function FLBG_fake_script() -- KeyBTN.MenuKeybindScript 
+coroutine.wrap(ZNPVYH_fake_script)()
+function NODMIQ_fake_script() -- KeyBTN.MenuKeybindScript 
 	local script = Instance.new('LocalScript', KeyBTN)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -4369,8 +4396,8 @@ function FLBG_fake_script() -- KeyBTN.MenuKeybindScript
 		button.TextSize = 10
 	end)
 end
-coroutine.wrap(FLBG_fake_script)()
-function ZUNDQ_fake_script() -- KeyBTN2.GetGunKeybindScript 
+coroutine.wrap(NODMIQ_fake_script)()
+function OPKH_fake_script() -- KeyBTN2.GetGunKeybindScript 
 	local script = Instance.new('LocalScript', KeyBTN2)
 
 	local Players = game:GetService("Players")
@@ -4439,8 +4466,8 @@ function ZUNDQ_fake_script() -- KeyBTN2.GetGunKeybindScript
 	end)
 	
 end
-coroutine.wrap(ZUNDQ_fake_script)()
-function UZIPEBY_fake_script() -- ServerLabel.ServerBtnScript 
+coroutine.wrap(OPKH_fake_script)()
+function FIEIVE_fake_script() -- ServerLabel.ServerBtnScript 
 	local script = Instance.new('LocalScript', ServerLabel)
 
 	local TeleportService = game:GetService("TeleportService")
@@ -4450,7 +4477,7 @@ function UZIPEBY_fake_script() -- ServerLabel.ServerBtnScript
 	local jobId = game.JobId
 	
 	local randomServerButton = script.Parent:WaitForChild("JoinRandomBtn")
-	local rejoinServerButton = script.Parent:WaitForChild("RjBtn", 1) or script.Parent
+	local rejoinServerButton = script.Parent:WaitForChild("RjBtn")
 	
 	local function notif(str, dur)
 	game.StarterGui:SetCore("SendNotification", {
@@ -4484,13 +4511,49 @@ function UZIPEBY_fake_script() -- ServerLabel.ServerBtnScript
 	
 	function joinRandomServer()
 		queueReload()
-		local success, result = pcall(function()
-			TeleportService:Teleport(placeId, LocalPlayer)
+	
+		local HttpService = game:GetService("HttpService")
+		local servers = {}
+		local cursor = ""
+	
+		local success, response = pcall(function()
+			return game:HttpGet("https://games.roblox.com/v1/games/" .. placeId .. "/servers/Public?sortOrder=Asc&limit=100")
 		end)
+	
 		if not success then
-			notif("Teleport Failed.")
+			notif("Failed to fetch servers.")
+			return
+		end
+	
+		local data = HttpService:JSONDecode(response)
+		if not data or not data.data or #data.data == 0 then
+			notif("No servers found.")
+			return
+		end
+	
+		for _, server in ipairs(data.data) do
+			if server.playing < server.maxPlayers and server.id ~= jobId then
+				table.insert(servers, server.id)
+			end
+		end
+	
+		if #servers == 0 then
+			notif("No available servers to join.")
+			return
+		end
+	
+		local randomServer = servers[math.random(1, #servers)]
+		local success2, err = pcall(function()
+			game:GetService("TeleportService"):TeleportToPlaceInstance(placeId, randomServer, LocalPlayer)
+		end)
+	
+		if not success2 then
+			notif("Teleport failed: " .. tostring(err))
+		else
+			notif("Joining a random server...")
 		end
 	end
+	
 	
 	function rejoinServer()
 		if jobId == "" then
@@ -4517,8 +4580,8 @@ function UZIPEBY_fake_script() -- ServerLabel.ServerBtnScript
 		end
 	end)
 end
-coroutine.wrap(UZIPEBY_fake_script)()
-function RJDOTYH_fake_script() -- OtherLabel_2.OtherBtnScript 
+coroutine.wrap(FIEIVE_fake_script)()
+function KLMDY_fake_script() -- OtherLabel_2.OtherBtnScript 
 	local script = Instance.new('LocalScript', OtherLabel_2)
 
 	local IYBtn = script.Parent.IY
@@ -4556,8 +4619,8 @@ function RJDOTYH_fake_script() -- OtherLabel_2.OtherBtnScript
 		end
 	end)
 end
-coroutine.wrap(RJDOTYH_fake_script)()
-function AFDX_fake_script() -- FPS.FPSScript 
+coroutine.wrap(KLMDY_fake_script)()
+function NPWSAC_fake_script() -- FPS.FPSScript 
 	local script = Instance.new('LocalScript', FPS)
 
 	local RunService = game:GetService("RunService")
@@ -4573,7 +4636,7 @@ function AFDX_fake_script() -- FPS.FPSScript
 		frames += 1
 		local currentTime = time()
 	
-		if currentTime - lastTime >= 1.0 then
+		if currentTime - lastTime >= 0.15 then
 			fps = frames / (currentTime - lastTime)
 			frames = 0
 			lastTime = currentTime
@@ -4598,8 +4661,8 @@ function AFDX_fake_script() -- FPS.FPSScript
 		end
 	end)
 end
-coroutine.wrap(AFDX_fake_script)()
-function LWEDWE_fake_script() -- HumanoidHealth.HealthScript 
+coroutine.wrap(NPWSAC_fake_script)()
+function WSSOPP_fake_script() -- HumanoidHealth.HealthScript 
 	local script = Instance.new('LocalScript', HumanoidHealth)
 
 	local player = game.Players.LocalPlayer
@@ -4630,8 +4693,8 @@ function LWEDWE_fake_script() -- HumanoidHealth.HealthScript
 	player.CharacterAdded:Connect(setupChar)
 	
 end
-coroutine.wrap(LWEDWE_fake_script)()
-function UPBGL_fake_script() -- Ping.PingScript 
+coroutine.wrap(WSSOPP_fake_script)()
+function FMSCPO_fake_script() -- Ping.PingScript 
 	local script = Instance.new('LocalScript', Ping)
 
 	local player = game.Players.LocalPlayer
@@ -4666,8 +4729,8 @@ function UPBGL_fake_script() -- Ping.PingScript
 	end)
 	
 end
-coroutine.wrap(UPBGL_fake_script)()
-function JHOX_fake_script() -- Fun.Drag 
+coroutine.wrap(FMSCPO_fake_script)()
+function XLQSBNO_fake_script() -- Fun.Drag 
 	local script = Instance.new('LocalScript', Fun)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -4710,8 +4773,8 @@ function JHOX_fake_script() -- Fun.Drag
 		end
 	end)
 end
-coroutine.wrap(JHOX_fake_script)()
-function SQZOL_fake_script() -- FunDD.LocalScript 
+coroutine.wrap(XLQSBNO_fake_script)()
+function AHHUPR_fake_script() -- FunDD.LocalScript 
 	local script = Instance.new('LocalScript', FunDD)
 
 	local dd = script.Parent.Parent.FunDDFrame
@@ -4754,8 +4817,8 @@ function SQZOL_fake_script() -- FunDD.LocalScript
 		end
 	end)
 end
-coroutine.wrap(SQZOL_fake_script)()
-function OGIDUNU_fake_script() -- FakeLag.FunScript 
+coroutine.wrap(AHHUPR_fake_script)()
+function KJOEAFZ_fake_script() -- FakeLag.FunScript 
 	local script = Instance.new('LocalScript', FakeLag)
 
 	local Players = game:GetService("Players")
@@ -4826,15 +4889,14 @@ function OGIDUNU_fake_script() -- FakeLag.FunScript
 	end)
 	
 end
-coroutine.wrap(OGIDUNU_fake_script)()
-function QCEUG_fake_script() -- KillAll.KillAllScript 
+coroutine.wrap(KJOEAFZ_fake_script)()
+function QLCXFF_fake_script() -- KillAll.KillAllScript 
 	local script = Instance.new('LocalScript', KillAll)
 
 	getgenv().killall = false
 	
 	local Players = game:GetService("Players")
 	local LocalPlayer = Players.LocalPlayer
-	local RunService = game:GetService("RunService")
 	
 	local button = script.Parent  
 	
@@ -4855,7 +4917,10 @@ function QCEUG_fake_script() -- KillAll.KillAllScript
 	
 	local function getKnife()
 		local char = LocalPlayer.Character
-		if not char then notif("No Character Found.") return nil end
+		if not char then
+			notif("No Character Found.")
+			return nil
+		end
 		local knife = char:FindFirstChildOfClass("Tool") or LocalPlayer.Backpack:FindFirstChildOfClass("Tool")
 		if knife and knife:FindFirstChild("Handle") then
 			equipTool(knife)
@@ -4881,10 +4946,10 @@ function QCEUG_fake_script() -- KillAll.KillAllScript
 		if getgenv().killall then return end 
 		getgenv().killall = true
 		notif("Killing All..")
-		spawn(function()
+	
+		task.spawn(function()
 			while getgenv().killall do
 				pcall(function()
-					local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 					local knife = getKnife()
 					if knife then
 						for _, player in ipairs(Players:GetPlayers()) do
@@ -4892,17 +4957,19 @@ function QCEUG_fake_script() -- KillAll.KillAllScript
 								attackPlayer(player, knife)
 							end
 						end
+						notif("Killed All.")
 					end
 				end)
-				wait(0.1) 
+				task.wait(0.5)
 			end
 		end)
 	end
 	
 	button.MouseButton1Click:Connect(startKillAll)
+	
 end
-coroutine.wrap(QCEUG_fake_script)()
-function QWEVRP_fake_script() -- KillUser.UserKillScript 
+coroutine.wrap(QLCXFF_fake_script)()
+function OPVVKI_fake_script() -- KillUser.UserKillScript 
 	local script = Instance.new('LocalScript', KillUser)
 
 	getgenv().killTarget = false
@@ -5002,4 +5069,4 @@ function QWEVRP_fake_script() -- KillUser.UserKillScript
 	button.MouseButton1Click:Connect(startKillTarget)
 	
 end
-coroutine.wrap(QWEVRP_fake_script)()
+coroutine.wrap(OPVVKI_fake_script)()
