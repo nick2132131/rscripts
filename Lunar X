@@ -910,7 +910,7 @@ f789z43hfn3i.gdsl.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 f789z43hfn3i.gdsl.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.gdsl.BorderSizePixel = 0
 f789z43hfn3i.gdsl.Position = UDim2.new(0.0289998278, 0, 15.1730003, 0)
-f789z43hfn3i.gdsl.Size = UDim2.new(0, 311, 0, 34)
+f789z43hfn3i.gdsl.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
 f789z43hfn3i.gdsl.Font = Enum.Font.SourceSans
 f789z43hfn3i.gdsl.Text = "  Loading.."
 f789z43hfn3i.gdsl.TextColor3 = Color3.fromRGB(211, 211, 211)
@@ -1398,8 +1398,8 @@ f789z43hfn3i.LagValue.Parent = f789z43hfn3i.fklbtn
 f789z43hfn3i.LagValue.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 f789z43hfn3i.LagValue.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.LagValue.BorderSizePixel = 0
-f789z43hfn3i.LagValue.Position = UDim2.new(0.309904158, 0, 0.176470593, 0)
-f789z43hfn3i.LagValue.Size = UDim2.new(0, 104, 0, 21)
+f789z43hfn3i.LagValue.Position = UDim2.new(0.303537279, 0, 0.149389729, 0)
+f789z43hfn3i.LagValue.Size = UDim2.new(0.318420082, 0, 0.650474548, 0)
 f789z43hfn3i.LagValue.Font = Enum.Font.Arial
 f789z43hfn3i.LagValue.PlaceholderText = "lag amount"
 f789z43hfn3i.LagValue.Text = ""
@@ -2262,7 +2262,7 @@ f789z43hfn3i._v.TextWrapped = true
 f789z43hfn3i._v.TextXAlignment = Enum.TextXAlignment.Left
 f789z43hfn3i._v.TextYAlignment = Enum.TextYAlignment.Bottom
 
-local function ZTHSKR_fake_script() -- f789z43hfn3i.f789z43hfn3i.l 
+local function HDXJBZ_fake_script() -- f789z43hfn3i.f789z43hfn3i.l 
 	local script = Instance.new('LocalScript', f789z43hfn3i.f789z43hfn3i)
 
 	local function notif(str, dur)
@@ -2294,8 +2294,8 @@ local function ZTHSKR_fake_script() -- f789z43hfn3i.f789z43hfn3i.l
 	end
 	
 end
-coroutine.wrap(ZTHSKR_fake_script)()
-local function MHTZVI_fake_script() -- f789z43hfn3i.dh.ds 
+coroutine.wrap(HDXJBZ_fake_script)()
+local function QCFYTGP_fake_script() -- f789z43hfn3i.dh.ds 
 	local script = Instance.new('LocalScript', f789z43hfn3i.dh)
 
 	local UIS = game:GetService("UserInputService")
@@ -2360,8 +2360,8 @@ local function MHTZVI_fake_script() -- f789z43hfn3i.dh.ds
 	end)
 	
 end
-coroutine.wrap(MHTZVI_fake_script)()
-local function JJND_fake_script() -- f789z43hfn3i._btns.btnhnd 
+coroutine.wrap(QCFYTGP_fake_script)()
+local function PYSYW_fake_script() -- f789z43hfn3i._btns.btnhnd 
 	local script = Instance.new('LocalScript', f789z43hfn3i._btns)
 
 	local btns = script.Parent
@@ -2406,8 +2406,8 @@ local function JJND_fake_script() -- f789z43hfn3i._btns.btnhnd
 		end)
 	end
 end
-coroutine.wrap(JJND_fake_script)()
-local function IKNMON_fake_script() -- f789z43hfn3i.ifrm.load 
+coroutine.wrap(PYSYW_fake_script)()
+local function QIHJLB_fake_script() -- f789z43hfn3i.ifrm.load 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ifrm)
 
 	local Players = game:GetService("Players")
@@ -2441,8 +2441,8 @@ local function IKNMON_fake_script() -- f789z43hfn3i.ifrm.load
 	
 	setHeadshot()
 end
-coroutine.wrap(IKNMON_fake_script)()
-local function TOJCGD_fake_script() -- f789z43hfn3i.hfrm.hload 
+coroutine.wrap(QIHJLB_fake_script)()
+local function QEHQVH_fake_script() -- f789z43hfn3i.hfrm.hload 
 	local script = Instance.new('LocalScript', f789z43hfn3i.hfrm)
 
 	local Players = game:GetService("Players")
@@ -2491,8 +2491,8 @@ local function TOJCGD_fake_script() -- f789z43hfn3i.hfrm.hload
 	typeOut(0.05, "Welcome, " .. display .. ".", displayl)
 	typeOut(0.05, "(@"..user..")", userl)
 end
-coroutine.wrap(TOJCGD_fake_script)()
-local function PJUE_fake_script() -- f789z43hfn3i.utbtn.uts 
+coroutine.wrap(QEHQVH_fake_script)()
+local function ZPGU_fake_script() -- f789z43hfn3i.utbtn.uts 
 	local script = Instance.new('LocalScript', f789z43hfn3i.utbtn)
 
 	local Players = game:GetService("Players")
@@ -2524,8 +2524,8 @@ local function PJUE_fake_script() -- f789z43hfn3i.utbtn.uts
 	
 	UTPBtn.MouseButton1Click:Connect(tpToUser)
 end
-coroutine.wrap(PJUE_fake_script)()
-local function KLTR_fake_script() -- f789z43hfn3i.rtpbtn.rtps 
+coroutine.wrap(ZPGU_fake_script)()
+local function QKBHXVR_fake_script() -- f789z43hfn3i.rtpbtn.rtps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.rtpbtn)
 
 	local Players = game:GetService("Players")
@@ -2555,8 +2555,8 @@ local function KLTR_fake_script() -- f789z43hfn3i.rtpbtn.rtps
 	
 	RTPBtn.MouseButton1Click:Connect(tpToRandom)
 end
-coroutine.wrap(KLTR_fake_script)()
-local function KJJJJO_fake_script() -- f789z43hfn3i.ltpbtn.ltps 
+coroutine.wrap(QKBHXVR_fake_script)()
+local function AZPVW_fake_script() -- f789z43hfn3i.ltpbtn.ltps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ltpbtn)
 
 	local Players = game:GetService("Players")
@@ -2585,8 +2585,8 @@ local function KJJJJO_fake_script() -- f789z43hfn3i.ltpbtn.ltps
 		end
 	end)
 end
-coroutine.wrap(KJJJJO_fake_script)()
-local function NBQYTS_fake_script() -- f789z43hfn3i.mtpbtn.mtps 
+coroutine.wrap(AZPVW_fake_script)()
+local function ELVM_fake_script() -- f789z43hfn3i.mtpbtn.mtps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mtpbtn)
 
 	local Players = game:GetService("Players")
@@ -2642,8 +2642,8 @@ local function NBQYTS_fake_script() -- f789z43hfn3i.mtpbtn.mtps
 	end)
 	
 end
-coroutine.wrap(NBQYTS_fake_script)()
-local function ITYEN_fake_script() -- f789z43hfn3i.stpbtn.stps 
+coroutine.wrap(ELVM_fake_script)()
+local function FGEZHXL_fake_script() -- f789z43hfn3i.stpbtn.stps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.stpbtn)
 
 	local Players = game:GetService("Players")
@@ -2729,8 +2729,8 @@ local function ITYEN_fake_script() -- f789z43hfn3i.stpbtn.stps
 	end)
 	
 end
-coroutine.wrap(ITYEN_fake_script)()
-local function MCHSO_fake_script() -- f789z43hfn3i.mptpbtn.mptps 
+coroutine.wrap(FGEZHXL_fake_script)()
+local function SPRZV_fake_script() -- f789z43hfn3i.mptpbtn.mptps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mptpbtn)
 
 	local Players = game:GetService("Players")
@@ -2775,8 +2775,8 @@ local function MCHSO_fake_script() -- f789z43hfn3i.mptpbtn.mptps
 		end
 	end)
 end
-coroutine.wrap(MCHSO_fake_script)()
-local function FXOQRV_fake_script() -- f789z43hfn3i.atpbtn.atps 
+coroutine.wrap(SPRZV_fake_script)()
+local function TVJJLOH_fake_script() -- f789z43hfn3i.atpbtn.atps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.atpbtn)
 
 	local Players = game:GetService("Players")
@@ -2822,8 +2822,8 @@ local function FXOQRV_fake_script() -- f789z43hfn3i.atpbtn.atps
 		end
 	end)
 end
-coroutine.wrap(FXOQRV_fake_script)()
-local function GZAAT_fake_script() -- f789z43hfn3i.ggbtn.ggs 
+coroutine.wrap(TVJJLOH_fake_script)()
+local function YQCEQPF_fake_script() -- f789z43hfn3i.ggbtn.ggs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ggbtn)
 
 	local Players = game:GetService("Players")
@@ -2870,8 +2870,8 @@ local function GZAAT_fake_script() -- f789z43hfn3i.ggbtn.ggs
 		end)
 	end
 end
-coroutine.wrap(GZAAT_fake_script)()
-local function YBVLE_fake_script() -- f789z43hfn3i.aggbtn.aggs 
+coroutine.wrap(YQCEQPF_fake_script)()
+local function NPKJHRQ_fake_script() -- f789z43hfn3i.aggbtn.aggs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.aggbtn)
 
 	local Players = game:GetService("Players")
@@ -2924,8 +2924,8 @@ local function YBVLE_fake_script() -- f789z43hfn3i.aggbtn.aggs
 	end)
 	
 end
-coroutine.wrap(YBVLE_fake_script)()
-local function PRJCMJ_fake_script() -- f789z43hfn3i.gdsl.gdss 
+coroutine.wrap(NPKJHRQ_fake_script)()
+local function GLJMT_fake_script() -- f789z43hfn3i.gdsl.gdss 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gdsl)
 
 	local Workspace = game:GetService("Workspace")
@@ -2981,8 +2981,8 @@ local function PRJCMJ_fake_script() -- f789z43hfn3i.gdsl.gdss
 	end)
 	
 end
-coroutine.wrap(PRJCMJ_fake_script)()
-local function FJCW_fake_script() -- f789z43hfn3i.sl.sbtns 
+coroutine.wrap(GLJMT_fake_script)()
+local function FVLBO_fake_script() -- f789z43hfn3i.sl.sbtns 
 	local script = Instance.new('LocalScript', f789z43hfn3i.sl)
 
 	local TeleportService = game:GetService("TeleportService")
@@ -3113,8 +3113,8 @@ local function FJCW_fake_script() -- f789z43hfn3i.sl.sbtns
 		end
 	end)
 end
-coroutine.wrap(FJCW_fake_script)()
-local function HDCKH_fake_script() -- f789z43hfn3i.gdsl_2.gdss 
+coroutine.wrap(FVLBO_fake_script)()
+local function GQEZT_fake_script() -- f789z43hfn3i.gdsl_2.gdss 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gdsl_2)
 
 	local Workspace = game:GetService("Workspace")
@@ -3170,8 +3170,8 @@ local function HDCKH_fake_script() -- f789z43hfn3i.gdsl_2.gdss
 	end)
 	
 end
-coroutine.wrap(HDCKH_fake_script)()
-local function RHOK_fake_script() -- f789z43hfn3i.gdnbtn.gdns 
+coroutine.wrap(GQEZT_fake_script)()
+local function HDVL_fake_script() -- f789z43hfn3i.gdnbtn.gdns 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gdnbtn)
 
 	local player = game.Players.LocalPlayer
@@ -3210,8 +3210,8 @@ local function RHOK_fake_script() -- f789z43hfn3i.gdnbtn.gdns
 	end)
 	
 end
-coroutine.wrap(RHOK_fake_script)()
-local function VNDQBLK_fake_script() -- f789z43hfn3i.btnnbtn.btnns 
+coroutine.wrap(HDVL_fake_script)()
+local function WUJP_fake_script() -- f789z43hfn3i.btnnbtn.btnns 
 	local script = Instance.new('LocalScript', f789z43hfn3i.btnnbtn)
 
 	local player = game.Players.LocalPlayer
@@ -3250,8 +3250,8 @@ local function VNDQBLK_fake_script() -- f789z43hfn3i.btnnbtn.btnns
 	end)
 	
 end
-coroutine.wrap(VNDQBLK_fake_script)()
-local function XLBYEML_fake_script() -- f789z43hfn3i.onbtn.ons 
+coroutine.wrap(WUJP_fake_script)()
+local function GBHONB_fake_script() -- f789z43hfn3i.onbtn.ons 
 	local script = Instance.new('LocalScript', f789z43hfn3i.onbtn)
 
 	local player = game.Players.LocalPlayer
@@ -3290,8 +3290,8 @@ local function XLBYEML_fake_script() -- f789z43hfn3i.onbtn.ons
 	end)
 	
 end
-coroutine.wrap(XLBYEML_fake_script)()
-local function SYPGKK_fake_script() -- f789z43hfn3i.ggkbtn.ggks 
+coroutine.wrap(GBHONB_fake_script)()
+local function PLTZ_fake_script() -- f789z43hfn3i.ggkbtn.ggks 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ggkbtn)
 
 	local Players = game:GetService("Players")
@@ -3371,8 +3371,8 @@ local function SYPGKK_fake_script() -- f789z43hfn3i.ggkbtn.ggks
 	end)
 	
 end
-coroutine.wrap(SYPGKK_fake_script)()
-local function PGJYECC_fake_script() -- f789z43hfn3i.mkbtn.mks 
+coroutine.wrap(PLTZ_fake_script)()
+local function DFMWCP_fake_script() -- f789z43hfn3i.mkbtn.mks 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mkbtn)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3420,8 +3420,8 @@ local function PGJYECC_fake_script() -- f789z43hfn3i.mkbtn.mks
 		button.TextSize = 10
 	end)
 end
-coroutine.wrap(PGJYECC_fake_script)()
-local function MPJUJ_fake_script() -- f789z43hfn3i.flbtn.fls 
+coroutine.wrap(DFMWCP_fake_script)()
+local function KQXCEC_fake_script() -- f789z43hfn3i.flbtn.fls 
 	local script = Instance.new('LocalScript', f789z43hfn3i.flbtn)
 
 	local TweenService = game:GetService("TweenService")
@@ -3491,8 +3491,8 @@ local function MPJUJ_fake_script() -- f789z43hfn3i.flbtn.fls
 	fling()
 	
 end
-coroutine.wrap(MPJUJ_fake_script)()
-local function LEWEGAF_fake_script() -- f789z43hfn3i.flusbtn.flus 
+coroutine.wrap(KQXCEC_fake_script)()
+local function CPCXAL_fake_script() -- f789z43hfn3i.flusbtn.flus 
 	local script = Instance.new('LocalScript', f789z43hfn3i.flusbtn)
 
 	local Players = game:GetService("Players")
@@ -3676,8 +3676,8 @@ local function LEWEGAF_fake_script() -- f789z43hfn3i.flusbtn.flus
 	
 	
 end
-coroutine.wrap(LEWEGAF_fake_script)()
-local function SBRVY_fake_script() -- f789z43hfn3i.fklbtn.fkls 
+coroutine.wrap(CPCXAL_fake_script)()
+local function BARKN_fake_script() -- f789z43hfn3i.fklbtn.fkls 
 	local script = Instance.new('LocalScript', f789z43hfn3i.fklbtn)
 
 	local TweenService = game:GetService("TweenService")
@@ -3758,8 +3758,8 @@ local function SBRVY_fake_script() -- f789z43hfn3i.fklbtn.fkls
 	bar.BackgroundColor3 = inactiveColor
 	
 end
-coroutine.wrap(SBRVY_fake_script)()
-local function AWQAULX_fake_script() -- f789z43hfn3i.kabtn.kas 
+coroutine.wrap(BARKN_fake_script)()
+local function WAVFI_fake_script() -- f789z43hfn3i.kabtn.kas 
 	local script = Instance.new('LocalScript', f789z43hfn3i.kabtn)
 
 	getgenv().killall = false
@@ -3841,8 +3841,8 @@ local function AWQAULX_fake_script() -- f789z43hfn3i.kabtn.kas
 	button.MouseButton1Click:Connect(startKillAll)
 	
 end
-coroutine.wrap(AWQAULX_fake_script)()
-local function ZFXMKV_fake_script() -- f789z43hfn3i.kubtn.kus 
+coroutine.wrap(WAVFI_fake_script)()
+local function DLFYJ_fake_script() -- f789z43hfn3i.kubtn.kus 
 	local script = Instance.new('LocalScript', f789z43hfn3i.kubtn)
 
 	getgenv().killTarget = false
@@ -3948,8 +3948,8 @@ local function ZFXMKV_fake_script() -- f789z43hfn3i.kubtn.kus
 	button.MouseButton1Click:Connect(startKillTarget)
 	
 end
-coroutine.wrap(ZFXMKV_fake_script)()
-local function KYYXV_fake_script() -- f789z43hfn3i.rebtn.res 
+coroutine.wrap(DLFYJ_fake_script)()
+local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res 
 	local script = Instance.new('LocalScript', f789z43hfn3i.rebtn)
 
 	local Players = game:GetService("Players")
@@ -4112,8 +4112,8 @@ local function KYYXV_fake_script() -- f789z43hfn3i.rebtn.res
 	btn.MouseButton1Click:Connect(toggleESP)
 	
 end
-coroutine.wrap(KYYXV_fake_script)()
-local function CMGGNA_fake_script() -- f789z43hfn3i.mebtn.mes 
+coroutine.wrap(TNKQ_fake_script)()
+local function UFCX_fake_script() -- f789z43hfn3i.mebtn.mes 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mebtn)
 
 	local Players = game:GetService("Players")
@@ -4218,8 +4218,8 @@ local function CMGGNA_fake_script() -- f789z43hfn3i.mebtn.mes
 	end)
 	
 end
-coroutine.wrap(CMGGNA_fake_script)()
-local function UNHD_fake_script() -- f789z43hfn3i.sebtn.ses 
+coroutine.wrap(UFCX_fake_script)()
+local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses 
 	local script = Instance.new('LocalScript', f789z43hfn3i.sebtn)
 
 	local Players = game:GetService("Players")
@@ -4371,8 +4371,8 @@ local function UNHD_fake_script() -- f789z43hfn3i.sebtn.ses
 	end)
 	
 end
-coroutine.wrap(UNHD_fake_script)()
-local function URYMY_fake_script() -- f789z43hfn3i.cebtn.ces 
+coroutine.wrap(IHTJB_fake_script)()
+local function BCOBFW_fake_script() -- f789z43hfn3i.cebtn.ces 
 	local script = Instance.new('LocalScript', f789z43hfn3i.cebtn)
 
 	local Workspace = game:GetService("Workspace")
@@ -4499,8 +4499,8 @@ local function URYMY_fake_script() -- f789z43hfn3i.cebtn.ces
 	end)
 	
 end
-coroutine.wrap(URYMY_fake_script)()
-local function JEIOZNW_fake_script() -- f789z43hfn3i.gebtn.ges 
+coroutine.wrap(BCOBFW_fake_script)()
+local function IQUP_fake_script() -- f789z43hfn3i.gebtn.ges 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gebtn)
 
 	local Workspace = game:GetService("Workspace")
@@ -4620,8 +4620,8 @@ local function JEIOZNW_fake_script() -- f789z43hfn3i.gebtn.ges
 	end)
 	
 end
-coroutine.wrap(JEIOZNW_fake_script)()
-local function SYRA_fake_script() -- f789z43hfn3i.tbtn_2.ts 
+coroutine.wrap(IQUP_fake_script)()
+local function YBPQDOZ_fake_script() -- f789z43hfn3i.tbtn_2.ts 
 	local script = Instance.new('LocalScript', f789z43hfn3i.tbtn_2)
 
 	local Players = game:GetService("Players")
@@ -4756,8 +4756,8 @@ local function SYRA_fake_script() -- f789z43hfn3i.tbtn_2.ts
 	end)
 	
 end
-coroutine.wrap(SYRA_fake_script)()
-local function XESQ_fake_script() -- f789z43hfn3i.nebtn.nes 
+coroutine.wrap(YBPQDOZ_fake_script)()
+local function HYUPCO_fake_script() -- f789z43hfn3i.nebtn.nes 
 	local script = Instance.new('LocalScript', f789z43hfn3i.nebtn)
 
 	local Players = game:GetService("Players")
@@ -4911,8 +4911,8 @@ local function XESQ_fake_script() -- f789z43hfn3i.nebtn.nes
 	bar.BackgroundColor3 = inactiveColor
 	
 end
-coroutine.wrap(XESQ_fake_script)()
-local function ULQCCOY_fake_script() -- f789z43hfn3i.gmbtn.gms 
+coroutine.wrap(HYUPCO_fake_script)()
+local function CWHLI_fake_script() -- f789z43hfn3i.gmbtn.gms 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gmbtn)
 
 	local Players = game:GetService("Players")
@@ -5000,8 +5000,8 @@ local function ULQCCOY_fake_script() -- f789z43hfn3i.gmbtn.gms
 	bar.Position = normalPos
 	bar.BackgroundColor3 = normalColor
 end
-coroutine.wrap(ULQCCOY_fake_script)()
-local function WQIDKB_fake_script() -- f789z43hfn3i.ncbtn.ncs 
+coroutine.wrap(CWHLI_fake_script)()
+local function XFKXRDP_fake_script() -- f789z43hfn3i.ncbtn.ncs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ncbtn)
 
 	local Players = game:GetService("Players")
@@ -5092,8 +5092,8 @@ local function WQIDKB_fake_script() -- f789z43hfn3i.ncbtn.ncs
 	bar.BackgroundColor3 = normalColor
 	
 end
-coroutine.wrap(WQIDKB_fake_script)()
-local function YXOBPT_fake_script() -- f789z43hfn3i.rbtn.rs 
+coroutine.wrap(XFKXRDP_fake_script)()
+local function MBGS_fake_script() -- f789z43hfn3i.rbtn.rs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.rbtn)
 
 	local Players = game:GetService("Players")
@@ -5122,8 +5122,8 @@ local function YXOBPT_fake_script() -- f789z43hfn3i.rbtn.rs
 		end
 	end)
 end
-coroutine.wrap(YXOBPT_fake_script)()
-local function ASROWL_fake_script() -- f789z43hfn3i.fbtn.fs 
+coroutine.wrap(MBGS_fake_script)()
+local function QZBM_fake_script() -- f789z43hfn3i.fbtn.fs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.fbtn)
 
 	local Players = game:GetService("Players")
@@ -5296,8 +5296,8 @@ local function ASROWL_fake_script() -- f789z43hfn3i.fbtn.fs
 	bar.BackgroundColor3 = normalColor
 	
 end
-coroutine.wrap(ASROWL_fake_script)()
-local function VJSWSIA_fake_script() -- f789z43hfn3i.ftbtn.fts 
+coroutine.wrap(QZBM_fake_script)()
+local function SESZWCB_fake_script() -- f789z43hfn3i.ftbtn.fts 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ftbtn)
 
 	local Players = game:GetService("Players")
@@ -5370,8 +5370,8 @@ local function VJSWSIA_fake_script() -- f789z43hfn3i.ftbtn.fts
 	bar.BackgroundColor3 = normalColor
 	
 end
-coroutine.wrap(VJSWSIA_fake_script)()
-local function PNGGMM_fake_script() -- f789z43hfn3i.ijbtn.ijs 
+coroutine.wrap(SESZWCB_fake_script)()
+local function IWUZIHQ_fake_script() -- f789z43hfn3i.ijbtn.ijs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ijbtn)
 
 	local Players = game:GetService("Players")
@@ -5427,8 +5427,8 @@ local function PNGGMM_fake_script() -- f789z43hfn3i.ijbtn.ijs
 	bar.Position = normalPos
 	bar.BackgroundColor3 = normalColor
 end
-coroutine.wrap(PNGGMM_fake_script)()
-local function NSLI_fake_script() -- f789z43hfn3i.sabtn.sas 
+coroutine.wrap(IWUZIHQ_fake_script)()
+local function QERYYE_fake_script() -- f789z43hfn3i.sabtn.sas 
 	local script = Instance.new('LocalScript', f789z43hfn3i.sabtn)
 
 	local TweenService = game:GetService("TweenService")
@@ -5479,8 +5479,8 @@ local function NSLI_fake_script() -- f789z43hfn3i.sabtn.sas
 	end)
 	
 end
-coroutine.wrap(NSLI_fake_script)()
-local function VMWBLNL_fake_script() -- f789z43hfn3i.aabtn.aas 
+coroutine.wrap(QERYYE_fake_script)()
+local function GZWVH_fake_script() -- f789z43hfn3i.aabtn.aas 
 	local script = Instance.new('LocalScript', f789z43hfn3i.aabtn)
 
 	local LocalPlayer = game.Players.LocalPlayer
@@ -5517,8 +5517,8 @@ local function VMWBLNL_fake_script() -- f789z43hfn3i.aabtn.aas
 	end)
 	
 end
-coroutine.wrap(VMWBLNL_fake_script)()
-local function HAZWBPR_fake_script() -- f789z43hfn3i.afbtn.afs 
+coroutine.wrap(GZWVH_fake_script)()
+local function QNGMUAX_fake_script() -- f789z43hfn3i.afbtn.afs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.afbtn)
 
 	local TweenService = game:GetService("TweenService")
@@ -5629,8 +5629,8 @@ local function HAZWBPR_fake_script() -- f789z43hfn3i.afbtn.afs
 	end)
 	
 end
-coroutine.wrap(HAZWBPR_fake_script)()
-local function TKPTJPV_fake_script() -- f789z43hfn3i.endb._es 
+coroutine.wrap(QNGMUAX_fake_script)()
+local function BFLWP_fake_script() -- f789z43hfn3i.endb._es 
 	local script = Instance.new('LocalScript', f789z43hfn3i.endb)
 
 	local Players = game:GetService("Players")
@@ -5643,8 +5643,8 @@ local function TKPTJPV_fake_script() -- f789z43hfn3i.endb._es
 	end)
 	
 end
-coroutine.wrap(TKPTJPV_fake_script)()
-local function YOFXCH_fake_script() -- f789z43hfn3i.min._ms 
+coroutine.wrap(BFLWP_fake_script)()
+local function BYNMDSN_fake_script() -- f789z43hfn3i.min._ms 
 	local script = Instance.new('LocalScript', f789z43hfn3i.min)
 
 	local Players = game:GetService("Players")
@@ -5707,4 +5707,4 @@ local function YOFXCH_fake_script() -- f789z43hfn3i.min._ms
 	end)
 	
 end
-coroutine.wrap(YOFXCH_fake_script)()
+coroutine.wrap(BYNMDSN_fake_script)()
