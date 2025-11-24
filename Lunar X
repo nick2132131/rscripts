@@ -3007,14 +3007,14 @@ local function FJCW_fake_script() -- f789z43hfn3i.sl.sbtns
 	TeleportService.TeleportInitFailed:Connect(function()
 		task.wait(5)
 		pcall(function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/LunarX"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/Lunar%20X"))()
 		end)
 	end)
 	
 	function queueReload()
 		local queued = [[
 	        task.wait(5)
-	        loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/LunarX"))()
+	        loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/Lunar%20X"))()
 	    ]]
 		if syn and syn.queue_on_teleport then
 			syn.queue_on_teleport(queued)
