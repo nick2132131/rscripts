@@ -50,7 +50,7 @@ local f789z43hfn3i = {
 	_c_17 = Instance.new("UICorner"),
 	logs = Instance.new("Frame"),
 	logl = Instance.new("TextLabel"),
-	TextLabel = Instance.new("TextLabel"),
+	txtl = Instance.new("TextLabel"),
 	_c_18 = Instance.new("UICorner"),
 	ofrm = Instance.new("Frame"),
 	_c_19 = Instance.new("UICorner"),
@@ -212,52 +212,52 @@ local f789z43hfn3i = {
 	_c_89 = Instance.new("UICorner"),
 	bar_13 = Instance.new("Frame"),
 	_c_90 = Instance.new("UICorner"),
-	pfrm = Instance.new("Frame"),
+	xbtn = Instance.new("TextButton"),
 	_c_91 = Instance.new("UICorner"),
+	tfrm_15 = Instance.new("Frame"),
+	_c_92 = Instance.new("UICorner"),
+	bar_14 = Instance.new("Frame"),
+	_c_93 = Instance.new("UICorner"),
+	pfrm = Instance.new("Frame"),
+	_c_94 = Instance.new("UICorner"),
 	_scr_5 = Instance.new("ScrollingFrame"),
 	pml = Instance.new("TextLabel"),
 	gmbtn = Instance.new("TextButton"),
-	_c_92 = Instance.new("UICorner"),
-	tfrm_15 = Instance.new("Frame"),
-	_c_93 = Instance.new("UICorner"),
-	bar_14 = Instance.new("Frame"),
-	_c_94 = Instance.new("UICorner"),
-	ncbtn = Instance.new("TextButton"),
 	_c_95 = Instance.new("UICorner"),
 	tfrm_16 = Instance.new("Frame"),
 	_c_96 = Instance.new("UICorner"),
 	bar_15 = Instance.new("Frame"),
 	_c_97 = Instance.new("UICorner"),
+	ncbtn = Instance.new("TextButton"),
+	_c_98 = Instance.new("UICorner"),
+	tfrm_17 = Instance.new("Frame"),
+	_c_99 = Instance.new("UICorner"),
+	bar_16 = Instance.new("Frame"),
+	_c_100 = Instance.new("UICorner"),
 	brd_13 = Instance.new("Frame"),
 	grd_13 = Instance.new("UIGradient"),
-	_c_98 = Instance.new("UICorner"),
-	rbtn = Instance.new("TextButton"),
-	_c_99 = Instance.new("UICorner"),
-	fbtn = Instance.new("TextButton"),
-	_c_100 = Instance.new("UICorner"),
-	tfrm_17 = Instance.new("Frame"),
 	_c_101 = Instance.new("UICorner"),
-	bar_16 = Instance.new("Frame"),
+	rbtn = Instance.new("TextButton"),
 	_c_102 = Instance.new("UICorner"),
-	ftbtn = Instance.new("TextButton"),
+	fbtn = Instance.new("TextButton"),
 	_c_103 = Instance.new("UICorner"),
 	tfrm_18 = Instance.new("Frame"),
 	_c_104 = Instance.new("UICorner"),
 	bar_17 = Instance.new("Frame"),
 	_c_105 = Instance.new("UICorner"),
-	ijbtn = Instance.new("TextButton"),
+	ftbtn = Instance.new("TextButton"),
 	_c_106 = Instance.new("UICorner"),
 	tfrm_19 = Instance.new("Frame"),
 	_c_107 = Instance.new("UICorner"),
 	bar_18 = Instance.new("Frame"),
 	_c_108 = Instance.new("UICorner"),
-	prl = Instance.new("TextLabel"),
-	sabtn = Instance.new("TextButton"),
+	ijbtn = Instance.new("TextButton"),
 	_c_109 = Instance.new("UICorner"),
 	tfrm_20 = Instance.new("Frame"),
 	_c_110 = Instance.new("UICorner"),
 	bar_19 = Instance.new("Frame"),
 	_c_111 = Instance.new("UICorner"),
+	prl = Instance.new("TextLabel"),
 	aabtn = Instance.new("TextButton"),
 	_c_112 = Instance.new("UICorner"),
 	tfrm_21 = Instance.new("Frame"),
@@ -279,6 +279,8 @@ local f789z43hfn3i = {
 	min = Instance.new("TextButton"),
 	_v = Instance.new("TextLabel"),
 }
+
+--Properties:
 
 f789z43hfn3i.f789z43hfn3i.Name = "f789z43hfn3i"
 f789z43hfn3i.f789z43hfn3i.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -596,8 +598,8 @@ f789z43hfn3i.hds_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 f789z43hfn3i.hds_2.BackgroundTransparency = 1.000
 f789z43hfn3i.hds_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.hds_2.BorderSizePixel = 0
-f789z43hfn3i.hds_2.Position = UDim2.new(0.0405684598, 0, 0.0748900101, 0)
-f789z43hfn3i.hds_2.Size = UDim2.new(0.210113987, 0, 0.245094925, 0)
+f789z43hfn3i.hds_2.Position = UDim2.new(0.0405683815, 0, 0.0748900175, 0)
+f789z43hfn3i.hds_2.Size = UDim2.new(0.215951234, 0, 0.24509494, 0)
 f789z43hfn3i.hds_2.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
 
 f789z43hfn3i.user.Name = "user"
@@ -645,26 +647,27 @@ f789z43hfn3i.logl.BorderSizePixel = 0
 f789z43hfn3i.logl.Position = UDim2.new(0.0226541162, 0, 0.0466666669, 0)
 f789z43hfn3i.logl.Size = UDim2.new(0.979178309, 0, 0.953333318, 0)
 f789z43hfn3i.logl.Font = Enum.Font.Arial
-f789z43hfn3i.logl.Text = "Change Logs [v0.10]"
+f789z43hfn3i.logl.Text = "Change Logs [v0.11]"
 f789z43hfn3i.logl.TextColor3 = Color3.fromRGB(189, 189, 189)
 f789z43hfn3i.logl.TextSize = 14.000
 f789z43hfn3i.logl.TextXAlignment = Enum.TextXAlignment.Left
 f789z43hfn3i.logl.TextYAlignment = Enum.TextYAlignment.Top
 
-f789z43hfn3i.TextLabel.Parent = f789z43hfn3i.logl
-f789z43hfn3i.TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-f789z43hfn3i.TextLabel.BackgroundTransparency = 1.000
-f789z43hfn3i.TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.TextLabel.BorderSizePixel = 0
-f789z43hfn3i.TextLabel.Position = UDim2.new(-4.03450059e-07, 0, 0.145984992, 0)
-f789z43hfn3i.TextLabel.Size = UDim2.new(0.998129189, 0, 0.854015291, 0)
-f789z43hfn3i.TextLabel.Font = Enum.Font.Arial
-f789z43hfn3i.TextLabel.Text = "     Release."
-f789z43hfn3i.TextLabel.TextColor3 = Color3.fromRGB(189, 189, 189)
-f789z43hfn3i.TextLabel.TextSize = 14.000
-f789z43hfn3i.TextLabel.TextTransparency = 0.300
-f789z43hfn3i.TextLabel.TextXAlignment = Enum.TextXAlignment.Left
-f789z43hfn3i.TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+f789z43hfn3i.txtl.Name = "txtl"
+f789z43hfn3i.txtl.Parent = f789z43hfn3i.logl
+f789z43hfn3i.txtl.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+f789z43hfn3i.txtl.BackgroundTransparency = 1.000
+f789z43hfn3i.txtl.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.txtl.BorderSizePixel = 0
+f789z43hfn3i.txtl.Position = UDim2.new(-4.03450059e-07, 0, 0.145984992, 0)
+f789z43hfn3i.txtl.Size = UDim2.new(0.998129189, 0, 0.854015291, 0)
+f789z43hfn3i.txtl.Font = Enum.Font.Arial
+f789z43hfn3i.txtl.Text = "     [!] Bug fixes "
+f789z43hfn3i.txtl.TextColor3 = Color3.fromRGB(189, 189, 189)
+f789z43hfn3i.txtl.TextSize = 14.000
+f789z43hfn3i.txtl.TextTransparency = 0.300
+f789z43hfn3i.txtl.TextXAlignment = Enum.TextXAlignment.Left
+f789z43hfn3i.txtl.TextYAlignment = Enum.TextYAlignment.Top
 
 f789z43hfn3i._c_18.CornerRadius = UDim.new(0, 13)
 f789z43hfn3i._c_18.Name = "_c"
@@ -1797,6 +1800,44 @@ f789z43hfn3i.bar_13.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
 f789z43hfn3i._c_90.Name = "_c"
 f789z43hfn3i._c_90.Parent = f789z43hfn3i.bar_13
 
+f789z43hfn3i.xbtn.Name = "xbtn"
+f789z43hfn3i.xbtn.Parent = f789z43hfn3i.el
+f789z43hfn3i.xbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+f789z43hfn3i.xbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.xbtn.BorderSizePixel = 0
+f789z43hfn3i.xbtn.Position = UDim2.new(0.0289999992, 0, 12.0869999, 0)
+f789z43hfn3i.xbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
+f789z43hfn3i.xbtn.Font = Enum.Font.Arial
+f789z43hfn3i.xbtn.Text = "   X-Ray"
+f789z43hfn3i.xbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
+f789z43hfn3i.xbtn.TextSize = 14.000
+f789z43hfn3i.xbtn.TextXAlignment = Enum.TextXAlignment.Left
+
+f789z43hfn3i._c_91.Name = "_c"
+f789z43hfn3i._c_91.Parent = f789z43hfn3i.xbtn
+
+f789z43hfn3i.tfrm_15.Name = "tfrm"
+f789z43hfn3i.tfrm_15.Parent = f789z43hfn3i.xbtn
+f789z43hfn3i.tfrm_15.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+f789z43hfn3i.tfrm_15.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.tfrm_15.BorderSizePixel = 0
+f789z43hfn3i.tfrm_15.Position = UDim2.new(0.702875495, 0, 0.147059128, 0)
+f789z43hfn3i.tfrm_15.Size = UDim2.new(0.251977593, 0, 0.709999979, 0)
+
+f789z43hfn3i._c_92.Name = "_c"
+f789z43hfn3i._c_92.Parent = f789z43hfn3i.tfrm_15
+
+f789z43hfn3i.bar_14.Name = "bar"
+f789z43hfn3i.bar_14.Parent = f789z43hfn3i.tfrm_15
+f789z43hfn3i.bar_14.BackgroundColor3 = Color3.fromRGB(179, 41, 22)
+f789z43hfn3i.bar_14.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.bar_14.BorderSizePixel = 0
+f789z43hfn3i.bar_14.Position = UDim2.new(2.3177729e-06, 0, -2.50801327e-06, 0)
+f789z43hfn3i.bar_14.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
+
+f789z43hfn3i._c_93.Name = "_c"
+f789z43hfn3i._c_93.Parent = f789z43hfn3i.bar_14
+
 f789z43hfn3i.pfrm.Name = "pfrm"
 f789z43hfn3i.pfrm.Parent = f789z43hfn3i._frms
 f789z43hfn3i.pfrm.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
@@ -1806,9 +1847,9 @@ f789z43hfn3i.pfrm.Position = UDim2.new(0.0316057913, 0, 0.0437500216, 0)
 f789z43hfn3i.pfrm.Size = UDim2.new(0.934596598, 0, 0.915625036, 0)
 f789z43hfn3i.pfrm.Visible = false
 
-f789z43hfn3i._c_91.CornerRadius = UDim.new(0, 4)
-f789z43hfn3i._c_91.Name = "_c"
-f789z43hfn3i._c_91.Parent = f789z43hfn3i.pfrm
+f789z43hfn3i._c_94.CornerRadius = UDim.new(0, 4)
+f789z43hfn3i._c_94.Name = "_c"
+f789z43hfn3i._c_94.Parent = f789z43hfn3i.pfrm
 
 f789z43hfn3i._scr_5.Name = "_scr"
 f789z43hfn3i._scr_5.Parent = f789z43hfn3i.pfrm
@@ -1847,49 +1888,11 @@ f789z43hfn3i.gmbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
 f789z43hfn3i.gmbtn.TextSize = 14.000
 f789z43hfn3i.gmbtn.TextXAlignment = Enum.TextXAlignment.Left
 
-f789z43hfn3i._c_92.Name = "_c"
-f789z43hfn3i._c_92.Parent = f789z43hfn3i.gmbtn
-
-f789z43hfn3i.tfrm_15.Name = "tfrm"
-f789z43hfn3i.tfrm_15.Parent = f789z43hfn3i.gmbtn
-f789z43hfn3i.tfrm_15.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
-f789z43hfn3i.tfrm_15.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.tfrm_15.BorderSizePixel = 0
-f789z43hfn3i.tfrm_15.Position = UDim2.new(0.702875495, 0, 0.147059128, 0)
-f789z43hfn3i.tfrm_15.Size = UDim2.new(0.251977593, 0, 0.709999979, 0)
-
-f789z43hfn3i._c_93.Name = "_c"
-f789z43hfn3i._c_93.Parent = f789z43hfn3i.tfrm_15
-
-f789z43hfn3i.bar_14.Name = "bar"
-f789z43hfn3i.bar_14.Parent = f789z43hfn3i.tfrm_15
-f789z43hfn3i.bar_14.BackgroundColor3 = Color3.fromRGB(179, 41, 22)
-f789z43hfn3i.bar_14.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.bar_14.BorderSizePixel = 0
-f789z43hfn3i.bar_14.Position = UDim2.new(2.3177729e-06, 0, -2.50801327e-06, 0)
-f789z43hfn3i.bar_14.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
-
-f789z43hfn3i._c_94.Name = "_c"
-f789z43hfn3i._c_94.Parent = f789z43hfn3i.bar_14
-
-f789z43hfn3i.ncbtn.Name = "ncbtn"
-f789z43hfn3i.ncbtn.Parent = f789z43hfn3i.pml
-f789z43hfn3i.ncbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-f789z43hfn3i.ncbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.ncbtn.BorderSizePixel = 0
-f789z43hfn3i.ncbtn.Position = UDim2.new(0.0289854966, 0, 2.82911372, 0)
-f789z43hfn3i.ncbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
-f789z43hfn3i.ncbtn.Font = Enum.Font.Arial
-f789z43hfn3i.ncbtn.Text = "   NoClip"
-f789z43hfn3i.ncbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
-f789z43hfn3i.ncbtn.TextSize = 14.000
-f789z43hfn3i.ncbtn.TextXAlignment = Enum.TextXAlignment.Left
-
 f789z43hfn3i._c_95.Name = "_c"
-f789z43hfn3i._c_95.Parent = f789z43hfn3i.ncbtn
+f789z43hfn3i._c_95.Parent = f789z43hfn3i.gmbtn
 
 f789z43hfn3i.tfrm_16.Name = "tfrm"
-f789z43hfn3i.tfrm_16.Parent = f789z43hfn3i.ncbtn
+f789z43hfn3i.tfrm_16.Parent = f789z43hfn3i.gmbtn
 f789z43hfn3i.tfrm_16.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 f789z43hfn3i.tfrm_16.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.tfrm_16.BorderSizePixel = 0
@@ -1910,6 +1913,44 @@ f789z43hfn3i.bar_15.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
 f789z43hfn3i._c_97.Name = "_c"
 f789z43hfn3i._c_97.Parent = f789z43hfn3i.bar_15
 
+f789z43hfn3i.ncbtn.Name = "ncbtn"
+f789z43hfn3i.ncbtn.Parent = f789z43hfn3i.pml
+f789z43hfn3i.ncbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+f789z43hfn3i.ncbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.ncbtn.BorderSizePixel = 0
+f789z43hfn3i.ncbtn.Position = UDim2.new(0.0289854966, 0, 2.82911372, 0)
+f789z43hfn3i.ncbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
+f789z43hfn3i.ncbtn.Font = Enum.Font.Arial
+f789z43hfn3i.ncbtn.Text = "   NoClip"
+f789z43hfn3i.ncbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
+f789z43hfn3i.ncbtn.TextSize = 14.000
+f789z43hfn3i.ncbtn.TextXAlignment = Enum.TextXAlignment.Left
+
+f789z43hfn3i._c_98.Name = "_c"
+f789z43hfn3i._c_98.Parent = f789z43hfn3i.ncbtn
+
+f789z43hfn3i.tfrm_17.Name = "tfrm"
+f789z43hfn3i.tfrm_17.Parent = f789z43hfn3i.ncbtn
+f789z43hfn3i.tfrm_17.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
+f789z43hfn3i.tfrm_17.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.tfrm_17.BorderSizePixel = 0
+f789z43hfn3i.tfrm_17.Position = UDim2.new(0.702875495, 0, 0.147059128, 0)
+f789z43hfn3i.tfrm_17.Size = UDim2.new(0.251977593, 0, 0.709999979, 0)
+
+f789z43hfn3i._c_99.Name = "_c"
+f789z43hfn3i._c_99.Parent = f789z43hfn3i.tfrm_17
+
+f789z43hfn3i.bar_16.Name = "bar"
+f789z43hfn3i.bar_16.Parent = f789z43hfn3i.tfrm_17
+f789z43hfn3i.bar_16.BackgroundColor3 = Color3.fromRGB(179, 41, 22)
+f789z43hfn3i.bar_16.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.bar_16.BorderSizePixel = 0
+f789z43hfn3i.bar_16.Position = UDim2.new(2.3177729e-06, 0, -2.50801327e-06, 0)
+f789z43hfn3i.bar_16.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
+
+f789z43hfn3i._c_100.Name = "_c"
+f789z43hfn3i._c_100.Parent = f789z43hfn3i.bar_16
+
 f789z43hfn3i.brd_13.Name = "brd"
 f789z43hfn3i.brd_13.Parent = f789z43hfn3i.pml
 f789z43hfn3i.brd_13.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -1922,8 +1963,8 @@ f789z43hfn3i.grd_13.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Co
 f789z43hfn3i.grd_13.Name = "grd"
 f789z43hfn3i.grd_13.Parent = f789z43hfn3i.brd_13
 
-f789z43hfn3i._c_98.Name = "_c"
-f789z43hfn3i._c_98.Parent = f789z43hfn3i.brd_13
+f789z43hfn3i._c_101.Name = "_c"
+f789z43hfn3i._c_101.Parent = f789z43hfn3i.brd_13
 
 f789z43hfn3i.rbtn.Name = "rbtn"
 f789z43hfn3i.rbtn.Parent = f789z43hfn3i.pml
@@ -1938,8 +1979,8 @@ f789z43hfn3i.rbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
 f789z43hfn3i.rbtn.TextSize = 14.000
 f789z43hfn3i.rbtn.TextXAlignment = Enum.TextXAlignment.Left
 
-f789z43hfn3i._c_99.Name = "_c"
-f789z43hfn3i._c_99.Parent = f789z43hfn3i.rbtn
+f789z43hfn3i._c_102.Name = "_c"
+f789z43hfn3i._c_102.Parent = f789z43hfn3i.rbtn
 
 f789z43hfn3i.fbtn.Name = "fbtn"
 f789z43hfn3i.fbtn.Parent = f789z43hfn3i.pml
@@ -1954,49 +1995,11 @@ f789z43hfn3i.fbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
 f789z43hfn3i.fbtn.TextSize = 14.000
 f789z43hfn3i.fbtn.TextXAlignment = Enum.TextXAlignment.Left
 
-f789z43hfn3i._c_100.Name = "_c"
-f789z43hfn3i._c_100.Parent = f789z43hfn3i.fbtn
-
-f789z43hfn3i.tfrm_17.Name = "tfrm"
-f789z43hfn3i.tfrm_17.Parent = f789z43hfn3i.fbtn
-f789z43hfn3i.tfrm_17.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
-f789z43hfn3i.tfrm_17.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.tfrm_17.BorderSizePixel = 0
-f789z43hfn3i.tfrm_17.Position = UDim2.new(0.702875495, 0, 0.147059128, 0)
-f789z43hfn3i.tfrm_17.Size = UDim2.new(0.251977593, 0, 0.709999979, 0)
-
-f789z43hfn3i._c_101.Name = "_c"
-f789z43hfn3i._c_101.Parent = f789z43hfn3i.tfrm_17
-
-f789z43hfn3i.bar_16.Name = "bar"
-f789z43hfn3i.bar_16.Parent = f789z43hfn3i.tfrm_17
-f789z43hfn3i.bar_16.BackgroundColor3 = Color3.fromRGB(179, 41, 22)
-f789z43hfn3i.bar_16.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.bar_16.BorderSizePixel = 0
-f789z43hfn3i.bar_16.Position = UDim2.new(2.3177729e-06, 0, -2.50801327e-06, 0)
-f789z43hfn3i.bar_16.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
-
-f789z43hfn3i._c_102.Name = "_c"
-f789z43hfn3i._c_102.Parent = f789z43hfn3i.bar_16
-
-f789z43hfn3i.ftbtn.Name = "ftbtn"
-f789z43hfn3i.ftbtn.Parent = f789z43hfn3i.pml
-f789z43hfn3i.ftbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-f789z43hfn3i.ftbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.ftbtn.BorderSizePixel = 0
-f789z43hfn3i.ftbtn.Position = UDim2.new(0.0289854966, 0, 7.45800018, 0)
-f789z43hfn3i.ftbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
-f789z43hfn3i.ftbtn.Font = Enum.Font.Arial
-f789z43hfn3i.ftbtn.Text = "   Float"
-f789z43hfn3i.ftbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
-f789z43hfn3i.ftbtn.TextSize = 14.000
-f789z43hfn3i.ftbtn.TextXAlignment = Enum.TextXAlignment.Left
-
 f789z43hfn3i._c_103.Name = "_c"
-f789z43hfn3i._c_103.Parent = f789z43hfn3i.ftbtn
+f789z43hfn3i._c_103.Parent = f789z43hfn3i.fbtn
 
 f789z43hfn3i.tfrm_18.Name = "tfrm"
-f789z43hfn3i.tfrm_18.Parent = f789z43hfn3i.ftbtn
+f789z43hfn3i.tfrm_18.Parent = f789z43hfn3i.fbtn
 f789z43hfn3i.tfrm_18.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 f789z43hfn3i.tfrm_18.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.tfrm_18.BorderSizePixel = 0
@@ -2017,24 +2020,24 @@ f789z43hfn3i.bar_17.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
 f789z43hfn3i._c_105.Name = "_c"
 f789z43hfn3i._c_105.Parent = f789z43hfn3i.bar_17
 
-f789z43hfn3i.ijbtn.Name = "ijbtn"
-f789z43hfn3i.ijbtn.Parent = f789z43hfn3i.pml
-f789z43hfn3i.ijbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-f789z43hfn3i.ijbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.ijbtn.BorderSizePixel = 0
-f789z43hfn3i.ijbtn.Position = UDim2.new(0.0289854966, 0, 4.37200022, 0)
-f789z43hfn3i.ijbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
-f789z43hfn3i.ijbtn.Font = Enum.Font.Arial
-f789z43hfn3i.ijbtn.Text = "   Infinite Jump"
-f789z43hfn3i.ijbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
-f789z43hfn3i.ijbtn.TextSize = 14.000
-f789z43hfn3i.ijbtn.TextXAlignment = Enum.TextXAlignment.Left
+f789z43hfn3i.ftbtn.Name = "ftbtn"
+f789z43hfn3i.ftbtn.Parent = f789z43hfn3i.pml
+f789z43hfn3i.ftbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+f789z43hfn3i.ftbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.ftbtn.BorderSizePixel = 0
+f789z43hfn3i.ftbtn.Position = UDim2.new(0.0289854966, 0, 7.45800018, 0)
+f789z43hfn3i.ftbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
+f789z43hfn3i.ftbtn.Font = Enum.Font.Arial
+f789z43hfn3i.ftbtn.Text = "   Float"
+f789z43hfn3i.ftbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
+f789z43hfn3i.ftbtn.TextSize = 14.000
+f789z43hfn3i.ftbtn.TextXAlignment = Enum.TextXAlignment.Left
 
 f789z43hfn3i._c_106.Name = "_c"
-f789z43hfn3i._c_106.Parent = f789z43hfn3i.ijbtn
+f789z43hfn3i._c_106.Parent = f789z43hfn3i.ftbtn
 
 f789z43hfn3i.tfrm_19.Name = "tfrm"
-f789z43hfn3i.tfrm_19.Parent = f789z43hfn3i.ijbtn
+f789z43hfn3i.tfrm_19.Parent = f789z43hfn3i.ftbtn
 f789z43hfn3i.tfrm_19.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 f789z43hfn3i.tfrm_19.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.tfrm_19.BorderSizePixel = 0
@@ -2055,38 +2058,24 @@ f789z43hfn3i.bar_18.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
 f789z43hfn3i._c_108.Name = "_c"
 f789z43hfn3i._c_108.Parent = f789z43hfn3i.bar_18
 
-f789z43hfn3i.prl.Name = "prl"
-f789z43hfn3i.prl.Parent = f789z43hfn3i._scr_5
-f789z43hfn3i.prl.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-f789z43hfn3i.prl.BackgroundTransparency = 1.000
-f789z43hfn3i.prl.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.prl.BorderSizePixel = 0
-f789z43hfn3i.prl.Position = UDim2.new(5.30740465e-07, 0, 0.482682586, 0)
-f789z43hfn3i.prl.Size = UDim2.new(1.00000036, 0, 0.0463246517, 0)
-f789z43hfn3i.prl.Font = Enum.Font.SourceSans
-f789z43hfn3i.prl.Text = "     Player Related"
-f789z43hfn3i.prl.TextColor3 = Color3.fromRGB(211, 211, 211)
-f789z43hfn3i.prl.TextSize = 20.000
-f789z43hfn3i.prl.TextXAlignment = Enum.TextXAlignment.Left
-
-f789z43hfn3i.sabtn.Name = "sabtn"
-f789z43hfn3i.sabtn.Parent = f789z43hfn3i.prl
-f789z43hfn3i.sabtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
-f789z43hfn3i.sabtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
-f789z43hfn3i.sabtn.BorderSizePixel = 0
-f789z43hfn3i.sabtn.Position = UDim2.new(0.0289854966, 0, 1.28596079, 0)
-f789z43hfn3i.sabtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
-f789z43hfn3i.sabtn.Font = Enum.Font.Arial
-f789z43hfn3i.sabtn.Text = "   Silent Aim"
-f789z43hfn3i.sabtn.TextColor3 = Color3.fromRGB(211, 211, 211)
-f789z43hfn3i.sabtn.TextSize = 14.000
-f789z43hfn3i.sabtn.TextXAlignment = Enum.TextXAlignment.Left
+f789z43hfn3i.ijbtn.Name = "ijbtn"
+f789z43hfn3i.ijbtn.Parent = f789z43hfn3i.pml
+f789z43hfn3i.ijbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+f789z43hfn3i.ijbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.ijbtn.BorderSizePixel = 0
+f789z43hfn3i.ijbtn.Position = UDim2.new(0.0289854966, 0, 4.37200022, 0)
+f789z43hfn3i.ijbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
+f789z43hfn3i.ijbtn.Font = Enum.Font.Arial
+f789z43hfn3i.ijbtn.Text = "   Infinite Jump"
+f789z43hfn3i.ijbtn.TextColor3 = Color3.fromRGB(211, 211, 211)
+f789z43hfn3i.ijbtn.TextSize = 14.000
+f789z43hfn3i.ijbtn.TextXAlignment = Enum.TextXAlignment.Left
 
 f789z43hfn3i._c_109.Name = "_c"
-f789z43hfn3i._c_109.Parent = f789z43hfn3i.sabtn
+f789z43hfn3i._c_109.Parent = f789z43hfn3i.ijbtn
 
 f789z43hfn3i.tfrm_20.Name = "tfrm"
-f789z43hfn3i.tfrm_20.Parent = f789z43hfn3i.sabtn
+f789z43hfn3i.tfrm_20.Parent = f789z43hfn3i.ijbtn
 f789z43hfn3i.tfrm_20.BackgroundColor3 = Color3.fromRGB(31, 31, 31)
 f789z43hfn3i.tfrm_20.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.tfrm_20.BorderSizePixel = 0
@@ -2107,12 +2096,26 @@ f789z43hfn3i.bar_19.Size = UDim2.new(0.495999992, 0, 1.00000525, 0)
 f789z43hfn3i._c_111.Name = "_c"
 f789z43hfn3i._c_111.Parent = f789z43hfn3i.bar_19
 
+f789z43hfn3i.prl.Name = "prl"
+f789z43hfn3i.prl.Parent = f789z43hfn3i._scr_5
+f789z43hfn3i.prl.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+f789z43hfn3i.prl.BackgroundTransparency = 1.000
+f789z43hfn3i.prl.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f789z43hfn3i.prl.BorderSizePixel = 0
+f789z43hfn3i.prl.Position = UDim2.new(5.30740465e-07, 0, 0.482682586, 0)
+f789z43hfn3i.prl.Size = UDim2.new(1.00000036, 0, 0.0463246517, 0)
+f789z43hfn3i.prl.Font = Enum.Font.SourceSans
+f789z43hfn3i.prl.Text = "     Player Related"
+f789z43hfn3i.prl.TextColor3 = Color3.fromRGB(211, 211, 211)
+f789z43hfn3i.prl.TextSize = 20.000
+f789z43hfn3i.prl.TextXAlignment = Enum.TextXAlignment.Left
+
 f789z43hfn3i.aabtn.Name = "aabtn"
 f789z43hfn3i.aabtn.Parent = f789z43hfn3i.prl
 f789z43hfn3i.aabtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 f789z43hfn3i.aabtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.aabtn.BorderSizePixel = 0
-f789z43hfn3i.aabtn.Position = UDim2.new(0.0289854966, 0, 2.82911372, 0)
+f789z43hfn3i.aabtn.Position = UDim2.new(0.0289999992, 0, 1.28600001, 0)
 f789z43hfn3i.aabtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
 f789z43hfn3i.aabtn.Font = Enum.Font.Arial
 f789z43hfn3i.aabtn.Text = "   Anti-AFK"
@@ -2165,7 +2168,7 @@ f789z43hfn3i.afbtn.Parent = f789z43hfn3i.prl
 f789z43hfn3i.afbtn.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
 f789z43hfn3i.afbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.afbtn.BorderSizePixel = 0
-f789z43hfn3i.afbtn.Position = UDim2.new(0.0289854966, 0, 4.37200022, 0)
+f789z43hfn3i.afbtn.Position = UDim2.new(0.0289999992, 0, 2.829, 0)
 f789z43hfn3i.afbtn.Size = UDim2.new(0.948000014, 0, 1.25999999, 0)
 f789z43hfn3i.afbtn.Font = Enum.Font.Arial
 f789z43hfn3i.afbtn.Text = "   Auto Farm"
@@ -2236,8 +2239,8 @@ f789z43hfn3i.min.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 f789z43hfn3i.min.BackgroundTransparency = 1.000
 f789z43hfn3i.min.BorderColor3 = Color3.fromRGB(0, 0, 0)
 f789z43hfn3i.min.BorderSizePixel = 0
-f789z43hfn3i.min.Position = UDim2.new(0.90679425, 0, -0.212319344, -2)
-f789z43hfn3i.min.Size = UDim2.new(0.0411291234, 0, 1.39958942, 0)
+f789z43hfn3i.min.Position = UDim2.new(0.90679425, 0, -0.0638002083, -2)
+f789z43hfn3i.min.Size = UDim2.new(0.0411292948, 0, 1.11496234, 0)
 f789z43hfn3i.min.Font = Enum.Font.SourceSans
 f789z43hfn3i.min.Text = "-"
 f789z43hfn3i.min.TextColor3 = Color3.fromRGB(147, 147, 147)
@@ -2254,7 +2257,7 @@ f789z43hfn3i._v.BorderSizePixel = 0
 f789z43hfn3i._v.Position = UDim2.new(0.0225922726, 0, 0.828385413, 0)
 f789z43hfn3i._v.Size = UDim2.new(0.207296088, 0, -0.779738367, 0)
 f789z43hfn3i._v.Font = Enum.Font.Arial
-f789z43hfn3i._v.Text = "Lunar X  - v0.10"
+f789z43hfn3i._v.Text = "Lunar X  - v0.11"
 f789z43hfn3i._v.TextColor3 = Color3.fromRGB(177, 177, 177)
 f789z43hfn3i._v.TextScaled = true
 f789z43hfn3i._v.TextSize = 14.000
@@ -2262,7 +2265,9 @@ f789z43hfn3i._v.TextWrapped = true
 f789z43hfn3i._v.TextXAlignment = Enum.TextXAlignment.Left
 f789z43hfn3i._v.TextYAlignment = Enum.TextYAlignment.Bottom
 
-local function HDXJBZ_fake_script() -- f789z43hfn3i.f789z43hfn3i.l 
+-- Scripts:
+
+local function IISEJ_fake_script() -- f789z43hfn3i.f789z43hfn3i.l 
 	local script = Instance.new('LocalScript', f789z43hfn3i.f789z43hfn3i)
 
 	local function notif(str, dur)
@@ -2294,8 +2299,8 @@ local function HDXJBZ_fake_script() -- f789z43hfn3i.f789z43hfn3i.l
 	end
 	
 end
-coroutine.wrap(HDXJBZ_fake_script)()
-local function QCFYTGP_fake_script() -- f789z43hfn3i.dh.ds 
+coroutine.wrap(IISEJ_fake_script)()
+local function XWVIL_fake_script() -- f789z43hfn3i.dh.ds 
 	local script = Instance.new('LocalScript', f789z43hfn3i.dh)
 
 	local UIS = game:GetService("UserInputService")
@@ -2360,8 +2365,8 @@ local function QCFYTGP_fake_script() -- f789z43hfn3i.dh.ds
 	end)
 	
 end
-coroutine.wrap(QCFYTGP_fake_script)()
-local function PYSYW_fake_script() -- f789z43hfn3i._btns.btnhnd 
+coroutine.wrap(XWVIL_fake_script)()
+local function TLODKR_fake_script() -- f789z43hfn3i._btns.btnhnd 
 	local script = Instance.new('LocalScript', f789z43hfn3i._btns)
 
 	local btns = script.Parent
@@ -2406,8 +2411,8 @@ local function PYSYW_fake_script() -- f789z43hfn3i._btns.btnhnd
 		end)
 	end
 end
-coroutine.wrap(PYSYW_fake_script)()
-local function QIHJLB_fake_script() -- f789z43hfn3i.ifrm.load 
+coroutine.wrap(TLODKR_fake_script)()
+local function KLQPTEN_fake_script() -- f789z43hfn3i.ifrm.load 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ifrm)
 
 	local Players = game:GetService("Players")
@@ -2441,8 +2446,8 @@ local function QIHJLB_fake_script() -- f789z43hfn3i.ifrm.load
 	
 	setHeadshot()
 end
-coroutine.wrap(QIHJLB_fake_script)()
-local function QEHQVH_fake_script() -- f789z43hfn3i.hfrm.hload 
+coroutine.wrap(KLQPTEN_fake_script)()
+local function FGSR_fake_script() -- f789z43hfn3i.hfrm.hload 
 	local script = Instance.new('LocalScript', f789z43hfn3i.hfrm)
 
 	local Players = game:GetService("Players")
@@ -2491,8 +2496,8 @@ local function QEHQVH_fake_script() -- f789z43hfn3i.hfrm.hload
 	typeOut(0.05, "Welcome, " .. display .. ".", displayl)
 	typeOut(0.05, "(@"..user..")", userl)
 end
-coroutine.wrap(QEHQVH_fake_script)()
-local function ZPGU_fake_script() -- f789z43hfn3i.utbtn.uts 
+coroutine.wrap(FGSR_fake_script)()
+local function QKPIU_fake_script() -- f789z43hfn3i.utbtn.uts 
 	local script = Instance.new('LocalScript', f789z43hfn3i.utbtn)
 
 	local Players = game:GetService("Players")
@@ -2524,8 +2529,8 @@ local function ZPGU_fake_script() -- f789z43hfn3i.utbtn.uts
 	
 	UTPBtn.MouseButton1Click:Connect(tpToUser)
 end
-coroutine.wrap(ZPGU_fake_script)()
-local function QKBHXVR_fake_script() -- f789z43hfn3i.rtpbtn.rtps 
+coroutine.wrap(QKPIU_fake_script)()
+local function TOKHDI_fake_script() -- f789z43hfn3i.rtpbtn.rtps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.rtpbtn)
 
 	local Players = game:GetService("Players")
@@ -2555,8 +2560,8 @@ local function QKBHXVR_fake_script() -- f789z43hfn3i.rtpbtn.rtps
 	
 	RTPBtn.MouseButton1Click:Connect(tpToRandom)
 end
-coroutine.wrap(QKBHXVR_fake_script)()
-local function AZPVW_fake_script() -- f789z43hfn3i.ltpbtn.ltps 
+coroutine.wrap(TOKHDI_fake_script)()
+local function PKEAZ_fake_script() -- f789z43hfn3i.ltpbtn.ltps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ltpbtn)
 
 	local Players = game:GetService("Players")
@@ -2585,8 +2590,8 @@ local function AZPVW_fake_script() -- f789z43hfn3i.ltpbtn.ltps
 		end
 	end)
 end
-coroutine.wrap(AZPVW_fake_script)()
-local function ELVM_fake_script() -- f789z43hfn3i.mtpbtn.mtps 
+coroutine.wrap(PKEAZ_fake_script)()
+local function RHGANRR_fake_script() -- f789z43hfn3i.mtpbtn.mtps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mtpbtn)
 
 	local Players = game:GetService("Players")
@@ -2642,8 +2647,8 @@ local function ELVM_fake_script() -- f789z43hfn3i.mtpbtn.mtps
 	end)
 	
 end
-coroutine.wrap(ELVM_fake_script)()
-local function FGEZHXL_fake_script() -- f789z43hfn3i.stpbtn.stps 
+coroutine.wrap(RHGANRR_fake_script)()
+local function DBRLWYZ_fake_script() -- f789z43hfn3i.stpbtn.stps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.stpbtn)
 
 	local Players = game:GetService("Players")
@@ -2729,8 +2734,8 @@ local function FGEZHXL_fake_script() -- f789z43hfn3i.stpbtn.stps
 	end)
 	
 end
-coroutine.wrap(FGEZHXL_fake_script)()
-local function SPRZV_fake_script() -- f789z43hfn3i.mptpbtn.mptps 
+coroutine.wrap(DBRLWYZ_fake_script)()
+local function JRACX_fake_script() -- f789z43hfn3i.mptpbtn.mptps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mptpbtn)
 
 	local Players = game:GetService("Players")
@@ -2775,8 +2780,8 @@ local function SPRZV_fake_script() -- f789z43hfn3i.mptpbtn.mptps
 		end
 	end)
 end
-coroutine.wrap(SPRZV_fake_script)()
-local function TVJJLOH_fake_script() -- f789z43hfn3i.atpbtn.atps 
+coroutine.wrap(JRACX_fake_script)()
+local function SXBFJ_fake_script() -- f789z43hfn3i.atpbtn.atps 
 	local script = Instance.new('LocalScript', f789z43hfn3i.atpbtn)
 
 	local Players = game:GetService("Players")
@@ -2822,17 +2827,21 @@ local function TVJJLOH_fake_script() -- f789z43hfn3i.atpbtn.atps
 		end
 	end)
 end
-coroutine.wrap(TVJJLOH_fake_script)()
-local function YQCEQPF_fake_script() -- f789z43hfn3i.ggbtn.ggs 
+coroutine.wrap(SXBFJ_fake_script)()
+local function QSANCBR_fake_script() -- f789z43hfn3i.ggbtn.ggs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ggbtn)
 
 	local Players = game:GetService("Players")
 	local Workspace = game:GetService("Workspace")
-	local RunService = game:GetService("RunService")
 	
 	local LocalPlayer = Players.LocalPlayer
-	local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-	local HRP = Character:WaitForChild("HumanoidRootPart")
+	
+	local function getCharacter()
+		local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+		local hrp = char:WaitForChild("HumanoidRootPart")
+		return char, hrp
+	end
+	
 	local GunName = "GunDrop"
 	
 	local function notif(str, dur)
@@ -2845,33 +2854,43 @@ local function YQCEQPF_fake_script() -- f789z43hfn3i.ggbtn.ggs
 	end
 	
 	local function grabGun()
-		if not Character or not HRP then notif("No character found.", 3) return end
+		local Character, HRP = getCharacter()
+		if not Character or not HRP then
+			notif("No character found.", 3)
+			return
+		end
 	
-		local gun = Workspace:FindFirstChild(GunName, true)
-		if gun then
-			local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
-			if not targetPart then return end
-	
-			local originalCFrame = HRP.CFrame
-			HRP.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
-	
-			task.wait(0.1)
-			HRP.CFrame = originalCFrame
-			if LocalPlayer:WaitForChild("btnn").Value == 1 then
-				notif("Gun Grabbed.")
+		local gun
+		for _, obj in ipairs(Workspace:GetDescendants()) do
+			if obj.Name == GunName then
+				gun = obj
+				break
 			end
+		end
+		if not gun then return end
+	
+		local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
+		if not targetPart then return end
+	
+		local originalCFrame = HRP.CFrame
+		HRP.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+	
+		task.wait(0.1)
+		HRP.CFrame = originalCFrame
+	
+		if LocalPlayer:WaitForChild("btnn").Value == 1 then
+			notif("Gun Grabbed.")
 		end
 	end
 	
 	local grabButton = script.Parent
 	if grabButton then
-		grabButton.MouseButton1Click:Connect(function()
-			grabGun()
-		end)
+		grabButton.MouseButton1Click:Connect(grabGun)
 	end
+	
 end
-coroutine.wrap(YQCEQPF_fake_script)()
-local function NPKJHRQ_fake_script() -- f789z43hfn3i.aggbtn.aggs 
+coroutine.wrap(QSANCBR_fake_script)()
+local function SBEI_fake_script() -- f789z43hfn3i.aggbtn.aggs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.aggbtn)
 
 	local Players = game:GetService("Players")
@@ -2895,21 +2914,39 @@ local function NPKJHRQ_fake_script() -- f789z43hfn3i.aggbtn.aggs
 	local activePos = UDim2.new(0.506, 0, 0, 0)
 	local normalPos = UDim2.new(0, 0, 0, 0)
 	
+	local function refreshChar()
+		Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+		HRP = Character:WaitForChild("HumanoidRootPart")
+	end
+	
 	local function grabGun()
+		refreshChar()
+	
 		if not Character or not HRP then return end
-		local gun = Workspace:FindFirstChild(GunName, true)
-		if gun then
-			local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
-			if not targetPart then return end
-			local oldCF = HRP.CFrame
-			HRP.CFrame = targetPart.CFrame + Vector3.new(0,3,0)
-			task.wait(0.0001)
-			HRP.CFrame = oldCF
+	
+		local gun
+	
+		for _, obj in ipairs(Workspace:GetDescendants()) do
+			if obj.Name == GunName then
+				gun = obj
+				break
+			end
 		end
+	
+		if not gun then return end
+	
+		local targetPart = gun:IsA("BasePart") and gun or gun:FindFirstChildWhichIsA("BasePart")
+		if not targetPart then return end
+	
+		local oldCF = HRP.CFrame
+		HRP.CFrame = targetPart.CFrame + Vector3.new(0, 3, 0)
+		task.wait(0.0001)
+		HRP.CFrame = oldCF
 	end
 	
 	task.spawn(function()
-		while task.wait(0.005) do
+		while true do
+			task.wait(0.005)
 			if AutoGrabGun then
 				grabGun()
 			end
@@ -2919,13 +2956,18 @@ local function NPKJHRQ_fake_script() -- f789z43hfn3i.aggbtn.aggs
 	toggleBtn.MouseButton1Click:Connect(function()
 		AutoGrabGun = not AutoGrabGun
 	
-		TweenService:Create(bar, tweenInfo, {Position = AutoGrabGun and activePos or normalPos}):Play()
-		TweenService:Create(bar, tweenInfo, {BackgroundColor3 = AutoGrabGun and activeColor or inactiveColor}):Play()
+		TweenService:Create(bar, tweenInfo, {
+			Position = AutoGrabGun and activePos or normalPos
+		}):Play()
+	
+		TweenService:Create(bar, tweenInfo, {
+			BackgroundColor3 = AutoGrabGun and activeColor or inactiveColor
+		}):Play()
 	end)
 	
 end
-coroutine.wrap(NPKJHRQ_fake_script)()
-local function GLJMT_fake_script() -- f789z43hfn3i.gdsl.gdss 
+coroutine.wrap(SBEI_fake_script)()
+local function OIHJO_fake_script() -- f789z43hfn3i.gdsl.gdss 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gdsl)
 
 	local Workspace = game:GetService("Workspace")
@@ -2981,8 +3023,8 @@ local function GLJMT_fake_script() -- f789z43hfn3i.gdsl.gdss
 	end)
 	
 end
-coroutine.wrap(GLJMT_fake_script)()
-local function FVLBO_fake_script() -- f789z43hfn3i.sl.sbtns 
+coroutine.wrap(OIHJO_fake_script)()
+local function TLUOT_fake_script() -- f789z43hfn3i.sl.sbtns 
 	local script = Instance.new('LocalScript', f789z43hfn3i.sl)
 
 	local TeleportService = game:GetService("TeleportService")
@@ -3113,8 +3155,8 @@ local function FVLBO_fake_script() -- f789z43hfn3i.sl.sbtns
 		end
 	end)
 end
-coroutine.wrap(FVLBO_fake_script)()
-local function GQEZT_fake_script() -- f789z43hfn3i.gdsl_2.gdss 
+coroutine.wrap(TLUOT_fake_script)()
+local function QHMANBJ_fake_script() -- f789z43hfn3i.gdsl_2.gdss 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gdsl_2)
 
 	local Workspace = game:GetService("Workspace")
@@ -3170,8 +3212,8 @@ local function GQEZT_fake_script() -- f789z43hfn3i.gdsl_2.gdss
 	end)
 	
 end
-coroutine.wrap(GQEZT_fake_script)()
-local function HDVL_fake_script() -- f789z43hfn3i.gdnbtn.gdns 
+coroutine.wrap(QHMANBJ_fake_script)()
+local function LBKXEUF_fake_script() -- f789z43hfn3i.gdnbtn.gdns 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gdnbtn)
 
 	local player = game.Players.LocalPlayer
@@ -3210,8 +3252,8 @@ local function HDVL_fake_script() -- f789z43hfn3i.gdnbtn.gdns
 	end)
 	
 end
-coroutine.wrap(HDVL_fake_script)()
-local function WUJP_fake_script() -- f789z43hfn3i.btnnbtn.btnns 
+coroutine.wrap(LBKXEUF_fake_script)()
+local function RVQQLPV_fake_script() -- f789z43hfn3i.btnnbtn.btnns 
 	local script = Instance.new('LocalScript', f789z43hfn3i.btnnbtn)
 
 	local player = game.Players.LocalPlayer
@@ -3250,8 +3292,8 @@ local function WUJP_fake_script() -- f789z43hfn3i.btnnbtn.btnns
 	end)
 	
 end
-coroutine.wrap(WUJP_fake_script)()
-local function GBHONB_fake_script() -- f789z43hfn3i.onbtn.ons 
+coroutine.wrap(RVQQLPV_fake_script)()
+local function MWKTC_fake_script() -- f789z43hfn3i.onbtn.ons 
 	local script = Instance.new('LocalScript', f789z43hfn3i.onbtn)
 
 	local player = game.Players.LocalPlayer
@@ -3290,8 +3332,8 @@ local function GBHONB_fake_script() -- f789z43hfn3i.onbtn.ons
 	end)
 	
 end
-coroutine.wrap(GBHONB_fake_script)()
-local function PLTZ_fake_script() -- f789z43hfn3i.ggkbtn.ggks 
+coroutine.wrap(MWKTC_fake_script)()
+local function BIASZWD_fake_script() -- f789z43hfn3i.ggkbtn.ggks 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ggkbtn)
 
 	local Players = game:GetService("Players")
@@ -3371,8 +3413,8 @@ local function PLTZ_fake_script() -- f789z43hfn3i.ggkbtn.ggks
 	end)
 	
 end
-coroutine.wrap(PLTZ_fake_script)()
-local function DFMWCP_fake_script() -- f789z43hfn3i.mkbtn.mks 
+coroutine.wrap(BIASZWD_fake_script)()
+local function HNKJ_fake_script() -- f789z43hfn3i.mkbtn.mks 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mkbtn)
 
 	local UserInputService = game:GetService("UserInputService")
@@ -3420,8 +3462,8 @@ local function DFMWCP_fake_script() -- f789z43hfn3i.mkbtn.mks
 		button.TextSize = 10
 	end)
 end
-coroutine.wrap(DFMWCP_fake_script)()
-local function KQXCEC_fake_script() -- f789z43hfn3i.flbtn.fls 
+coroutine.wrap(HNKJ_fake_script)()
+local function HSRJE_fake_script() -- f789z43hfn3i.flbtn.fls 
 	local script = Instance.new('LocalScript', f789z43hfn3i.flbtn)
 
 	local TweenService = game:GetService("TweenService")
@@ -3491,8 +3533,8 @@ local function KQXCEC_fake_script() -- f789z43hfn3i.flbtn.fls
 	fling()
 	
 end
-coroutine.wrap(KQXCEC_fake_script)()
-local function CPCXAL_fake_script() -- f789z43hfn3i.flusbtn.flus 
+coroutine.wrap(HSRJE_fake_script)()
+local function WWWJQ_fake_script() -- f789z43hfn3i.flusbtn.flus 
 	local script = Instance.new('LocalScript', f789z43hfn3i.flusbtn)
 
 	local Players = game:GetService("Players")
@@ -3676,8 +3718,8 @@ local function CPCXAL_fake_script() -- f789z43hfn3i.flusbtn.flus
 	
 	
 end
-coroutine.wrap(CPCXAL_fake_script)()
-local function BARKN_fake_script() -- f789z43hfn3i.fklbtn.fkls 
+coroutine.wrap(WWWJQ_fake_script)()
+local function MLJUO_fake_script() -- f789z43hfn3i.fklbtn.fkls 
 	local script = Instance.new('LocalScript', f789z43hfn3i.fklbtn)
 
 	local TweenService = game:GetService("TweenService")
@@ -3758,91 +3800,137 @@ local function BARKN_fake_script() -- f789z43hfn3i.fklbtn.fkls
 	bar.BackgroundColor3 = inactiveColor
 	
 end
-coroutine.wrap(BARKN_fake_script)()
-local function WAVFI_fake_script() -- f789z43hfn3i.kabtn.kas 
+coroutine.wrap(MLJUO_fake_script)()
+local function GYRCVQX_fake_script() -- f789z43hfn3i.kabtn.kas 
 	local script = Instance.new('LocalScript', f789z43hfn3i.kabtn)
 
-	getgenv().killall = false
-	
 	local Players = game:GetService("Players")
+	local RunService = game:GetService("RunService")
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	
 	local LocalPlayer = Players.LocalPlayer
+	local btn = script.Parent
 	
-	local button = script.Parent
+	_G.KillAllEnabled = false
+	local killLoopRunning = false
+	local killNoclipConnection = nil
 	
-	local function notif(str, dur)
-		if LocalPlayer:WaitForChild("btnn").Value == 1 then
-			game.StarterGui:SetCore("SendNotification", {
-				Title = "Lunar Notify",
-				Text = str,
-				Icon = "rbxassetid://77980660684977",
-				Duration = dur or 3
-			})
-		end
-	end
-	
-	local function equipTool(tool)
-		if tool and tool.Parent == LocalPlayer.Backpack then
-			tool.Parent = LocalPlayer.Character
-		end
-	end
-	
-	local function getKnife()
-		local char = LocalPlayer.Character
-		if not char then
-			notif("No Character Found.")
-			return nil
-		end
-	
-		local knife = char:FindFirstChild("Knife") or LocalPlayer.Backpack:FindFirstChild("Knife")
-		if knife and knife:FindFirstChild("Handle") then
-			equipTool(knife)
-			return knife
-		end
-	
-		return nil
-	end
-	
-	local function attackPlayer(targetPlayer, knife)
-		if not targetPlayer.Character or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then return end
-		local rootPart = targetPlayer.Character.HumanoidRootPart
-		local handle = knife.Handle
-		if not handle then return end
-	
-		task.spawn(function()
-			knife:Activate()
-			firetouchinterest(rootPart, handle, 0)
-			firetouchinterest(rootPart, handle, 1)
-		end)
-	end
-	
-	local function startKillAll()
-		if getgenv().killall then return end
-		getgenv().killall = true
-		notif("Killing All..")
-	
-		task.spawn(function()
-			while getgenv().killall do
-				pcall(function()
-					local knife = getKnife()
-					if knife and knife.Name == "Knife" then
-						for _, player in ipairs(Players:GetPlayers()) do
-							if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-								attackPlayer(player, knife)
-							end
-						end
-						notif("Killed All.")
+	local function toggleTemporaryNoclip(enabled)
+		if enabled and LocalPlayer.Character then
+			local connection
+			connection = RunService.Stepped:Connect(function()
+				if not enabled or not LocalPlayer.Character then
+					connection:Disconnect()
+					return
+				end
+				for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+					if part:IsA("BasePart") then
+						part.CanCollide = false
 					end
-				end)
-				task.wait(0.5)
-			end
-		end)
+				end
+			end)
+			return connection
+		end
 	end
 	
-	button.MouseButton1Click:Connect(startKillAll)
+	local function runKillAll()
+		if killLoopRunning then return end
+		killLoopRunning = true
 	
+		task.spawn(function()
+			while _G.KillAllEnabled do
+	
+				local character = LocalPlayer.Character
+				if not character then
+					task.wait(0.2)
+					continue
+				end
+	
+				local hrp = character:FindFirstChild("HumanoidRootPart")
+				local knife = character:FindFirstChild("Knife") 
+					or LocalPlayer.Backpack:FindFirstChild("Knife")
+	
+				if not knife or not hrp then
+					_G.KillAllEnabled = false
+					break
+				end
+	
+				local bodyVelocity = hrp:FindFirstChild("KillAllVelocity") 
+					or Instance.new("BodyVelocity")
+				bodyVelocity.Name = "KillAllVelocity"
+				bodyVelocity.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+				bodyVelocity.Parent = hrp
+	
+				if not killNoclipConnection then
+					killNoclipConnection = toggleTemporaryNoclip(true)
+				end
+	
+				for _, plr in pairs(Players:GetPlayers()) do
+					if not _G.KillAllEnabled then break end
+					if plr == LocalPlayer then continue end
+	
+					local targetChar = plr.Character
+					if not targetChar then continue end
+	
+					local targetHRP = targetChar:FindFirstChild("HumanoidRootPart")
+					local targetHum = targetChar:FindFirstChild("Humanoid")
+	
+					if not targetHRP or not targetHum or targetHum.Health <= 0 then continue end
+	
+					local startPos = hrp.Position
+					local targetPos = targetHRP.Position
+					local distance = (targetPos - startPos).Magnitude
+					local speed = 25
+					local timeToReach = distance / speed
+					local startTime = tick()
+	
+					while
+						tick() - startTime < timeToReach
+						and _G.KillAllEnabled
+						and targetHum.Parent ~= nil
+						and targetHum.Health > 0
+					do
+						local t = (tick() - startTime) / timeToReach
+						local newPos = startPos:Lerp(targetPos, t)
+						bodyVelocity.Velocity = (newPos - hrp.Position).Unit * speed
+						RunService.RenderStepped:Wait()
+					end
+	
+					bodyVelocity.Velocity = Vector3.zero
+	
+					local remotes = ReplicatedStorage:FindFirstChild("Remotes")
+					if remotes then
+						local remote = remotes:FindFirstChild("HitKnife") 
+							or remotes:FindFirstChild("Damage")
+						if remote then
+							remote:FireServer(targetHum)
+						end
+					end
+	
+					task.wait(0.15)
+				end
+	
+				task.wait(0.3)
+			end
+	
+			if killNoclipConnection then
+				killNoclipConnection:Disconnect()
+				killNoclipConnection = nil
+			end
+	
+			local hrp2 = LocalPlayer.Character 
+				and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+			if hrp2 then
+				local bv = hrp2:FindFirstChild("KillAllVelocity")
+				if bv then bv:Destroy() end
+			end
+	
+			killLoopRunning = false
+		end)
+	end
 end
-coroutine.wrap(WAVFI_fake_script)()
-local function DLFYJ_fake_script() -- f789z43hfn3i.kubtn.kus 
+coroutine.wrap(GYRCVQX_fake_script)()
+local function AZFAVUZ_fake_script() -- f789z43hfn3i.kubtn.kus 
 	local script = Instance.new('LocalScript', f789z43hfn3i.kubtn)
 
 	getgenv().killTarget = false
@@ -3948,8 +4036,8 @@ local function DLFYJ_fake_script() -- f789z43hfn3i.kubtn.kus
 	button.MouseButton1Click:Connect(startKillTarget)
 	
 end
-coroutine.wrap(DLFYJ_fake_script)()
-local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res 
+coroutine.wrap(AZFAVUZ_fake_script)()
+local function UTUSE_fake_script() -- f789z43hfn3i.rebtn.res 
 	local script = Instance.new('LocalScript', f789z43hfn3i.rebtn)
 
 	local Players = game:GetService("Players")
@@ -3970,11 +4058,42 @@ local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res
 	local normalPos = UDim2.new(0, 0, 0, 0)
 	local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 	
+	local updateESP
+	
 	local function DetectOriginalSheriff()
 		if OriginalSheriff and OriginalSheriff.Parent then return end
 		for _, plr in ipairs(Players:GetPlayers()) do
-			if plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun")) then
+			local hasGun = plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun"))
+			if hasGun then
 				OriginalSheriff = plr
+	
+				if plr.Character then
+					local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+					if humanoid then
+						humanoid.Died:Connect(function()
+							if OriginalSheriff == plr then
+								OriginalSheriff = nil
+								if espEnabled then
+									updateESP()
+								end
+								DetectOriginalSheriff()
+							end
+						end)
+					end
+				end
+	
+				if plr:FindFirstChild("Backpack") then
+					plr.Backpack.ChildRemoved:Connect(function(child)
+						if child.Name == "Gun" and OriginalSheriff == plr then
+							OriginalSheriff = nil
+							if espEnabled then
+								updateESP()
+							end
+							DetectOriginalSheriff()
+						end
+					end)
+				end
+	
 				break
 			end
 		end
@@ -4032,7 +4151,7 @@ local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res
 		end
 	end
 	
-	local function updateESP()
+	updateESP = function()
 		if not espEnabled then return end
 		DetectOriginalSheriff()
 		for _, player in ipairs(Players:GetPlayers()) do
@@ -4062,6 +4181,7 @@ local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res
 					if espEnabled then
 						updateESP()
 					end
+					DetectOriginalSheriff()
 				end)
 			end
 		end
@@ -4076,6 +4196,7 @@ local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res
 				if espEnabled then
 					updateESP()
 				end
+				DetectOriginalSheriff()
 			end
 		end)
 	end
@@ -4087,6 +4208,7 @@ local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res
 		clearESP(player)
 		if player == OriginalSheriff then
 			OriginalSheriff = nil
+			DetectOriginalSheriff()
 		end
 	end)
 	
@@ -4112,8 +4234,8 @@ local function TNKQ_fake_script() -- f789z43hfn3i.rebtn.res
 	btn.MouseButton1Click:Connect(toggleESP)
 	
 end
-coroutine.wrap(TNKQ_fake_script)()
-local function UFCX_fake_script() -- f789z43hfn3i.mebtn.mes 
+coroutine.wrap(UTUSE_fake_script)()
+local function YSIACKT_fake_script() -- f789z43hfn3i.mebtn.mes 
 	local script = Instance.new('LocalScript', f789z43hfn3i.mebtn)
 
 	local Players = game:GetService("Players")
@@ -4218,8 +4340,8 @@ local function UFCX_fake_script() -- f789z43hfn3i.mebtn.mes
 	end)
 	
 end
-coroutine.wrap(UFCX_fake_script)()
-local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses 
+coroutine.wrap(YSIACKT_fake_script)()
+local function WBMCZTE_fake_script() -- f789z43hfn3i.sebtn.ses 
 	local script = Instance.new('LocalScript', f789z43hfn3i.sebtn)
 
 	local Players = game:GetService("Players")
@@ -4246,6 +4368,30 @@ local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses
 			local hasGun = plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun"))
 			if hasGun then
 				OriginalSheriff = plr
+	
+				if plr.Character then
+					local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+					if humanoid then
+						humanoid.Died:Connect(function()
+							if OriginalSheriff == plr then
+								OriginalSheriff = nil
+								updateESP()
+								DetectOriginalSheriff()
+							end
+						end)
+					end
+				end
+	
+				if plr:FindFirstChild("Backpack") then
+					plr.Backpack.ChildRemoved:Connect(function(child)
+						if child.Name == "Gun" and OriginalSheriff == plr then
+							OriginalSheriff = nil
+							updateESP()
+							DetectOriginalSheriff()
+						end
+					end)
+				end
+	
 				break
 			end
 		end
@@ -4301,12 +4447,12 @@ local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses
 		end
 	end
 	
-	local function updateESP()
+	function updateESP()
 		DetectOriginalSheriff()
 		for _, player in ipairs(Players:GetPlayers()) do
 			if player ~= LocalPlayer and player.Character then
 				local role = GetRole(player)
-				if (role == "Sheriff" or role == "Hero") then
+				if role == "Sheriff" or role == "Hero" then
 					local color = role == "Sheriff" and Color3.fromRGB(0,0,255) or Color3.fromRGB(255,170,32)
 					createBodyESP(player, color)
 				else
@@ -4324,6 +4470,7 @@ local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses
 					if player == OriginalSheriff then
 						OriginalSheriff = nil
 						updateESP()
+						DetectOriginalSheriff()
 					end
 				end)
 			end
@@ -4335,6 +4482,7 @@ local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses
 			if child.Name == "Gun" and player == OriginalSheriff then
 				OriginalSheriff = nil
 				updateESP()
+				DetectOriginalSheriff()
 			end
 		end)
 	end
@@ -4344,10 +4492,8 @@ local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses
 	
 	local function toggleESP()
 		espEnabled = not espEnabled
-		local posTween = TweenService:Create(bar, tweenInfo, {Position = espEnabled and activePos or normalPos})
-		posTween:Play()
-		local colorTween = TweenService:Create(bar, tweenInfo, {BackgroundColor3 = espEnabled and activeColor or normalColor})
-		colorTween:Play()
+		TweenService:Create(bar, tweenInfo, {Position = espEnabled and activePos or normalPos}):Play()
+		TweenService:Create(bar, tweenInfo, {BackgroundColor3 = espEnabled and activeColor or normalColor}):Play()
 	
 		if espEnabled then
 			RunService:BindToRenderStep("SheriffHeroESP", Enum.RenderPriority.Camera.Value+1, updateESP)
@@ -4367,261 +4513,173 @@ local function IHTJB_fake_script() -- f789z43hfn3i.sebtn.ses
 		if player == OriginalSheriff then
 			OriginalSheriff = nil
 			updateESP()
+			DetectOriginalSheriff()
 		end
 	end)
 	
 end
-coroutine.wrap(IHTJB_fake_script)()
-local function BCOBFW_fake_script() -- f789z43hfn3i.cebtn.ces 
+coroutine.wrap(WBMCZTE_fake_script)()
+local function HOSA_fake_script() -- f789z43hfn3i.cebtn.ces 
 	local script = Instance.new('LocalScript', f789z43hfn3i.cebtn)
 
+	local Players = game:GetService("Players")
 	local Workspace = game:GetService("Workspace")
 	local TweenService = game:GetService("TweenService")
+	local RunService = game:GetService("RunService")
 	
-	local CESPBtn = script.Parent
-	local bar = CESPBtn:WaitForChild("tfrm"):WaitForChild("bar")
+	local btn = script.Parent
+	local bar = btn:WaitForChild("tfrm"):WaitForChild("bar")
 	
-	local CoinESPEnabled = false
-	local CoinConnections = {}
-	local activeColor = Color3.fromRGB(8, 197, 20)
+	local activeColor = Color3.fromRGB(8,197,20)
 	local inactiveColor = bar.BackgroundColor3
+	local activePos = UDim2.new(0.506,0,0,0)
+	local normalPos = UDim2.new(0,0,0,0)
+	local tweenInfo = TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.Out)
 	
-	local ESPFolder = Instance.new("Folder")
-	ESPFolder.Name = "CoinESPFolder"
-	ESPFolder.Parent = Workspace
+	_G.ItemESPEnabled = false
+	local espBoxes = {}
 	
-	local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	local activePos = UDim2.new(0.506, 0, 0, 0)
-	local normalPos = UDim2.new(0, 0, 0, 0)
-	
-	local function isCoinPart(instance)
-		if not instance:IsA("BasePart") then return false end
-		local current = instance
-		while current do
-			if current.Name:lower() == "coin" then
-				return true
-			end
-			current = current.Parent
-		end
-		return false
+	local function updateBarUI()
+		local pos = _G.ItemESPEnabled and activePos or normalPos
+		local color = _G.ItemESPEnabled and activeColor or inactiveColor
+		TweenService:Create(bar, tweenInfo, {Position = pos}):Play()
+		TweenService:Create(bar, tweenInfo, {BackgroundColor3 = color}):Play()
 	end
 	
-	local function createCoinESP(part)
-		if part:GetAttribute("CoinESP") or not isCoinPart(part) then return end
+	local function createItemESP(part, color)
+		if not _G.ItemESPEnabled then return end
+		if not espBoxes[part] then espBoxes[part] = {} end
 	
-		part:SetAttribute("CoinESP", true)
-	
-		local highlight = Instance.new("Highlight")
-		highlight.Name = "CoinESPHighlight"
-		highlight.Adornee = part
-		highlight.FillColor = Color3.fromRGB(255, 177, 20)
-		highlight.OutlineColor = Color3.fromRGB(255, 142, 29)
-		highlight.FillTransparency = 0.6
-		highlight.OutlineTransparency = 0
-		highlight.Parent = ESPFolder
-	end
-	
-	local function removeAllESP()
-		for _, h in ipairs(ESPFolder:GetChildren()) do
-			local adornee = h.Adornee
-			if adornee and adornee.Parent then
-				adornee:SetAttribute("CoinESP", nil)
-			end
-			h:Destroy()
-		end
-	end
-	
-	local function disableCoinESP()
-		for _, conn in ipairs(CoinConnections) do
-			if conn then
-				conn:Disconnect()
-			end
-		end
-		CoinConnections = {}
-		removeAllESP()
-	end
-	
-	local function enableCoinESP()
-		disableCoinESP()
-	
-		task.spawn(function()
-			for _, obj in ipairs(Workspace:GetDescendants()) do
-				if not CoinESPEnabled then break end
-				if obj:IsA("BasePart") and isCoinPart(obj) then
-					createCoinESP(obj)
-				end
-			end
-		end)
-	
-		local addedConn = Workspace.DescendantAdded:Connect(function(obj)
-			if not CoinESPEnabled then return end
-			if obj:IsA("BasePart") and isCoinPart(obj) then
-				createCoinESP(obj)
-			end
-		end)
-	
-		local removingConn = Workspace.DescendantRemoving:Connect(function(obj)
-			if not CoinESPEnabled then return end
-			if obj:IsA("BasePart") and obj:GetAttribute("CoinESP") then
-				obj:SetAttribute("CoinESP", nil)
-				for _, h in ipairs(ESPFolder:GetChildren()) do
-					if h:IsA("Highlight") and h.Adornee == obj then
-						h:Destroy()
-					end
-				end
-			end
-		end)
-	
-		table.insert(CoinConnections, addedConn)
-		table.insert(CoinConnections, removingConn)
-	end
-	
-	CESPBtn.MouseButton1Click:Connect(function()
-		CoinESPEnabled = not CoinESPEnabled
-	
-		local posTween = TweenService:Create(bar, tweenInfo, {Position = CoinESPEnabled and activePos or normalPos})
-		posTween:Play()
-		local colorTween = TweenService:Create(bar, tweenInfo, {BackgroundColor3 = CoinESPEnabled and activeColor or inactiveColor})
-		colorTween:Play()
-	
-		if CoinESPEnabled then
-			enableCoinESP()
+		if not espBoxes[part].box then
+			local box = Instance.new("BoxHandleAdornment")
+			box.Size = part.Size
+			box.Adornee = part
+			box.AlwaysOnTop = true
+			box.ZIndex = 10
+			box.Transparency = 0.5
+			box.Color3 = color
+			box.Parent = part
+			espBoxes[part].box = box
 		else
-			disableCoinESP()
+			local box = espBoxes[part].box
+			box.Adornee = part
+			box.Color3 = color
+			if box.Parent ~= part then box.Parent = part end
+		end
+	end
+	
+	local function clearItemESP()
+		for part,data in pairs(espBoxes) do
+			if data.box then data.box:Destroy() end
+		end
+		espBoxes = {}
+	end
+	
+	RunService.Heartbeat:Connect(function()
+		if not _G.ItemESPEnabled then return end
+		for _, part in pairs(Workspace:GetDescendants()) do
+			if part:IsA("BasePart") then
+				local n = part.Name:lower()
+				if n == "coin" or n:find("coin") then
+					createItemESP(part, Color3.fromRGB(255,255,0))
+				elseif n:find("egg") or n:find("candy") then
+					createItemESP(part, Color3.fromRGB(0,255,255))
+				end
+			end
 		end
 	end)
 	
-	script.AncestryChanged:Connect(function()
-		if not script.Parent then
-			disableCoinESP()
-			ESPFolder:Destroy()
+	btn.MouseButton1Click:Connect(function()
+		_G.ItemESPEnabled = not _G.ItemESPEnabled
+		updateBarUI()
+		if not _G.ItemESPEnabled then
+			clearItemESP()
 		end
 	end)
+	
+	bar.Position = normalPos
+	bar.BackgroundColor3 = inactiveColor
 	
 end
-coroutine.wrap(BCOBFW_fake_script)()
-local function IQUP_fake_script() -- f789z43hfn3i.gebtn.ges 
+coroutine.wrap(HOSA_fake_script)()
+local function IUOXFE_fake_script() -- f789z43hfn3i.gebtn.ges 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gebtn)
 
 	local Workspace = game:GetService("Workspace")
 	local TweenService = game:GetService("TweenService")
+	local RunService = game:GetService("RunService")
 	
-	local GESPBtn = script.Parent
-	local bar = GESPBtn:WaitForChild("tfrm"):WaitForChild("bar")
+	local btn = script.Parent
+	local bar = btn:WaitForChild("tfrm"):WaitForChild("bar")
 	
-	local GunESPEnabled = false
-	local GunConnections = {}
-	local activeColor = Color3.fromRGB(8, 197, 20)
-	local inactiveColor = Color3.fromRGB(179, 41, 22)
+	local activeColor = Color3.fromRGB(8,197,20)
+	local inactiveColor = bar.BackgroundColor3
+	local activePos = UDim2.new(0.506,0,0,0)
+	local normalPos = UDim2.new(0,0,0,0)
+	local tweenInfo = TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.Out)
 	
-	local ESPFolder = Instance.new("Folder")
-	ESPFolder.Name = "GunESPFolder"
-	ESPFolder.Parent = Workspace
+	_G.GunESPEnabled = false
+	local espBoxes = {}
 	
-	local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-	local activePos = UDim2.new(0.506, 0, 0, 0)
-	local normalPos = UDim2.new(0, 0, 0, 0)
-	
-	local function createGunESP(part)
-		if part:FindFirstChild("GunESPHighlight") then return end
-	
-		local highlight = Instance.new("Highlight")
-		highlight.Name = "GunESPHighlight"
-		highlight.Adornee = part
-		highlight.FillColor = Color3.fromRGB(0, 89, 255)
-		highlight.OutlineColor = Color3.fromRGB(0, 89, 255)
-		highlight.FillTransparency = 0.6
-		highlight.OutlineTransparency = 0
-		highlight.Parent = ESPFolder
-	
-		local billboard = Instance.new("BillboardGui")
-		billboard.Name = "GunESPText"
-		billboard.Adornee = part
-		billboard.Size = UDim2.new(0,100,0,50)
-		billboard.StudsOffset = Vector3.new(0, part.Size.Y + 0.5, 0)
-		billboard.AlwaysOnTop = true
-		billboard.Parent = ESPFolder
-	
-		local textLabel = Instance.new("TextLabel")
-		textLabel.Size = UDim2.new(1,0,1,0)
-		textLabel.BackgroundTransparency = 1
-		textLabel.Text = "Gun Drop"
-		textLabel.TextColor3 = Color3.fromRGB(0, 89, 255)
-		textLabel.TextScaled = true
-		textLabel.Font = Enum.Font.SourceSansBold
-		textLabel.Parent = billboard
+	local function updateBarUI()
+		local pos = _G.GunESPEnabled and activePos or normalPos
+		local color = _G.GunESPEnabled and activeColor or inactiveColor
+		TweenService:Create(bar, tweenInfo, {Position = pos}):Play()
+		TweenService:Create(bar, tweenInfo, {BackgroundColor3 = color}):Play()
 	end
 	
-	local function removeAllGunESP()
-		for _, h in ipairs(ESPFolder:GetChildren()) do
-			h:Destroy()
-		end
-	end
+	local function createGunESP(part, color)
+		if not _G.GunESPEnabled then return end
+		if not espBoxes[part] then espBoxes[part] = {} end
 	
-	local function enableGunESP()
-		removeAllGunESP()
-	
-		for _, obj in ipairs(Workspace:GetDescendants()) do
-			if not GunESPEnabled then break end
-			if obj:IsA("Model") and obj.Name == "GunDrop" then
-				for _, part in ipairs(obj:GetDescendants()) do
-					if part:IsA("BasePart") then
-						createGunESP(part)
-					end
-				end
-			end
-		end
-	
-		local conn = Workspace.DescendantAdded:Connect(function(obj)
-			if not GunESPEnabled then return end
-			if obj:IsA("Model") and obj.Name == "GunDrop" then
-				for _, part in ipairs(obj:GetDescendants()) do
-					if part:IsA("BasePart") then
-						createGunESP(part)
-					end
-				end
-			end
-		end)
-		table.insert(GunConnections, conn)
-	
-		local remConn = Workspace.DescendantRemoving:Connect(function(obj)
-			if obj:IsA("BasePart") then
-				for _, h in ipairs(ESPFolder:GetChildren()) do
-					if (h:IsA("Highlight") or h:IsA("BillboardGui")) and h.Adornee == obj then
-						h:Destroy()
-					end
-				end
-			end
-		end)
-		table.insert(GunConnections, remConn)
-	end
-	
-	local function disableGunESP()
-		for _, conn in ipairs(GunConnections) do
-			conn:Disconnect()
-		end
-		GunConnections = {}
-		removeAllGunESP()
-	end
-	
-	GESPBtn.MouseButton1Click:Connect(function()
-		GunESPEnabled = not GunESPEnabled
-	
-		local posTween = TweenService:Create(bar, tweenInfo, {Position = GunESPEnabled and activePos or normalPos})
-		posTween:Play()
-		local colorTween = TweenService:Create(bar, tweenInfo, {BackgroundColor3 = GunESPEnabled and activeColor or inactiveColor})
-		colorTween:Play()
-	
-		if GunESPEnabled then
-			enableGunESP()
+		if not espBoxes[part].box then
+			local box = Instance.new("BoxHandleAdornment")
+			box.Size = part.Size
+			box.Adornee = part
+			box.AlwaysOnTop = true
+			box.ZIndex = 10
+			box.Transparency = 0.5
+			box.Color3 = color
+			box.Parent = part
+			espBoxes[part].box = box
 		else
-			disableGunESP()
+			local box = espBoxes[part].box
+			box.Adornee = part
+			box.Color3 = color
+			if box.Parent ~= part then box.Parent = part end
+		end
+	end
+	
+	local function clearGunESP()
+		for part,data in pairs(espBoxes) do
+			if data.box then data.box:Destroy() end
+		end
+		espBoxes = {}
+	end
+	
+	RunService.Heartbeat:Connect(function()
+		if not _G.GunESPEnabled then return end
+		for _, part in pairs(Workspace:GetDescendants()) do
+			if part:IsA("BasePart") and (part.Name == "GunDrop") then
+				createGunESP(part, Color3.fromRGB(0,0,255)) -- blue
+			end
 		end
 	end)
 	
+	btn.MouseButton1Click:Connect(function()
+		_G.GunESPEnabled = not _G.GunESPEnabled
+		updateBarUI()
+		if not _G.GunESPEnabled then
+			clearGunESP()
+		end
+	end)
+	
+	bar.Position = normalPos
+	bar.BackgroundColor3 = inactiveColor
+	
 end
-coroutine.wrap(IQUP_fake_script)()
-local function YBPQDOZ_fake_script() -- f789z43hfn3i.tbtn_2.ts 
+coroutine.wrap(IUOXFE_fake_script)()
+local function XQVFFP_fake_script() -- f789z43hfn3i.tbtn_2.ts 
 	local script = Instance.new('LocalScript', f789z43hfn3i.tbtn_2)
 
 	local Players = game:GetService("Players")
@@ -4652,11 +4710,34 @@ local function YBPQDOZ_fake_script() -- f789z43hfn3i.tbtn_2.ts
 	}
 	
 	local function DetectOriginalSheriff()
+		if OriginalSheriff and OriginalSheriff.Parent then return end
 		for _, plr in ipairs(Players:GetPlayers()) do
-			if plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun")) then
-				if not OriginalSheriff then
-					OriginalSheriff = plr
+			local hasGun = plr.Backpack:FindFirstChild("Gun") or (plr.Character and plr.Character:FindFirstChild("Gun"))
+			if hasGun then
+				OriginalSheriff = plr
+	
+				if plr.Character then
+					local humanoid = plr.Character:FindFirstChildOfClass("Humanoid")
+					if humanoid then
+						humanoid.Died:Connect(function()
+							if OriginalSheriff == plr then
+								OriginalSheriff = nil
+								DetectOriginalSheriff()
+							end
+						end)
+					end
 				end
+	
+				if plr:FindFirstChild("Backpack") then
+					plr.Backpack.ChildRemoved:Connect(function(child)
+						if child.Name == "Gun" and OriginalSheriff == plr then
+							OriginalSheriff = nil
+							DetectOriginalSheriff()
+						end
+					end)
+				end
+	
+				break 
 			end
 		end
 	end
@@ -4712,11 +4793,15 @@ local function YBPQDOZ_fake_script() -- f789z43hfn3i.tbtn_2.ts
 	
 		for _, player in ipairs(Players:GetPlayers()) do
 			if player~=LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+				local targetHRP = player.Character.HumanoidRootPart
+				local screenPos, onScreen = Camera:WorldToViewportPoint(targetHRP.Position)
+				if not onScreen then
+					if Tracers[player] then Tracers[player].Visible = false end
+					continue
+				end
+	
 				local role = GetRole(player)
 				local color = RoleColors[role] or Color3.new(1,1,1)
-	
-				local targetHRP = player.Character.HumanoidRootPart
-				local toScreen = Camera:WorldToViewportPoint(targetHRP.Position)
 	
 				if not Tracers[player] then
 					local line = Drawing.new("Line")
@@ -4726,7 +4811,7 @@ local function YBPQDOZ_fake_script() -- f789z43hfn3i.tbtn_2.ts
 				end
 	
 				Tracers[player].From = Vector2.new(mousePos.X, mousePos.Y)
-				Tracers[player].To = Vector2.new(toScreen.X, toScreen.Y)
+				Tracers[player].To = Vector2.new(screenPos.X, screenPos.Y)
 				Tracers[player].Color = color
 				Tracers[player].Visible = true
 			else
@@ -4756,8 +4841,8 @@ local function YBPQDOZ_fake_script() -- f789z43hfn3i.tbtn_2.ts
 	end)
 	
 end
-coroutine.wrap(YBPQDOZ_fake_script)()
-local function HYUPCO_fake_script() -- f789z43hfn3i.nebtn.nes 
+coroutine.wrap(XQVFFP_fake_script)()
+local function YFOS_fake_script() -- f789z43hfn3i.nebtn.nes 
 	local script = Instance.new('LocalScript', f789z43hfn3i.nebtn)
 
 	local Players = game:GetService("Players")
@@ -4911,8 +4996,63 @@ local function HYUPCO_fake_script() -- f789z43hfn3i.nebtn.nes
 	bar.BackgroundColor3 = inactiveColor
 	
 end
-coroutine.wrap(HYUPCO_fake_script)()
-local function CWHLI_fake_script() -- f789z43hfn3i.gmbtn.gms 
+coroutine.wrap(YFOS_fake_script)()
+local function APCPY_fake_script() -- f789z43hfn3i.xbtn.xs 
+	local script = Instance.new('LocalScript', f789z43hfn3i.xbtn)
+
+	local Players = game:GetService("Players")
+	local TweenService = game:GetService("TweenService")
+	local RunService = game:GetService("RunService")
+	
+	local player = Players.LocalPlayer
+	local playerGui = player:WaitForChild("PlayerGui")
+	
+	local toggleBtn = script.Parent 
+	local bar = toggleBtn:WaitForChild("tfrm") 
+	local activeColor = Color3.fromRGB(8, 197, 20)
+	local inactiveColor = bar.BackgroundColor3
+	
+	local xrayEnabled = false
+	local xrayTransparency = 0.75
+	local originalTransparencies = {}
+	
+	local function toggleXRay()
+		xrayEnabled = not xrayEnabled
+	
+		local goal = {BackgroundColor3 = xrayEnabled and activeColor or inactiveColor}
+		local tween = TweenService:Create(bar, TweenInfo.new(0.3), goal)
+		tween:Play()
+	
+		for _, part in pairs(workspace:GetDescendants()) do
+			if part:IsA("BasePart") and part.CanCollide then
+				if xrayEnabled then
+					originalTransparencies[part] = part.Transparency
+					part.Transparency = xrayTransparency
+				else
+					if originalTransparencies[part] then
+						part.Transparency = originalTransparencies[part]
+					end
+				end
+			end
+		end
+	end
+	
+	toggleBtn.MouseButton1Click:Connect(toggleXRay)
+	
+	RunService.Heartbeat:Connect(function()
+		if xrayEnabled then
+			for _, part in pairs(workspace:GetDescendants()) do
+				if part:IsA("BasePart") and part.CanCollide and not originalTransparencies[part] then
+					originalTransparencies[part] = part.Transparency
+					part.Transparency = xrayTransparency
+				end
+			end
+		end
+	end)
+	
+end
+coroutine.wrap(APCPY_fake_script)()
+local function MYJF_fake_script() -- f789z43hfn3i.gmbtn.gms 
 	local script = Instance.new('LocalScript', f789z43hfn3i.gmbtn)
 
 	local Players = game:GetService("Players")
@@ -4929,6 +5069,7 @@ local function CWHLI_fake_script() -- f789z43hfn3i.gmbtn.gms
 	local normalPos = UDim2.new(0, 0, 0, 0)
 	
 	local activated = false
+	local activeConnection = nil
 	
 	local tweenInfo = TweenInfo.new(
 		0.3, 
@@ -4943,40 +5084,37 @@ local function CWHLI_fake_script() -- f789z43hfn3i.gmbtn.gms
 	
 		_G.GodModeEnabled = activated 
 	
+		if activeConnection then
+			activeConnection:Disconnect()
+			activeConnection = nil
+		end
+	
 		if activated then
-			local connection
-			connection = humanoid.HealthChanged:Connect(function(health)
-				if health < humanoid.MaxHealth and _G.GodModeEnabled then
-					humanoid.Health = humanoid.MaxHealth
+	
+			humanoid.MaxHealth = 100
+			humanoid.Health = humanoid.MaxHealth
+	
+			activeConnection = humanoid.HealthChanged:Connect(function(health)
+				if _G.GodModeEnabled and LocalPlayer.Character and humanoid then
+					if health < humanoid.MaxHealth then
+						humanoid.Health = humanoid.MaxHealth
+					end
 				end
 			end)
 	
-			humanoid.MaxHealth = 100
-			humanoid.Health = 100
-	
-			spawn(function()
+			task.spawn(function()
 				while _G.GodModeEnabled and humanoid.Parent do
 					if humanoid.Health < humanoid.MaxHealth then
 						humanoid.Health = humanoid.MaxHealth
 					end
-					wait(0.05)
+					task.wait(0.05)
 				end
-				if connection then
-					connection:Disconnect()
+	
+				if activeConnection then
+					activeConnection:Disconnect()
+					activeConnection = nil
 				end
 			end)
-	
-			-- Prevent TakeDamage if God Mode
-			local mt = getrawmetatable(humanoid)
-			local oldIndex = mt.__index
-			setreadonly(mt, false)
-			mt.__index = function(self, key)
-				if key == "TakeDamage" and _G.GodModeEnabled then
-					return function() end
-				end
-				return oldIndex(self, key)
-			end
-			setreadonly(mt, true)
 		end
 	end
 	
@@ -4997,11 +5135,19 @@ local function CWHLI_fake_script() -- f789z43hfn3i.gmbtn.gms
 		toggleGodMode()
 	end)
 	
+	LocalPlayer.CharacterAdded:Connect(function()
+		if activated then
+			task.wait(0.3)
+			toggleGodMode()
+		end
+	end)
+	
 	bar.Position = normalPos
 	bar.BackgroundColor3 = normalColor
+	
 end
-coroutine.wrap(CWHLI_fake_script)()
-local function XFKXRDP_fake_script() -- f789z43hfn3i.ncbtn.ncs 
+coroutine.wrap(MYJF_fake_script)()
+local function HWCIQ_fake_script() -- f789z43hfn3i.ncbtn.ncs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ncbtn)
 
 	local Players = game:GetService("Players")
@@ -5092,8 +5238,8 @@ local function XFKXRDP_fake_script() -- f789z43hfn3i.ncbtn.ncs
 	bar.BackgroundColor3 = normalColor
 	
 end
-coroutine.wrap(XFKXRDP_fake_script)()
-local function MBGS_fake_script() -- f789z43hfn3i.rbtn.rs 
+coroutine.wrap(HWCIQ_fake_script)()
+local function EUCZPPD_fake_script() -- f789z43hfn3i.rbtn.rs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.rbtn)
 
 	local Players = game:GetService("Players")
@@ -5122,8 +5268,8 @@ local function MBGS_fake_script() -- f789z43hfn3i.rbtn.rs
 		end
 	end)
 end
-coroutine.wrap(MBGS_fake_script)()
-local function QZBM_fake_script() -- f789z43hfn3i.fbtn.fs 
+coroutine.wrap(EUCZPPD_fake_script)()
+local function LGOAUN_fake_script() -- f789z43hfn3i.fbtn.fs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.fbtn)
 
 	local Players = game:GetService("Players")
@@ -5296,8 +5442,8 @@ local function QZBM_fake_script() -- f789z43hfn3i.fbtn.fs
 	bar.BackgroundColor3 = normalColor
 	
 end
-coroutine.wrap(QZBM_fake_script)()
-local function SESZWCB_fake_script() -- f789z43hfn3i.ftbtn.fts 
+coroutine.wrap(LGOAUN_fake_script)()
+local function AWVKFXY_fake_script() -- f789z43hfn3i.ftbtn.fts 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ftbtn)
 
 	local Players = game:GetService("Players")
@@ -5370,8 +5516,8 @@ local function SESZWCB_fake_script() -- f789z43hfn3i.ftbtn.fts
 	bar.BackgroundColor3 = normalColor
 	
 end
-coroutine.wrap(SESZWCB_fake_script)()
-local function IWUZIHQ_fake_script() -- f789z43hfn3i.ijbtn.ijs 
+coroutine.wrap(AWVKFXY_fake_script)()
+local function OTKR_fake_script() -- f789z43hfn3i.ijbtn.ijs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.ijbtn)
 
 	local Players = game:GetService("Players")
@@ -5396,6 +5542,17 @@ local function IWUZIHQ_fake_script() -- f789z43hfn3i.ijbtn.ijs
 	local infJumpEnabled = false
 	local humanoid = nil
 	
+	local function setupHumanoid()
+		local character = player.Character or player.CharacterAdded:Wait()
+		humanoid = character:WaitForChild("Humanoid")
+	end
+	
+	setupHumanoid()
+	
+	player.CharacterAdded:Connect(function()
+		setupHumanoid()
+	end)
+	
 	local function updateToggleVisual()
 		local targetPos = infJumpEnabled and activePos or normalPos
 		local targetColor = infJumpEnabled and activeColor or normalColor
@@ -5416,71 +5573,18 @@ local function IWUZIHQ_fake_script() -- f789z43hfn3i.ijbtn.ijs
 	
 	UserInputService.JumpRequest:Connect(function()
 		if infJumpEnabled then
-			if not humanoid or humanoid.Parent == nil then
-				local char = player.Character or player.CharacterAdded:Wait()
-				humanoid = char:WaitForChild("Humanoid")
+			if humanoid then
+				humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 			end
-			humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
 		end
 	end)
 	
 	bar.Position = normalPos
 	bar.BackgroundColor3 = normalColor
-end
-coroutine.wrap(IWUZIHQ_fake_script)()
-local function QERYYE_fake_script() -- f789z43hfn3i.sabtn.sas 
-	local script = Instance.new('LocalScript', f789z43hfn3i.sabtn)
-
-	local TweenService = game:GetService("TweenService")
-	local btn = script.Parent
-	local bar = btn.tfrm.bar
-	
-	local activeColor = Color3.fromRGB(8,197,20)
-	local inactiveColor = bar.BackgroundColor3
-	local tweenInfo = TweenInfo.new(0.3,Enum.EasingStyle.Quad,Enum.EasingDirection.Out)
-	local activePos = UDim2.new(0.506,0,0,0)
-	local normalPos = UDim2.new(0,0,0,0)
-	
-	_G.SilentAimEnabled = false
-	
-	local function setupSilentAim()
-		if _G.SilentAimEnabled then
-			local mt = getrawmetatable(game)
-			local oldNamecall = mt.__namecall
-			setreadonly(mt,false)
-			mt.__namecall = function(self,...)
-				local args = {...}
-				local method = getnamecallmethod()
-				if method == "FireServer" and _G.SilentAimEnabled then
-					local playerRole = getPlayerRole(LocalPlayer)
-					if (playerRole == "Murderer" and _G.SilentAimMurderer and self.Name == "HitKnife") or
-						(playerRole == "Sheriff" and _G.SilentAimSheriff and (self.Name == "ShootGun" or self.Name == "FireGun")) then
-						local target,targetPart = raycastToPlayer()
-						if target and targetPart then
-							if playerRole == "Murderer" then
-								args[1] = target.Character.Humanoid
-							elseif playerRole == "Sheriff" then
-								args[1] = targetPart.Position
-							end
-						end
-					end
-				end
-				return oldNamecall(self,unpack(args))
-			end
-			setreadonly(mt,true)
-		end
-	end
-	
-	btn.MouseButton1Click:Connect(function()
-		_G.SilentAimEnabled = not _G.SilentAimEnabled
-		TweenService:Create(bar,tweenInfo,{Position=_G.SilentAimEnabled and activePos or normalPos}):Play()
-		TweenService:Create(bar,tweenInfo,{BackgroundColor3=_G.SilentAimEnabled and activeColor or inactiveColor}):Play()
-		setupSilentAim()
-	end)
 	
 end
-coroutine.wrap(QERYYE_fake_script)()
-local function GZWVH_fake_script() -- f789z43hfn3i.aabtn.aas 
+coroutine.wrap(OTKR_fake_script)()
+local function JDPY_fake_script() -- f789z43hfn3i.aabtn.aas 
 	local script = Instance.new('LocalScript', f789z43hfn3i.aabtn)
 
 	local LocalPlayer = game.Players.LocalPlayer
@@ -5503,7 +5607,7 @@ local function GZWVH_fake_script() -- f789z43hfn3i.aabtn.aas
 					local humanoid = LocalPlayer.Character.Humanoid
 					local rootPart = LocalPlayer.Character.HumanoidRootPart
 					humanoid:MoveTo(rootPart.Position + Vector3.new(math.random(-5,5),0,math.random(-5,5)))
-					wait(30)
+					wait(20)
 				end
 			end)
 		end
@@ -5517,8 +5621,8 @@ local function GZWVH_fake_script() -- f789z43hfn3i.aabtn.aas
 	end)
 	
 end
-coroutine.wrap(GZWVH_fake_script)()
-local function QNGMUAX_fake_script() -- f789z43hfn3i.afbtn.afs 
+coroutine.wrap(JDPY_fake_script)()
+local function ETTNRF_fake_script() -- f789z43hfn3i.afbtn.afs 
 	local script = Instance.new('LocalScript', f789z43hfn3i.afbtn)
 
 	local TweenService = game:GetService("TweenService")
@@ -5590,7 +5694,7 @@ local function QNGMUAX_fake_script() -- f789z43hfn3i.afbtn.afs
 							local targetPos = coin.Position
 							local startPos = LocalPlayer.Character.HumanoidRootPart.Position
 							local distance = (targetPos - startPos).Magnitude
-							local speed = 25
+							local speed = 40
 							local timeToReach = distance / speed
 							local startTime = tick()
 							while tick() - startTime < timeToReach and _G.AutoFarmEnabled and coin.Parent do
@@ -5629,8 +5733,8 @@ local function QNGMUAX_fake_script() -- f789z43hfn3i.afbtn.afs
 	end)
 	
 end
-coroutine.wrap(QNGMUAX_fake_script)()
-local function BFLWP_fake_script() -- f789z43hfn3i.endb._es 
+coroutine.wrap(ETTNRF_fake_script)()
+local function FDJBC_fake_script() -- f789z43hfn3i.endb._es 
 	local script = Instance.new('LocalScript', f789z43hfn3i.endb)
 
 	local Players = game:GetService("Players")
@@ -5643,34 +5747,27 @@ local function BFLWP_fake_script() -- f789z43hfn3i.endb._es
 	end)
 	
 end
-coroutine.wrap(BFLWP_fake_script)()
-local function BYNMDSN_fake_script() -- f789z43hfn3i.min._ms 
+coroutine.wrap(FDJBC_fake_script)()
+local function AEAOF_fake_script() -- f789z43hfn3i.min._ms 
 	local script = Instance.new('LocalScript', f789z43hfn3i.min)
 
 	local Players = game:GetService("Players")
-	local TWS = game:GetService("TweenService")
+	local TweenService = game:GetService("TweenService")
 	
+	local button = script.Parent
 	local playerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
 	
 	local miniFolder = playerGui:WaitForChild("f789z43hfn3i")
 	local mini = miniFolder:WaitForChild("_main")
-	local minif = miniFolder:WaitForChild("tsk")
 	
 	local minimized = false
-	
 	local sizeNormal = UDim2.new(0.34, 0, 0.453, 0)
-	local sizeMin = UDim2.new(0.34, 0, 0.032, 0)  
-	
-	local tweeninfo = TweenInfo.new(
-		0.5,
-		Enum.EasingStyle.Circular,
-		Enum.EasingDirection.InOut
-	)
-	
+	local sizeMin = UDim2.new(0.34, 0, 0.032, 0)
+	local tweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Circular, Enum.EasingDirection.InOut)
 	local isTweening = false
 	
 	local function setChildrenVisible(frame, visible)
-		for _, child in pairs(frame:GetChildren()) do
+		for _, child in ipairs(frame:GetChildren()) do
 			if child:IsA("GuiObject") then
 				if child.Name == "dh" then
 					child.Visible = true
@@ -5681,30 +5778,33 @@ local function BYNMDSN_fake_script() -- f789z43hfn3i.min._ms
 		end
 	end
 	
-	script.Parent.MouseButton1Click:Connect(function()
-		if isTweening then return end  
-		isTweening = true
+	button.Active = true
+	button.AutoButtonColor = true
 	
-		if minimized == false then
-			local tween = TWS:Create(mini, tweeninfo, {Size = sizeMin})
-			tween:Play()
-			setChildrenVisible(mini, false) 
-			tween.Completed:Connect(function()
+	local function toggle()
+		if isTweening then return end
+		isTweening = true
+		if not minimized then
+			local t = TweenService:Create(mini, tweenInfo, {Size = sizeMin})
+			t:Play()
+			setChildrenVisible(mini, false)
+			t.Completed:Connect(function()
 				minimized = true
 				isTweening = false
 			end)
 		else
-	
-			local tween2 = TWS:Create(mini, tweeninfo, {Size = sizeNormal})
-			tween2:Play()
-	
-			tween2.Completed:Connect(function()
+			local t2 = TweenService:Create(mini, tweenInfo, {Size = sizeNormal})
+			t2:Play()
+			t2.Completed:Connect(function()
+				setChildrenVisible(mini, true)
 				minimized = false
 				isTweening = false
-				setChildrenVisible(mini, true) 
 			end)
 		end
-	end)
+	end
+	
+	button.MouseButton1Click:Connect(toggle)
+	button.Activated:Connect(toggle)
 	
 end
-coroutine.wrap(BYNMDSN_fake_script)()
+coroutine.wrap(AEAOF_fake_script)()
