@@ -7,27 +7,20 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Attempt to find the values
 local wordValue = ReplicatedStorage:WaitForChild("WordValue", 10)
-
-if not wordValue then
-    warn("WordValue not found in ReplicatedStorage")
-    wordValue = Instance.new("StringValue")
-end
 
 local state = {
     autoType = false,
     autoSay = false,
-    speed = 0, -- Defaulted to 0 (Instant)
+    speed = 0, 
     randomSpeed = false,
-    minSpeed = 0.05,
-    maxSpeed = 0.2,
+    minSpeed = 0.01,
+    maxSpeed = 0.05,
     lastWord = ""
 }
 
 local menuVisible = true
 
--- // UI CREATION START // --
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "ModernAutoType"
 ScreenGui.ResetOnSpawn = false
@@ -106,7 +99,6 @@ Content.Position = UDim2.new(0, 20, 0, 65)
 Content.BackgroundTransparency = 1
 Content.Parent = Main
 
--- Toggle Factory
 local function createToggle(name, position, callback)
     local Container = Instance.new("Frame")
     Container.Size = UDim2.new(1, 0, 0, 56)
@@ -220,7 +212,6 @@ SpeedInput.FocusLost:Connect(function()
     end
 end)
 
--- Random Speed Controls
 local RandomLabel = Instance.new("TextLabel")
 RandomLabel.Size = UDim2.new(0.6, 0, 0, 28)
 RandomLabel.Position = UDim2.new(0, 18, 0, 44)
@@ -336,7 +327,6 @@ MaxInput.FocusLost:Connect(function()
     end
 end)
 
--- Console
 local Console = Instance.new("Frame")
 Console.Size = UDim2.new(1, 0, 0, 140)
 Console.Position = UDim2.new(0, 0, 0, 288)
@@ -384,7 +374,6 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     end
 end)
 
--- // HELPER FUNCTIONS // --
 local function getPlayerTextbox()
     if not playerGui then return nil end
     local success, gui = pcall(function() return playerGui:FindFirstChild("Textbox") end)
@@ -419,7 +408,6 @@ local function completeWord(targetTextbox)
     end)
 end
 
--- // MAIN LOGIC // --
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local newWord = wordValue.Value
     
@@ -442,14 +430,12 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
         local targetTextbox = getPlayerTextbox()
         
         if targetTextbox then
-            -- TRUE INSTANT MODE (If Random is OFF and Speed is 0)
             if state.randomSpeed == false and state.speed == 0 then
                 targetTextbox.Text = newWord
                 completeWord(targetTextbox)
-                return -- Stop here, we are done
+                return
             end
 
-            -- TYPEWRITER MODE (If Random is ON -OR- Speed > 0)
             local wordLength = string.len(newWord)
             local count = 0
             
@@ -464,12 +450,16 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                     if min > max then min, max = max, min end
                     currentDelay = min + (math.random() * (max - min))
                 end
-                
-                -- Only wait if delay is significant
                 if currentDelay > 0 then
                     task.wait(currentDelay)
                 end
                 
+				local delayTime = state.speed
+            if state.randomSpeed then
+                delayTime = math.random(state.minSpeed * 1000, state.maxSpeed * 1000) / 1000
+            end
+            
+            task.wait(math.max(delayTime, 0.00001))
                 count = count + 1
                 targetTextbox.Text = string.sub(newWord, 1, count)
                 
