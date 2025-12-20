@@ -7,10 +7,9 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Attempt to find the values (adjust timeouts if necessary)
+-- Attempt to find the values
 local wordValue = ReplicatedStorage:WaitForChild("WordValue", 10)
 
--- Default fallback if objects aren't found immediately
 if not wordValue then
     warn("WordValue not found in ReplicatedStorage")
     wordValue = Instance.new("StringValue")
@@ -19,7 +18,7 @@ end
 local state = {
     autoType = false,
     autoSay = false,
-    speed = 0.1,
+    speed = 0, -- Defaulted to 0 (Instant)
     randomSpeed = false,
     minSpeed = 0.05,
     maxSpeed = 0.2,
@@ -97,17 +96,7 @@ local CloseBtnCorner = Instance.new("UICorner")
 CloseBtnCorner.CornerRadius = UDim.new(0, 10)
 CloseBtnCorner.Parent = CloseBtn
 
-CloseBtn.MouseEnter:Connect(function()
-    TweenService:Create(CloseBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(220, 60, 60)}):Play()
-end)
-
-CloseBtn.MouseLeave:Connect(function()
-    TweenService:Create(CloseBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(40, 40, 48)}):Play()
-end)
-
 CloseBtn.MouseButton1Click:Connect(function()
-    TweenService:Create(Main, TweenInfo.new(0.2), {Size = UDim2.new(0, 0, 0, 0)}):Play()
-    task.wait(0.2)
     ScreenGui:Destroy()
 end)
 
@@ -117,6 +106,7 @@ Content.Position = UDim2.new(0, 20, 0, 65)
 Content.BackgroundTransparency = 1
 Content.Parent = Main
 
+-- Toggle Factory
 local function createToggle(name, position, callback)
     local Container = Instance.new("Frame")
     Container.Size = UDim2.new(1, 0, 0, 56)
@@ -128,11 +118,6 @@ local function createToggle(name, position, callback)
     local Corner = Instance.new("UICorner")
     Corner.CornerRadius = UDim.new(0, 12)
     Corner.Parent = Container
-    
-    local Stroke = Instance.new("UIStroke")
-    Stroke.Color = Color3.fromRGB(45, 45, 55)
-    Stroke.Thickness = 1
-    Stroke.Parent = Container
     
     local Label = Instance.new("TextLabel")
     Label.Size = UDim2.new(0.6, 0, 1, 0)
@@ -174,32 +159,19 @@ local function createToggle(name, position, callback)
     Toggle.MouseButton1Click:Connect(function()
         isOn = not isOn
         local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-        
         if isOn then
             TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(70, 140, 255)}):Play()
-            TweenService:Create(Knob, tweenInfo, {
-                Position = UDim2.new(1, -27, 0.5, -12), 
-                BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-            }):Play()
+            TweenService:Create(Knob, tweenInfo, {Position = UDim2.new(1, -27, 0.5, -12), BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play()
         else
             TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(45, 45, 55)}):Play()
-            TweenService:Create(Knob, tweenInfo, {
-                Position = UDim2.new(0, 3, 0.5, -12), 
-                BackgroundColor3 = Color3.fromRGB(180, 180, 185)
-            }):Play()
+            TweenService:Create(Knob, tweenInfo, {Position = UDim2.new(0, 3, 0.5, -12), BackgroundColor3 = Color3.fromRGB(180, 180, 185)}):Play()
         end
         callback(isOn)
     end)
-    return Container
 end
 
-createToggle("Auto Type", UDim2.new(0, 0, 0, 0), function(enabled)
-    state.autoType = enabled
-end)
-
-createToggle("Auto Say", UDim2.new(0, 0, 0, 66), function(enabled)
-    state.autoSay = enabled
-end)
+createToggle("Auto Type", UDim2.new(0, 0, 0, 0), function(enabled) state.autoType = enabled end)
+createToggle("Auto Say", UDim2.new(0, 0, 0, 66), function(enabled) state.autoSay = enabled end)
 
 local SpeedContainer = Instance.new("Frame")
 SpeedContainer.Size = UDim2.new(1, 0, 0, 140) 
@@ -212,16 +184,11 @@ local SpeedCorner = Instance.new("UICorner")
 SpeedCorner.CornerRadius = UDim.new(0, 12)
 SpeedCorner.Parent = SpeedContainer
 
-local SpeedStroke = Instance.new("UIStroke")
-SpeedStroke.Color = Color3.fromRGB(45, 45, 55)
-SpeedStroke.Thickness = 1
-SpeedStroke.Parent = SpeedContainer
-
 local SpeedLabel = Instance.new("TextLabel")
 SpeedLabel.Size = UDim2.new(0.5, 0, 0, 28)
 SpeedLabel.Position = UDim2.new(0, 18, 0, 8)
 SpeedLabel.BackgroundTransparency = 1
-SpeedLabel.Text = "Type Speed"
+SpeedLabel.Text = "Type Speed (0 = Insta)"
 SpeedLabel.TextColor3 = Color3.fromRGB(230, 230, 235)
 SpeedLabel.Font = Enum.Font.GothamMedium
 SpeedLabel.TextSize = 14
@@ -234,21 +201,15 @@ SpeedInput.Position = UDim2.new(1, -100, 0, 8)
 SpeedInput.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
 SpeedInput.BorderSizePixel = 0
 SpeedInput.Text = tostring(state.speed)
-SpeedInput.PlaceholderText = "0.1"
+SpeedInput.PlaceholderText = "0"
 SpeedInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedInput.Font = Enum.Font.GothamMedium
 SpeedInput.TextSize = 14
-SpeedInput.ClearTextOnFocus = false
 SpeedInput.Parent = SpeedContainer
 
 local SpeedInputCorner = Instance.new("UICorner")
 SpeedInputCorner.CornerRadius = UDim.new(0, 8)
 SpeedInputCorner.Parent = SpeedInput
-
-local SpeedInputStroke = Instance.new("UIStroke")
-SpeedInputStroke.Color = Color3.fromRGB(60, 60, 70)
-SpeedInputStroke.Thickness = 1
-SpeedInputStroke.Parent = SpeedInput
 
 SpeedInput.FocusLost:Connect(function()
     local num = tonumber(SpeedInput.Text)
@@ -259,6 +220,7 @@ SpeedInput.FocusLost:Connect(function()
     end
 end)
 
+-- Random Speed Controls
 local RandomLabel = Instance.new("TextLabel")
 RandomLabel.Size = UDim2.new(0.6, 0, 0, 28)
 RandomLabel.Position = UDim2.new(0, 18, 0, 44)
@@ -294,27 +256,15 @@ local RandomKnobCorner = Instance.new("UICorner")
 RandomKnobCorner.CornerRadius = UDim.new(1, 0)
 RandomKnobCorner.Parent = RandomKnob
 
-if state.randomSpeed then
-    RandomToggle.BackgroundColor3 = Color3.fromRGB(70, 140, 255)
-    RandomKnob.Position = UDim2.new(1, -27, 0.5, -12)
-    RandomKnob.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-end
-
 RandomToggle.MouseButton1Click:Connect(function()
     state.randomSpeed = not state.randomSpeed
     local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
     if state.randomSpeed then
         TweenService:Create(RandomToggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(70, 140, 255)}):Play()
-        TweenService:Create(RandomKnob, tweenInfo, {
-            Position = UDim2.new(1, -27, 0.5, -12),
-            BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        }):Play()
+        TweenService:Create(RandomKnob, tweenInfo, {Position = UDim2.new(1, -27, 0.5, -12), BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play()
     else
         TweenService:Create(RandomToggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(45, 45, 55)}):Play()
-        TweenService:Create(RandomKnob, tweenInfo, {
-            Position = UDim2.new(0, 3, 0.5, -12),
-            BackgroundColor3 = Color3.fromRGB(180, 180, 185)
-        }):Play()
+        TweenService:Create(RandomKnob, tweenInfo, {Position = UDim2.new(0, 3, 0.5, -12), BackgroundColor3 = Color3.fromRGB(180, 180, 185)}):Play()
     end
 end)
 
@@ -338,27 +288,15 @@ MinInput.Text = tostring(state.minSpeed)
 MinInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 MinInput.Font = Enum.Font.Gotham
 MinInput.TextSize = 13
-MinInput.ClearTextOnFocus = false
 MinInput.Parent = SpeedContainer
-
 local MinInputCorner = Instance.new("UICorner")
 MinInputCorner.CornerRadius = UDim.new(0, 8)
 MinInputCorner.Parent = MinInput
-
-local MinInputStroke = Instance.new("UIStroke")
-MinInputStroke.Color = Color3.fromRGB(60, 60, 70)
-MinInputStroke.Thickness = 1
-MinInputStroke.Parent = MinInput
 
 MinInput.FocusLost:Connect(function()
     local v = tonumber(MinInput.Text)
     if v and v >= 0 then
         state.minSpeed = v
-
-        if state.maxSpeed < state.minSpeed then
-            state.maxSpeed = state.minSpeed
-            MaxInput.Text = tostring(state.maxSpeed)
-        end
     else
         MinInput.Text = tostring(state.minSpeed)
     end
@@ -384,58 +322,30 @@ MaxInput.Text = tostring(state.maxSpeed)
 MaxInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 MaxInput.Font = Enum.Font.Gotham
 MaxInput.TextSize = 13
-MaxInput.ClearTextOnFocus = false
 MaxInput.Parent = SpeedContainer
-
 local MaxInputCorner = Instance.new("UICorner")
 MaxInputCorner.CornerRadius = UDim.new(0, 8)
 MaxInputCorner.Parent = MaxInput
-
-local MaxInputStroke = Instance.new("UIStroke")
-MaxInputStroke.Color = Color3.fromRGB(60, 60, 70)
-MaxInputStroke.Thickness = 1
-MaxInputStroke.Parent = MaxInput
 
 MaxInput.FocusLost:Connect(function()
     local v = tonumber(MaxInput.Text)
     if v and v >= 0 then
         state.maxSpeed = v
-
-        if state.minSpeed > state.maxSpeed then
-            state.minSpeed = state.maxSpeed
-            MinInput.Text = tostring(state.minSpeed)
-        end
     else
         MaxInput.Text = tostring(state.maxSpeed)
     end
 end)
 
+-- Console
 local Console = Instance.new("Frame")
 Console.Size = UDim2.new(1, 0, 0, 140)
 Console.Position = UDim2.new(0, 0, 0, 288)
 Console.BackgroundColor3 = Color3.fromRGB(15, 15, 18)
 Console.BorderSizePixel = 0
 Console.Parent = Content
-
 local ConsoleCorner = Instance.new("UICorner")
 ConsoleCorner.CornerRadius = UDim.new(0, 12)
 ConsoleCorner.Parent = Console
-
-local ConsoleStroke = Instance.new("UIStroke")
-ConsoleStroke.Color = Color3.fromRGB(45, 45, 55)
-ConsoleStroke.Thickness = 1
-ConsoleStroke.Parent = Console
-
-local ConsoleTitle = Instance.new("TextLabel")
-ConsoleTitle.Size = UDim2.new(1, -30, 0, 32)
-ConsoleTitle.Position = UDim2.new(0, 15, 0, 8)
-ConsoleTitle.BackgroundTransparency = 1
-ConsoleTitle.Text = "CURRENT WORD"
-ConsoleTitle.TextColor3 = Color3.fromRGB(130, 130, 140)
-ConsoleTitle.Font = Enum.Font.GothamBold
-ConsoleTitle.TextSize = 12
-ConsoleTitle.TextXAlignment = Enum.TextXAlignment.Left
-ConsoleTitle.Parent = Console
 
 local ConsoleText = Instance.new("TextLabel")
 ConsoleText.Size = UDim2.new(1, -30, 1, -48)
@@ -449,29 +359,6 @@ ConsoleText.TextWrapped = true
 ConsoleText.TextYAlignment = Enum.TextYAlignment.Top
 ConsoleText.Parent = Console
 
-local StatusDot = Instance.new("Frame")
-StatusDot.Size = UDim2.new(0, 10, 0, 10)
-StatusDot.Position = UDim2.new(1, -20, 0, 14)
-StatusDot.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
-StatusDot.BorderSizePixel = 0
-StatusDot.Parent = Console
-
-local StatusDotCorner = Instance.new("UICorner")
-StatusDotCorner.CornerRadius = UDim.new(1, 0)
-StatusDotCorner.Parent = StatusDot
-
-local function pulseStatusDot()
-    while task.wait(1) do
-        if StatusDot.BackgroundColor3 == Color3.fromRGB(80, 220, 100) then
-            TweenService:Create(StatusDot, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
-                Size = UDim2.new(0, 12, 0, 12),
-                Position = UDim2.new(1, -21, 0, 13)
-            }):Play()
-        end
-    end
-end
-task.spawn(pulseStatusDot)
-
 local Version = Instance.new("TextLabel")
 Version.Size = UDim2.new(1, 0, 0, 22)
 Version.Position = UDim2.new(0, 0, 1, -27)
@@ -484,62 +371,31 @@ Version.Parent = Content
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
-    
     if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
         menuVisible = not menuVisible
-        
-        local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-        
         if menuVisible then
             Main.Visible = true
-            TweenService:Create(Main, tweenInfo, {
-                Size = UDim2.new(0, 340, 0, 510),
-                Position = UDim2.new(0.5, -170, 0.5, -220),
-                BackgroundTransparency = 0
-            }):Play()
+            TweenService:Create(Main, TweenInfo.new(0.3), {Size = UDim2.new(0, 340, 0, 510), BackgroundTransparency = 0}):Play()
         else
-            TweenService:Create(Main, tweenInfo, {
-                Size = UDim2.new(0, 0, 0, 0),
-                Position = UDim2.new(0.5, 0, 0.5, 0),
-                BackgroundTransparency = 1
-            }):Play()
-            task.wait(0.1)
+            TweenService:Create(Main, TweenInfo.new(0.3), {Size = UDim2.new(0, 0, 0, 0), BackgroundTransparency = 1}):Play()
+            task.wait(0.3)
             Main.Visible = false
         end
     end
 end)
--- // UI CREATION END // --
 
 -- // HELPER FUNCTIONS // --
-
 local function getPlayerTextbox()
     if not playerGui then return nil end
-
-    local success, gui = pcall(function()
-        return playerGui:FindFirstChild("Textbox")
-    end)
-    
+    local success, gui = pcall(function() return playerGui:FindFirstChild("Textbox") end)
     if success and gui then
         local tb = gui:FindFirstChild("TextBox")
-        if tb and tb:IsA("TextBox") then
-            return tb
-        end
+        if tb and tb:IsA("TextBox") then return tb end
     end
-
     for _, d in ipairs(playerGui:GetDescendants()) do
-        if d:IsA("TextBox") and d.Visible and d.Active then
-            return d
-        end
+        if d:IsA("TextBox") and d.Visible and d.Active then return d end
     end
-
     return nil
-end
-
-local function textboxUsable(tb)
-    return tb
-        and tb.Visible == true
-        and tb.Active == true
-        and (tb:IsDescendantOf(playerGui))
 end
 
 local function sayWord(word)
@@ -547,89 +403,78 @@ local function sayWord(word)
     pcall(function()
         if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
             local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
-            if channel then
-                channel:SendAsync(msg)
-            end
+            if channel then channel:SendAsync(msg) end
         else
             local chatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
-            if chatEvent then
-                local sayEvent = chatEvent:FindFirstChild("SayMessageRequest")
-                if sayEvent then
-                    sayEvent:FireServer(msg, "All")
-                end
-            end
+            if chatEvent then chatEvent:FindFirstChild("SayMessageRequest"):FireServer(msg, "All") end
         end
     end)
 end
 
--- // MAIN LOGIC // --
+local function completeWord(targetTextbox)
+    targetTextbox:ReleaseFocus()
+    local success, err = pcall(function()
+        local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") or ReplicatedStorage:FindFirstChild("CorrectSpelling")
+        if remote then remote:FireServer() end
+    end)
+end
 
+-- // MAIN LOGIC // --
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local newWord = wordValue.Value
     
-    -- Update UI Console
     if newWord ~= "" then
         ConsoleText.Text = newWord
-        StatusDot.BackgroundColor3 = Color3.fromRGB(80, 220, 100)
     else
         ConsoleText.Text = "Waiting..."
-        StatusDot.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
     end
     
     if newWord == "" then return end
     state.lastWord = newWord
 
-    -- Auto Say Logic
     if state.autoSay then
-        task.spawn(function()
-            sayWord(newWord)
-        end)
+        task.spawn(function() sayWord(newWord) end)
     end
 
-    -- Auto Type Logic
     task.wait(1)
 
     if state.autoType then
         local targetTextbox = getPlayerTextbox()
         
-        if targetTextbox and textboxUsable(targetTextbox) then
+        if targetTextbox then
+            -- TRUE INSTANT MODE (If Random is OFF and Speed is 0)
+            if state.randomSpeed == false and state.speed == 0 then
+                targetTextbox.Text = newWord
+                completeWord(targetTextbox)
+                return -- Stop here, we are done
+            end
+
+            -- TYPEWRITER MODE (If Random is ON -OR- Speed > 0)
             local wordLength = string.len(newWord)
             local count = 0
             
             for i = 1, wordLength do
-                -- Stop if setting turned off or word changed mid-typing
                 if not state.autoType or wordValue.Value ~= newWord then break end
                 
-                -- // CALCULATE DELAY HERE // --
                 local currentDelay = state.speed
                 
                 if state.randomSpeed then
-                    -- This ensures a unique random number is picked for EVERY letter
                     local min = state.minSpeed
                     local max = state.maxSpeed
-                    -- Safety check to ensure min isn't larger than max
-                    if min > max then min, max = max, min end 
-                    
-                    -- Calculate random delay
+                    if min > max then min, max = max, min end
                     currentDelay = min + (math.random() * (max - min))
                 end
                 
-                task.wait(currentDelay) 
+                -- Only wait if delay is significant
+                if currentDelay > 0 then
+                    task.wait(currentDelay)
+                end
                 
                 count = count + 1
-                local stringSub = string.sub(newWord, 1, count)
-                
-                targetTextbox.Text = stringSub
+                targetTextbox.Text = string.sub(newWord, 1, count)
                 
                 if i == wordLength then
-                    targetTextbox:ReleaseFocus()
-                    local success, err = pcall(function()
-                        local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") 
-                                    or ReplicatedStorage:FindFirstChild("CorrectSpelling")
-                        if remote then
-                            remote:FireServer()
-                        end
-                    end)
+                    completeWord(targetTextbox)
                     break
                 end
             end
