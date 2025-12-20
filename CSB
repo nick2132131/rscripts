@@ -7,14 +7,10 @@ local UserInputService = game:GetService("UserInputService")
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Attempt to find the values (adjust timeouts if necessary)
 local wordValue = ReplicatedStorage:WaitForChild("WordValue", 10)
 local currentText = ReplicatedStorage:WaitForChild("CurrentText", 10)
 
--- Default fallback if objects aren't found immediately to prevent errors
 if not wordValue then
-    warn("WordValue not found in ReplicatedStorage")
-    -- Create a fake one just to keep the GUI from crashing, though functionality won't work
     wordValue = Instance.new("StringValue")
 end
 
@@ -31,7 +27,6 @@ local state = {
 
 local menuVisible = true
 
--- // UI CREATION START // --
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "ModernAutoType"
 ScreenGui.ResetOnSpawn = false
@@ -176,9 +171,7 @@ local function createToggle(name, position, callback)
     
     Toggle.MouseButton1Click:Connect(function()
         isOn = not isOn
-        
         local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-        
         if isOn then
             TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(70, 140, 255)}):Play()
             TweenService:Create(Knob, tweenInfo, {
@@ -192,10 +185,8 @@ local function createToggle(name, position, callback)
                 BackgroundColor3 = Color3.fromRGB(180, 180, 185)
             }):Play()
         end
-        
         callback(isOn)
     end)
-    
     return Container
 end
 
@@ -360,7 +351,6 @@ MinInput.FocusLost:Connect(function()
     local v = tonumber(MinInput.Text)
     if v and v >= 0 then
         state.minSpeed = v
-
         if state.maxSpeed < state.minSpeed then
             state.maxSpeed = state.minSpeed
             MaxInput.Text = tostring(state.maxSpeed)
@@ -406,7 +396,6 @@ MaxInput.FocusLost:Connect(function()
     local v = tonumber(MaxInput.Text)
     if v and v >= 0 then
         state.maxSpeed = v
-
         if state.minSpeed > state.maxSpeed then
             state.minSpeed = state.maxSpeed
             MinInput.Text = tostring(state.minSpeed)
@@ -466,7 +455,7 @@ local StatusDotCorner = Instance.new("UICorner")
 StatusDotCorner.CornerRadius = UDim.new(1, 0)
 StatusDotCorner.Parent = StatusDot
 
-local function pulseStatusDot()
+task.spawn(function()
     while task.wait(1) do
         if StatusDot.BackgroundColor3 == Color3.fromRGB(80, 220, 100) then
             TweenService:Create(StatusDot, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
@@ -475,8 +464,7 @@ local function pulseStatusDot()
             }):Play()
         end
     end
-end
-task.spawn(pulseStatusDot)
+end)
 
 local Version = Instance.new("TextLabel")
 Version.Size = UDim2.new(1, 0, 0, 22)
@@ -490,12 +478,9 @@ Version.Parent = Content
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
-    
     if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
         menuVisible = not menuVisible
-        
         local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-        
         if menuVisible then
             Main.Visible = true
             TweenService:Create(Main, tweenInfo, {
@@ -514,40 +499,28 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         end
     end
 end)
--- // UI CREATION END // --
-
--- // HELPER FUNCTIONS // --
 
 local function getPlayerTextbox()
     if not playerGui then return nil end
-
-    -- Strategy 1: Look for "Textbox" directly (Based on your provided snippet)
     local success, gui = pcall(function()
         return playerGui:FindFirstChild("Textbox")
     end)
-    
     if success and gui then
-        local tb = gui:FindFirstChild("TextBox") -- Usually Textbox.TextBox
+        local tb = gui:FindFirstChild("TextBox")
         if tb and tb:IsA("TextBox") then
             return tb
         end
     end
-
-    -- Strategy 2: Deep search (Fallback)
     for _, d in ipairs(playerGui:GetDescendants()) do
         if d:IsA("TextBox") and d.Visible and d.Active then
             return d
         end
     end
-
     return nil
 end
 
 local function textboxUsable(tb)
-    return tb
-        and tb.Visible == true
-        and tb.Active == true
-        and (tb:IsDescendantOf(playerGui))
+    return tb and tb.Visible == true and tb.Active == true and (tb:IsDescendantOf(playerGui))
 end
 
 local function sayWord(word)
@@ -570,7 +543,6 @@ local function sayWord(word)
     end)
 end
 
--- // SPEED CALCULATION LOGIC // --
 task.spawn(function()
     while task.wait(0.01) do
         if state.randomSpeed then
@@ -586,12 +558,8 @@ task.spawn(function()
     end
 end)
 
--- // MAIN LOGIC (MODIFIED AS REQUESTED) // --
-
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local newWord = wordValue.Value
-    
-    -- Update UI Console
     if newWord ~= "" then
         ConsoleText.Text = newWord
         StatusDot.BackgroundColor3 = Color3.fromRGB(80, 220, 100)
@@ -599,54 +567,35 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
         ConsoleText.Text = "Waiting..."
         StatusDot.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
     end
-    
     if newWord == "" then return end
-    
     state.lastWord = newWord
-
-    -- Auto Say Logic
     if state.autoSay then
         task.spawn(function()
             sayWord(newWord)
         end)
     end
-
-    -- Auto Type Logic (Wait 1 second as requested)
     task.wait(1)
-
     if state.autoType then
-        -- We check if we have a valid textbox AND if it is visible/enabled
         local targetTextbox = getPlayerTextbox()
-        
         if targetTextbox and textboxUsable(targetTextbox) then
-            local wordLength = string.len(newWord)
-            local count = 0
-            
-            for i = 1, wordLength do
-                -- Stop if setting turned off or word changed mid-typing
-                if not state.autoType or wordValue.Value ~= newWord then break end
-                
-                -- Use GUI speed setting (or default to 0.10 if you want strict adherence, currently uses slider)
-                -- If you strictly want 0.10 regardless of slider, change `state.currentDelay` to `0.10` below.
-                task.wait(state.currentDelay) 
-                
-                count = count + 1
-                local stringSub = string.sub(newWord, 1, count)
-                
-                targetTextbox.Text = stringSub
-                
-                if i == wordLength then
-                    targetTextbox:ReleaseFocus()
-                    
-                    -- Attempt to find the correct remote
-                    local success, err = pcall(function()
-                        local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") 
-                                    or ReplicatedStorage:FindFirstChild("CorrectSpelling")
-                        if remote then
-                            remote:FireServer()
-                        end
-                    end)
-                    break
+            if state.currentDelay <= 0 then
+                targetTextbox.Text = newWord
+                targetTextbox:ReleaseFocus()
+                local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") or ReplicatedStorage:FindFirstChild("CorrectSpelling")
+                if remote then remote:FireServer() end
+            else
+                local wordLength = string.len(newWord)
+                local count = 0
+                for i = 1, wordLength do
+                    if not state.autoType or wordValue.Value ~= newWord then break end
+                    task.wait(state.currentDelay) 
+                    count = count + 1
+                    targetTextbox.Text = string.sub(newWord, 1, count)
+                    if i == wordLength then
+                        targetTextbox:ReleaseFocus()
+                        local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") or ReplicatedStorage:FindFirstChild("CorrectSpelling")
+                        if remote then remote:FireServer() end
+                    end
                 end
             end
         end
