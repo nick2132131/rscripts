@@ -38,7 +38,7 @@ local nearbyKeys = {
 }
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "get rekt rara what is this fucking system u got"
+ScreenGui.Name = "LunarX_UI"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = playerGui
@@ -105,9 +105,7 @@ local CloseBtnCorner = Instance.new("UICorner")
 CloseBtnCorner.CornerRadius = UDim.new(0, 10)
 CloseBtnCorner.Parent = CloseBtn
 
-CloseBtn.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
+CloseBtn.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
 
 local Content = Instance.new("Frame")
 Content.Size = UDim2.new(1, -40, 1, -75)
@@ -208,8 +206,7 @@ SpeedInput.Size = UDim2.new(0, 90, 0, 28)
 SpeedInput.Position = UDim2.new(1, -100, 0, 8)
 SpeedInput.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
 SpeedInput.BorderSizePixel = 0
-SpeedInput.Text = tostring(state.speed)
-SpeedInput.PlaceholderText = "0"
+SpeedInput.Text = "0"
 SpeedInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 SpeedInput.Font = Enum.Font.GothamMedium
 SpeedInput.TextSize = 14
@@ -221,11 +218,7 @@ SpeedInputCorner.Parent = SpeedInput
 
 SpeedInput.FocusLost:Connect(function()
     local num = tonumber(SpeedInput.Text)
-    if num and num >= 0 then
-        state.speed = num
-    else
-        SpeedInput.Text = tostring(state.speed)
-    end
+    if num and num >= 0 then state.speed = num else SpeedInput.Text = tostring(state.speed) end
 end)
 
 local RandomLabel = Instance.new("TextLabel")
@@ -302,11 +295,7 @@ MinInputCorner.Parent = MinInput
 
 MinInput.FocusLost:Connect(function()
     local v = tonumber(MinInput.Text)
-    if v and v >= 0 then
-        state.minSpeed = v
-    else
-        MinInput.Text = tostring(state.minSpeed)
-    end
+    if v and v >= 0 then state.minSpeed = v else MinInput.Text = tostring(state.minSpeed) end
 end)
 
 local MaxLabel = Instance.new("TextLabel")
@@ -336,11 +325,7 @@ MaxInputCorner.Parent = MaxInput
 
 MaxInput.FocusLost:Connect(function()
     local v = tonumber(MaxInput.Text)
-    if v and v >= 0 then
-        state.maxSpeed = v
-    else
-        MaxInput.Text = tostring(state.maxSpeed)
-    end
+    if v and v >= 0 then state.maxSpeed = v else MaxInput.Text = tostring(state.maxSpeed) end
 end)
 
 local Console = Instance.new("Frame")
@@ -364,16 +349,6 @@ ConsoleText.TextSize = 26
 ConsoleText.TextWrapped = true
 ConsoleText.TextYAlignment = Enum.TextYAlignment.Top
 ConsoleText.Parent = Console
-
-local Version = Instance.new("TextLabel")
-Version.Size = UDim2.new(1, 0, 0, 22)
-Version.Position = UDim2.new(0, 0, 1, -27)
-Version.BackgroundTransparency = 1
-Version.Text = "CTRL | SHIFT+Q"
-Version.TextColor3 = Color3.fromRGB(90, 90, 100)
-Version.Font = Enum.Font.Gotham
-Version.TextSize = 10
-Version.Parent = Content
 
 local CmdFrame = Instance.new("Frame")
 CmdFrame.Size = UDim2.new(0, 500, 0, 300)
@@ -432,26 +407,50 @@ local function addCmdLine(txt)
     CmdScroll.CanvasPosition = Vector2.new(0, CmdList.AbsoluteContentSize.Y)
 end
 
--- [[ LOGIC & COMMANDS ]] --
+addCmdLine("Microsoft Windows [Version 10.0.19045.4291]")
+addCmdLine("(c) Lunar X Corporation. All rights reserved.")
+addCmdLine("")
+addCmdLine("type .helpx for help")
+
 local function handleCommand(msg)
-    local low = msg:lower()
+    local args = msg:split(" ")
+    local cmd = args[1]:lower()
     local prefix = "C:\\Users\\" .. player.DisplayName .. "> "
     
-    if low == ".typo" then
-        state.typosEnabled = not state.typosEnabled
-        addCmdLine(prefix .. "Typos set to: " .. tostring(state.typosEnabled))
-    elseif low:match("^%.typochance%s+%d+") then
-        local val = tonumber(low:match("%d+"))
-        state.typoChance = val
-        addCmdLine(prefix .. "Typo Chance updated to: " .. val .. "%")
-    elseif low == ".die" then
-        state.dieMode = not state.dieMode
-        addCmdLine(prefix .. "Die Mode set to: " .. tostring(state.dieMode))
-    elseif low:match("^%.diechance%s+%d+") then
-        local val = tonumber(low:match("%d+"))
-        state.dieChance = val
-        addCmdLine(prefix .. "Die Chance updated to: " .. val .. "%")
-    elseif low == ".cls" then
+    local function getBool()
+        if args[2] == "true" or args[2] == "on" then return true
+        elseif args[2] == "false" or args[2] == "off" then return false
+        end
+        return nil
+    end
+
+    if cmd == ".helpx" then
+        addCmdLine("--- AVAILABLE COMMANDS ---")
+        addCmdLine(".typo [true/false] - Toggle typos")
+        addCmdLine(".typochance [num] - Set typo chance %")
+        addCmdLine(".die [true/false] - Toggle instant fail mode")
+        addCmdLine(".diechance [num] - Set fail chance %")
+        addCmdLine(".autotype [true/false] - Toggle AutoType")
+        addCmdLine(".cls - Clear console")
+    elseif cmd == ".typo" then
+        local b = getBool()
+        state.typosEnabled = (b ~= nil) and b or not state.typosEnabled
+        addCmdLine(prefix .. "Typos: " .. tostring(state.typosEnabled))
+    elseif cmd == ".die" then
+        local b = getBool()
+        state.dieMode = (b ~= nil) and b or not state.dieMode
+        addCmdLine(prefix .. "Die Mode: " .. tostring(state.dieMode))
+    elseif cmd == ".autotype" then
+        local b = getBool()
+        state.autoType = (b ~= nil) and b or not state.autoType
+        addCmdLine(prefix .. "AutoType: " .. tostring(state.autoType))
+    elseif cmd == ".typochance" and args[2] then
+        state.typoChance = tonumber(args[2]) or state.typoChance
+        addCmdLine(prefix .. "Typo Chance: " .. state.typoChance .. "%")
+    elseif cmd == ".diechance" and args[2] then
+        state.dieChance = tonumber(args[2]) or state.dieChance
+        addCmdLine(prefix .. "Die Chance: " .. state.dieChance .. "%")
+    elseif cmd == ".cls" then
         for _,v in pairs(CmdScroll:GetChildren()) do if v:IsA("TextLabel") then v:Destroy() end end
     end
 end
@@ -459,21 +458,22 @@ end
 CmdInputBox.FocusLost:Connect(function(enter)
     if enter then
         local t = CmdInputBox.Text
-        addCmdLine("C:\\Users\\" .. player.DisplayName .. "> " .. t)
-        handleCommand(t)
+        if t ~= "" then
+            addCmdLine("C:\\Users\\" .. player.DisplayName .. "> " .. t)
+            handleCommand(t)
+        end
         CmdInputBox.Text = ""
+        task.wait()
         CmdInputBox:CaptureFocus()
     end
 end)
 
--- Standard Chat Listener
 if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
     TextChatService.MessageReceived:Connect(function(m) if m.TextSource.UserId == player.UserId then handleCommand(m.Text) end end)
 else
     player.Chatted:Connect(handleCommand)
 end
 
--- Toggles
 UserInputService.InputBegan:Connect(function(io, gp)
     if gp then return end
     if io.KeyCode == Enum.KeyCode.Q and UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
@@ -485,7 +485,6 @@ UserInputService.InputBegan:Connect(function(io, gp)
     end
 end)
 
--- [[ AUTO TYPE ENGINE ]] --
 local function getPlayerTextbox()
     for _, d in ipairs(playerGui:GetDescendants()) do
         if d:IsA("TextBox") and d.Visible and d.Active then return d end
@@ -527,17 +526,19 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                 
                 if isDie and i == dieIdx then
                     cur = cur .. getTypoChar(ch)
+                    tb.Text = cur
+                    break
                 else
                     if state.typosEnabled and math.random(1,100) <= state.typoChance and i < #intended then
                         tb.Text = cur .. getTypoChar(ch)
-                        task.wait(0.15)
+                        task.wait(0.12)
                     end
                     cur = cur .. ch
                 end
                 tb.Text = cur
                 task.wait(state.randomSpeed and (state.minSpeed + math.random()*(state.maxSpeed-state.minSpeed)) or state.speed)
             end
-            ReplicatedStorage.SpelledCorrectly:FireServer()
+            if tb.Text == intended then ReplicatedStorage.SpelledCorrectly:FireServer() end
             break
         end
         state.isTyping = false
