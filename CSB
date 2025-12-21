@@ -17,7 +17,11 @@ local state = {
     minSpeed = 0.01,
     maxSpeed = 0.04,
     lastWord = "",
-    typosEnabled = false
+    typosEnabled = false,
+    typoDieEnabled = false,
+    isTyping = false,
+    typoChance = 15,
+    dieChance = 35
 }
 
 local menuVisible = true
@@ -52,7 +56,7 @@ local nearbyKeys = {
 }
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "get cooked rara"
+ScreenGui.Name = "ModernAutoType"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = playerGui
@@ -210,7 +214,7 @@ local SpeedLabel = Instance.new("TextLabel")
 SpeedLabel.Size = UDim2.new(0.5, 0, 0, 28)
 SpeedLabel.Position = UDim2.new(0, 18, 0, 8)
 SpeedLabel.BackgroundTransparency = 1
-SpeedLabel.Text = "Type Speed"
+SpeedLabel.Text = "Type Speed (0 = Insta)"
 SpeedLabel.TextColor3 = Color3.fromRGB(230, 230, 235)
 SpeedLabel.Font = Enum.Font.GothamMedium
 SpeedLabel.TextSize = 14
@@ -383,22 +387,45 @@ local Version = Instance.new("TextLabel")
 Version.Size = UDim2.new(1, 0, 0, 22)
 Version.Position = UDim2.new(0, 0, 1, -27)
 Version.BackgroundTransparency = 1
-Version.Text = "CTRL = menu | .typo = toggle typos"
+Version.Text = "CTRL | .typo .typodie .typochance .diechance"
 Version.TextColor3 = Color3.fromRGB(90, 90, 100)
 Version.Font = Enum.Font.Gotham
-Version.TextSize = 11
+Version.TextSize = 10
 Version.Parent = Content
 
 local function setupChatListener()
     if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
         TextChatService.MessageReceived:Connect(function(message)
             if message.TextSource and message.TextSource.UserId == player.UserId then
-                if message.Text == ".typo" then
+                local msg = message.Text
+                if msg == ".typo" then
                     state.typosEnabled = not state.typosEnabled
                     local status = state.typosEnabled and "enabled" or "disabled"
                     ConsoleText.Text = "Typos " .. status
                     task.wait(2)
                     ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                elseif msg == ".typodie" then
+                    state.typoDieEnabled = not state.typoDieEnabled
+                    local status = state.typoDieEnabled and "enabled" or "disabled"
+                    ConsoleText.Text = "Typo Die " .. status
+                    task.wait(2)
+                    ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                elseif string.sub(msg, 1, 12) == ".typochance " then
+                    local value = tonumber(string.sub(msg, 13))
+                    if value and value >= 0 and value <= 100 then
+                        state.typoChance = value
+                        ConsoleText.Text = "Typo Chance: " .. value .. "%"
+                        task.wait(2)
+                        ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                    end
+                elseif string.sub(msg, 1, 11) == ".diechance " then
+                    local value = tonumber(string.sub(msg, 12))
+                    if value and value >= 0 and value <= 100 then
+                        state.dieChance = value
+                        ConsoleText.Text = "Die Chance: " .. value .. "%"
+                        task.wait(2)
+                        ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                    end
                 end
             end
         end)
@@ -410,6 +437,28 @@ local function setupChatListener()
                 ConsoleText.Text = "Typos " .. status
                 task.wait(2)
                 ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+            elseif msg == ".typodie" then
+                state.typoDieEnabled = not state.typoDieEnabled
+                local status = state.typoDieEnabled and "enabled" or "disabled"
+                ConsoleText.Text = "Typo Die " .. status
+                task.wait(2)
+                ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+            elseif string.sub(msg, 1, 12) == ".typochance " then
+                local value = tonumber(string.sub(msg, 13))
+                if value and value >= 0 and value <= 100 then
+                    state.typoChance = value
+                    ConsoleText.Text = "Typo Chance: " .. value .. "%"
+                    task.wait(2)
+                    ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                end
+            elseif string.sub(msg, 1, 11) == ".diechance " then
+                local value = tonumber(string.sub(msg, 12))
+                if value and value >= 0 and value <= 100 then
+                    state.dieChance = value
+                    ConsoleText.Text = "Die Chance: " .. value .. "%"
+                    task.wait(2)
+                    ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                end
             end
         end)
     end
@@ -437,7 +486,7 @@ local function getPlayerTextbox()
     local success, gui = pcall(function() return playerGui:FindFirstChild("Textbox") end)
     if success and gui then
         local tb = gui:FindFirstChild("TextBox")
-        if tb and tb:IsA("TextBox") then return tb end
+        if tb and tb:IsA("TextBox") and tb.Visible then return tb end
     end
     for _, d in ipairs(playerGui:GetDescendants()) do
         if d:IsA("TextBox") and d.Visible and d.Active then return d end
@@ -476,7 +525,16 @@ local function getTypoChar(char)
 end
 
 local function shouldMakeTypo()
-    return state.typosEnabled and math.random(1, 100) <= 15
+    return state.typosEnabled and math.random(1, 100) <= state.typoChance
+end
+
+local function killPlayer()
+    if player.Character then
+        local humanoid = player.Character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.Health = 0
+        end
+    end
 end
 
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
@@ -489,6 +547,8 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     end
     
     if newWord == "" then return end
+    if state.isTyping then return end
+    
     state.lastWord = newWord
 
     if state.autoSay then
@@ -500,64 +560,89 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     if state.autoType then
         local targetTextbox = getPlayerTextbox()
         
-        if targetTextbox then
-            if state.randomSpeed == false and state.speed == 0 then
-                targetTextbox.Text = newWord
-                completeWord(targetTextbox)
+        if not targetTextbox or not targetTextbox.Visible then 
+            return 
+        end
+        
+        state.isTyping = true
+        
+        if state.randomSpeed == false and state.speed == 0 then
+            targetTextbox.Text = newWord
+            completeWord(targetTextbox)
+            state.isTyping = false
+            return
+        end
+
+        local wordLength = string.len(newWord)
+        local count = 0
+        local madeTypo = false
+        
+        for i = 1, wordLength do
+            if not state.autoType or wordValue.Value ~= newWord then 
+                state.isTyping = false
+                break 
+            end
+            
+            if not targetTextbox or not targetTextbox.Visible then
+                state.isTyping = false
                 return
             end
-
-            local wordLength = string.len(newWord)
-            local count = 0
             
-            for i = 1, wordLength do
-                if not state.autoType or wordValue.Value ~= newWord then break end
+            local currentDelay = state.speed
+            
+            if state.randomSpeed then
+                local min = state.minSpeed
+                local max = state.maxSpeed
+                if min > max then min, max = max, min end
                 
-                local currentDelay = state.speed
+                local randomFactor = math.random() ^ 0.5
+                currentDelay = min + (randomFactor * (max - min))
                 
-                if state.randomSpeed then
-                    local min = state.minSpeed
-                    local max = state.maxSpeed
-                    if min > max then min, max = max, min end
-                    
-                    local randomFactor = math.random() ^ 0.5
-                    currentDelay = min + (randomFactor * (max - min))
-                    
-                    if math.random(1, 100) <= 8 then
-                        currentDelay = currentDelay * (2 + math.random())
-                    end
-                end
-                
-                if currentDelay > 0 then
-                    task.wait(currentDelay)
-                end
-                
-                count = count + 1
-                local currentChar = string.sub(newWord, i, i)
-                local displayText = string.sub(newWord, 1, count)
-                
-                -- Typo logic
-                if shouldMakeTypo() and i < wordLength then
-                    local typoChar = getTypoChar(currentChar)
-                    local typoText = string.sub(newWord, 1, count - 1) .. typoChar
-                    targetTextbox.Text = typoText
-                    
-                    -- Wait a bit before correcting
-                    local typoDelay = 0.1 + (math.random() * 0.2)
-                    task.wait(typoDelay)
-                    
-                    -- Backspace effect
-                    targetTextbox.Text = string.sub(newWord, 1, count - 1)
-                    task.wait(0.05 + (math.random() * 0.1))
-                end
-                
-                targetTextbox.Text = displayText
-                
-                if i == wordLength then
-                    completeWord(targetTextbox)
-                    break
+                if math.random(1, 100) <= 8 then
+                    currentDelay = currentDelay * (2 + math.random())
                 end
             end
+            
+            if currentDelay > 0 then
+                task.wait(currentDelay)
+            end
+            
+            count = count + 1
+            local currentChar = string.sub(newWord, i, i)
+            local displayText = string.sub(newWord, 1, count)
+            
+            if shouldMakeTypo() and i < wordLength then
+                local typoChar = getTypoChar(currentChar)
+                
+                if state.typoDieEnabled and math.random(1, 100) <= state.dieChance then
+                    madeTypo = true
+                    displayText = string.sub(newWord, 1, count - 1) .. typoChar
+                    targetTextbox.Text = displayText
+                else
+                    targetTextbox.Text = string.sub(newWord, 1, count - 1) .. typoChar
+                    local typoDelay = 0.1 + (math.random() * 0.2)
+                    task.wait(typoDelay)
+                    targetTextbox.Text = string.sub(newWord, 1, count - 1)
+                    task.wait(0.05 + (math.random() * 0.1))
+                    displayText = string.sub(newWord, 1, count)
+                    targetTextbox.Text = displayText
+                end
+            else
+                targetTextbox.Text = displayText
+            end
+            
+            if i == wordLength then
+                completeWord(targetTextbox)
+                state.isTyping = false
+                
+                if madeTypo then
+                    task.wait(0.5)
+                    killPlayer()
+                end
+                break
+            end
         end
+        
+        state.isTyping = false
     end
 end)
