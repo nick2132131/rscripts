@@ -11,7 +11,7 @@ local wordValue = ReplicatedStorage:WaitForChild("WordValue", 10)
 local state = {
     autoType = false,
     autoSay = false,
-    speed = 0, 
+    speed = 0,
     randomSpeed = false,
     minSpeed = 0.01,
     maxSpeed = 0.04,
@@ -37,6 +37,7 @@ local nearbyKeys = {
     ["y"] = {"t", "u", "h", "g"}, ["z"] = {"a", "s", "x"}
 }
 
+-- UI creation (unchanged)
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "LunarX_UI"
 ScreenGui.ResetOnSpawn = false
@@ -120,11 +121,11 @@ local function createToggle(name, position, callback)
     Container.BackgroundColor3 = Color3.fromRGB(28, 28, 35)
     Container.BorderSizePixel = 0
     Container.Parent = Content
-    
+
     local Corner = Instance.new("UICorner")
     Corner.CornerRadius = UDim.new(0, 12)
     Corner.Parent = Container
-    
+
     local Label = Instance.new("TextLabel")
     Label.Size = UDim2.new(0.6, 0, 1, 0)
     Label.Position = UDim2.new(0, 18, 0, 0)
@@ -135,7 +136,7 @@ local function createToggle(name, position, callback)
     Label.TextSize = 15
     Label.TextXAlignment = Enum.TextXAlignment.Left
     Label.Parent = Container
-    
+
     local Toggle = Instance.new("TextButton")
     Toggle.Size = UDim2.new(0, 56, 0, 30)
     Toggle.Position = UDim2.new(1, -68, 0.5, -15)
@@ -144,24 +145,24 @@ local function createToggle(name, position, callback)
     Toggle.Text = ""
     Toggle.AutoButtonColor = false
     Toggle.Parent = Container
-    
+
     local ToggleCorner = Instance.new("UICorner")
     ToggleCorner.CornerRadius = UDim.new(1, 0)
     ToggleCorner.Parent = Toggle
-    
+
     local Knob = Instance.new("Frame")
     Knob.Size = UDim2.new(0, 24, 0, 24)
     Knob.Position = UDim2.new(0, 3, 0.5, -12)
     Knob.BackgroundColor3 = Color3.fromRGB(180, 180, 185)
     Knob.BorderSizePixel = 0
     Knob.Parent = Toggle
-    
+
     local KnobCorner = Instance.new("UICorner")
     KnobCorner.CornerRadius = UDim.new(1, 0)
     KnobCorner.Parent = Knob
-    
+
     local isOn = false
-    
+
     Toggle.MouseButton1Click:Connect(function()
         isOn = not isOn
         local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
@@ -180,7 +181,7 @@ createToggle("Auto Type", UDim2.new(0, 0, 0, 0), function(enabled) state.autoTyp
 createToggle("Auto Say", UDim2.new(0, 0, 0, 66), function(enabled) state.autoSay = enabled end)
 
 local SpeedContainer = Instance.new("Frame")
-SpeedContainer.Size = UDim2.new(1, 0, 0, 140) 
+SpeedContainer.Size = UDim2.new(1, 0, 0, 140)
 SpeedContainer.Position = UDim2.new(0, 0, 0, 132)
 SpeedContainer.BackgroundColor3 = Color3.fromRGB(28, 28, 35)
 SpeedContainer.BorderSizePixel = 0
@@ -414,9 +415,9 @@ addCmdLine("type .helpx for help")
 
 local function handleCommand(msg)
     local args = msg:split(" ")
-    local cmd = args[1]:lower()
+    local cmd = args[1] and args[1]:lower() or ""
     local prefix = "C:\\Users\\" .. player.DisplayName .. "> "
-    
+
     local function getBool()
         if args[2] == "true" or args[2] == "on" then return true
         elseif args[2] == "false" or args[2] == "off" then return false
@@ -451,7 +452,7 @@ local function handleCommand(msg)
         state.dieChance = tonumber(args[2]) or state.dieChance
         addCmdLine(prefix .. "Die Chance: " .. state.dieChance .. "%")
     elseif cmd == ".cls" then
-        for _,v in pairs(CmdScroll:GetChildren()) do if v:IsA("TextLabel") then v:Destroy() end end
+        for _, v in pairs(CmdScroll:GetChildren()) do if v:IsA("TextLabel") then v:Destroy() end end
     end
 end
 
@@ -469,7 +470,7 @@ CmdInputBox.FocusLost:Connect(function(enter)
 end)
 
 if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-    TextChatService.MessageReceived:Connect(function(m) if m.TextSource.UserId == player.UserId then handleCommand(m.Text) end end)
+    TextChatService.MessageReceived:Connect(function(m) if m.TextSource and m.TextSource.UserId == player.UserId then handleCommand(m.Text) end end)
 else
     player.Chatted:Connect(handleCommand)
 end
@@ -487,14 +488,18 @@ end)
 
 local function getPlayerTextbox()
     for _, d in ipairs(playerGui:GetDescendants()) do
-        if d:IsA("TextBox") and d.Visible and d.Active then return d end
+        if d:IsA("TextBox") and d.Visible and d.Active then
+            return d
+        end
     end
     return nil
 end
 
 local function getTypoChar(char)
     local lc = char:lower()
-    if nearbyKeys[lc] then return nearbyKeys[lc][math.random(1, #nearbyKeys[lc])] end
+    if nearbyKeys[lc] then
+        return nearbyKeys[lc][math.random(1, #nearbyKeys[lc])]
+    end
     return char
 end
 
@@ -506,9 +511,13 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     state.isTyping = true
     task.spawn(function()
         local intended = val
+
         while state.autoType and wordValue.Value == intended do
             local tb = getPlayerTextbox()
-            if not tb then task.wait(0.1) continue end
+            if not tb then
+                task.wait(0.1)
+                continue
+            end
 
             if not state.randomSpeed and state.speed == 0 then
                 tb.Text = intended
@@ -521,26 +530,58 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             local dieIdx = isDie and math.random(1, #intended) or nil
 
             for i = 1, #intended do
-                if wordValue.Value ~= intended then break end
+                if not state.autoType or wordValue.Value ~= intended then
+                    state.isTyping = false
+                    return
+                end
+
+                tb = getPlayerTextbox()
+                if not tb then
+                    state.isTyping = false
+                    return
+                end
+
                 local ch = intended:sub(i,i)
-                
+
                 if isDie and i == dieIdx then
                     cur = cur .. getTypoChar(ch)
                     tb.Text = cur
-                    break
-                else
-                    if state.typosEnabled and math.random(1,100) <= state.typoChance and i < #intended then
-                        tb.Text = cur .. getTypoChar(ch)
-                        task.wait(0.12)
-                    end
-                    cur = cur .. ch
+                    state.isTyping = false
+                    return
                 end
+
+                if state.typosEnabled and math.random(1,100) <= state.typoChance and i < #intended then
+                    tb.Text = cur .. getTypoChar(ch)
+                    task.wait(0.12)
+                    tb = getPlayerTextbox()
+                    if not tb then
+                        state.isTyping = false
+                        return
+                    end
+                end
+
+                cur = cur .. ch
                 tb.Text = cur
-                task.wait(state.randomSpeed and (state.minSpeed + math.random()*(state.maxSpeed-state.minSpeed)) or state.speed)
+
+                local delay = state.speed
+                if state.randomSpeed then
+                    delay = state.minSpeed + math.random() * (state.maxSpeed - state.minSpeed)
+                end
+
+                if delay > 0 then
+                    task.wait(delay)
+                else
+                    task.wait()
+                end
             end
-            if tb.Text == intended then ReplicatedStorage.SpelledCorrectly:FireServer() end
+
+            tb = getPlayerTextbox()
+            if tb and tb.Text == intended then
+                ReplicatedStorage.SpelledCorrectly:FireServer()
+            end
             break
         end
+
         state.isTyping = false
     end)
 end)
