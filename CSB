@@ -3,6 +3,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TextChatService = game:GetService("TextChatService")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
 
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
@@ -20,7 +21,8 @@ local state = {
     isTyping = false,
     typoChance = 15,
     dieMode = false,
-    dieChance = 15
+    dieChance = 15,
+    currentTextbox = nil
 }
 
 local menuVisible = true
@@ -37,7 +39,7 @@ local nearbyKeys = {
     ["y"] = {"t", "u", "h", "g"}, ["z"] = {"a", "s", "x"}
 }
 
--- UI creation (unchanged)
+-- UI Creation with cleaner design
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "LunarX_UI"
 ScreenGui.ResetOnSpawn = false
@@ -45,60 +47,72 @@ ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.Parent = playerGui
 
 local Main = Instance.new("Frame")
-Main.Size = UDim2.new(0, 340, 0, 510)
-Main.Position = UDim2.new(0.5, -170, 0.5, -220)
-Main.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+Main.Size = UDim2.new(0, 360, 0, 520)
+Main.Position = UDim2.new(0.5, -180, 0.5, -260)
+Main.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
 Main.BorderSizePixel = 0
 Main.Active = true
 Main.Draggable = true
 Main.Parent = ScreenGui
 
 local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 16)
+MainCorner.CornerRadius = UDim.new(0, 14)
 MainCorner.Parent = Main
 
 local MainStroke = Instance.new("UIStroke")
-MainStroke.Color = Color3.fromRGB(60, 60, 70)
-MainStroke.Thickness = 1
+MainStroke.Color = Color3.fromRGB(70, 140, 255)
+MainStroke.Thickness = 2
+MainStroke.Transparency = 0.5
 MainStroke.Parent = Main
 
 local Header = Instance.new("Frame")
-Header.Size = UDim2.new(1, 0, 0, 55)
-Header.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+Header.Size = UDim2.new(1, 0, 0, 60)
+Header.BackgroundColor3 = Color3.fromRGB(28, 28, 34)
 Header.BorderSizePixel = 0
 Header.Parent = Main
 
 local HeaderCorner = Instance.new("UICorner")
-HeaderCorner.CornerRadius = UDim.new(0, 16)
+HeaderCorner.CornerRadius = UDim.new(0, 14)
 HeaderCorner.Parent = Header
 
 local HeaderBlock = Instance.new("Frame")
-HeaderBlock.Size = UDim2.new(1, 0, 0, 16)
-HeaderBlock.Position = UDim2.new(0, 0, 1, -16)
-HeaderBlock.BackgroundColor3 = Color3.fromRGB(25, 25, 30)
+HeaderBlock.Size = UDim2.new(1, 0, 0, 14)
+HeaderBlock.Position = UDim2.new(0, 0, 1, -14)
+HeaderBlock.BackgroundColor3 = Color3.fromRGB(28, 28, 34)
 HeaderBlock.BorderSizePixel = 0
 HeaderBlock.Parent = Header
 
 local Title = Instance.new("TextLabel")
-Title.Size = UDim2.new(1, -60, 1, 0)
-Title.Position = UDim2.new(0, 20, 0, 0)
+Title.Size = UDim2.new(1, -80, 1, 0)
+Title.Position = UDim2.new(0, 24, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "Lunar X auto"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Text = "🌙 LUNAR X"
+Title.TextColor3 = Color3.fromRGB(70, 140, 255)
 Title.Font = Enum.Font.GothamBold
-Title.TextSize = 17
+Title.TextSize = 20
 Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = Header
 
+local Version = Instance.new("TextLabel")
+Version.Size = UDim2.new(1, -80, 0, 20)
+Version.Position = UDim2.new(0, 24, 1, -24)
+Version.BackgroundTransparency = 1
+Version.Text = "v2.0 Auto"
+Version.TextColor3 = Color3.fromRGB(150, 150, 160)
+Version.Font = Enum.Font.Gotham
+Version.TextSize = 12
+Version.TextXAlignment = Enum.TextXAlignment.Left
+Version.Parent = Header
+
 local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 40, 0, 40)
-CloseBtn.Position = UDim2.new(1, -48, 0.5, -20)
-CloseBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
+CloseBtn.Size = UDim2.new(0, 44, 0, 44)
+CloseBtn.Position = UDim2.new(1, -54, 0.5, -22)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 52)
 CloseBtn.BorderSizePixel = 0
-CloseBtn.Text = "X"
-CloseBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
+CloseBtn.Text = "×"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
 CloseBtn.Font = Enum.Font.GothamBold
-CloseBtn.TextSize = 20
+CloseBtn.TextSize = 26
 CloseBtn.AutoButtonColor = false
 CloseBtn.Parent = Header
 
@@ -106,41 +120,53 @@ local CloseBtnCorner = Instance.new("UICorner")
 CloseBtnCorner.CornerRadius = UDim.new(0, 10)
 CloseBtnCorner.Parent = CloseBtn
 
+CloseBtn.MouseEnter:Connect(function()
+    TweenService:Create(CloseBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 80, 80)}):Play()
+end)
+CloseBtn.MouseLeave:Connect(function()
+    TweenService:Create(CloseBtn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(45, 45, 52)}):Play()
+end)
 CloseBtn.MouseButton1Click:Connect(function() ScreenGui:Destroy() end)
 
 local Content = Instance.new("Frame")
-Content.Size = UDim2.new(1, -40, 1, -75)
-Content.Position = UDim2.new(0, 20, 0, 65)
+Content.Size = UDim2.new(1, -48, 1, -80)
+Content.Position = UDim2.new(0, 24, 0, 70)
 Content.BackgroundTransparency = 1
 Content.Parent = Main
 
 local function createToggle(name, position, callback)
     local Container = Instance.new("Frame")
-    Container.Size = UDim2.new(1, 0, 0, 56)
+    Container.Size = UDim2.new(1, 0, 0, 52)
     Container.Position = position
-    Container.BackgroundColor3 = Color3.fromRGB(28, 28, 35)
+    Container.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
     Container.BorderSizePixel = 0
     Container.Parent = Content
 
     local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(0, 12)
+    Corner.CornerRadius = UDim.new(0, 10)
     Corner.Parent = Container
 
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Color = Color3.fromRGB(50, 50, 60)
+    Stroke.Thickness = 1
+    Stroke.Transparency = 0.8
+    Stroke.Parent = Container
+
     local Label = Instance.new("TextLabel")
-    Label.Size = UDim2.new(0.6, 0, 1, 0)
-    Label.Position = UDim2.new(0, 18, 0, 0)
+    Label.Size = UDim2.new(0.6, -20, 1, 0)
+    Label.Position = UDim2.new(0, 16, 0, 0)
     Label.BackgroundTransparency = 1
     Label.Text = name
-    Label.TextColor3 = Color3.fromRGB(230, 230, 235)
-    Label.Font = Enum.Font.GothamMedium
+    Label.TextColor3 = Color3.fromRGB(240, 240, 245)
+    Label.Font = Enum.Font.GothamSemibold
     Label.TextSize = 15
     Label.TextXAlignment = Enum.TextXAlignment.Left
     Label.Parent = Container
 
     local Toggle = Instance.new("TextButton")
-    Toggle.Size = UDim2.new(0, 56, 0, 30)
-    Toggle.Position = UDim2.new(1, -68, 0.5, -15)
-    Toggle.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+    Toggle.Size = UDim2.new(0, 52, 0, 28)
+    Toggle.Position = UDim2.new(1, -64, 0.5, -14)
+    Toggle.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
     Toggle.BorderSizePixel = 0
     Toggle.Text = ""
     Toggle.AutoButtonColor = false
@@ -151,9 +177,9 @@ local function createToggle(name, position, callback)
     ToggleCorner.Parent = Toggle
 
     local Knob = Instance.new("Frame")
-    Knob.Size = UDim2.new(0, 24, 0, 24)
-    Knob.Position = UDim2.new(0, 3, 0.5, -12)
-    Knob.BackgroundColor3 = Color3.fromRGB(180, 180, 185)
+    Knob.Size = UDim2.new(0, 22, 0, 22)
+    Knob.Position = UDim2.new(0, 3, 0.5, -11)
+    Knob.BackgroundColor3 = Color3.fromRGB(200, 200, 205)
     Knob.BorderSizePixel = 0
     Knob.Parent = Toggle
 
@@ -165,47 +191,59 @@ local function createToggle(name, position, callback)
 
     Toggle.MouseButton1Click:Connect(function()
         isOn = not isOn
-        local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+        local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
         if isOn then
             TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(70, 140, 255)}):Play()
-            TweenService:Create(Knob, tweenInfo, {Position = UDim2.new(1, -27, 0.5, -12), BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+            TweenService:Create(Knob, tweenInfo, {
+                Position = UDim2.new(1, -25, 0.5, -11), 
+                BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            }):Play()
         else
-            TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(45, 45, 55)}):Play()
-            TweenService:Create(Knob, tweenInfo, {Position = UDim2.new(0, 3, 0.5, -12), BackgroundColor3 = Color3.fromRGB(180, 180, 185)}):Play()
+            TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(50, 50, 60)}):Play()
+            TweenService:Create(Knob, tweenInfo, {
+                Position = UDim2.new(0, 3, 0.5, -11), 
+                BackgroundColor3 = Color3.fromRGB(200, 200, 205)
+            }):Play()
         end
         callback(isOn)
     end)
 end
 
 createToggle("Auto Type", UDim2.new(0, 0, 0, 0), function(enabled) state.autoType = enabled end)
-createToggle("Auto Say", UDim2.new(0, 0, 0, 66), function(enabled) state.autoSay = enabled end)
+createToggle("Auto Say", UDim2.new(0, 0, 0, 62), function(enabled) state.autoSay = enabled end)
 
 local SpeedContainer = Instance.new("Frame")
-SpeedContainer.Size = UDim2.new(1, 0, 0, 140)
-SpeedContainer.Position = UDim2.new(0, 0, 0, 132)
-SpeedContainer.BackgroundColor3 = Color3.fromRGB(28, 28, 35)
+SpeedContainer.Size = UDim2.new(1, 0, 0, 148)
+SpeedContainer.Position = UDim2.new(0, 0, 0, 124)
+SpeedContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 38)
 SpeedContainer.BorderSizePixel = 0
 SpeedContainer.Parent = Content
 
 local SpeedCorner = Instance.new("UICorner")
-SpeedCorner.CornerRadius = UDim.new(0, 12)
+SpeedCorner.CornerRadius = UDim.new(0, 10)
 SpeedCorner.Parent = SpeedContainer
 
+local SpeedStroke = Instance.new("UIStroke")
+SpeedStroke.Color = Color3.fromRGB(50, 50, 60)
+SpeedStroke.Thickness = 1
+SpeedStroke.Transparency = 0.8
+SpeedStroke.Parent = SpeedContainer
+
 local SpeedLabel = Instance.new("TextLabel")
-SpeedLabel.Size = UDim2.new(0.5, 0, 0, 28)
-SpeedLabel.Position = UDim2.new(0, 18, 0, 8)
+SpeedLabel.Size = UDim2.new(0.5, 0, 0, 32)
+SpeedLabel.Position = UDim2.new(0, 16, 0, 10)
 SpeedLabel.BackgroundTransparency = 1
 SpeedLabel.Text = "Type Speed"
-SpeedLabel.TextColor3 = Color3.fromRGB(230, 230, 235)
-SpeedLabel.Font = Enum.Font.GothamMedium
+SpeedLabel.TextColor3 = Color3.fromRGB(240, 240, 245)
+SpeedLabel.Font = Enum.Font.GothamSemibold
 SpeedLabel.TextSize = 14
 SpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
 SpeedLabel.Parent = SpeedContainer
 
 local SpeedInput = Instance.new("TextBox")
-SpeedInput.Size = UDim2.new(0, 90, 0, 28)
-SpeedInput.Position = UDim2.new(1, -100, 0, 8)
-SpeedInput.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
+SpeedInput.Size = UDim2.new(0, 85, 0, 30)
+SpeedInput.Position = UDim2.new(1, -95, 0, 11)
+SpeedInput.BackgroundColor3 = Color3.fromRGB(45, 45, 52)
 SpeedInput.BorderSizePixel = 0
 SpeedInput.Text = "0"
 SpeedInput.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -223,20 +261,20 @@ SpeedInput.FocusLost:Connect(function()
 end)
 
 local RandomLabel = Instance.new("TextLabel")
-RandomLabel.Size = UDim2.new(0.6, 0, 0, 28)
-RandomLabel.Position = UDim2.new(0, 18, 0, 44)
+RandomLabel.Size = UDim2.new(0.6, 0, 0, 32)
+RandomLabel.Position = UDim2.new(0, 16, 0, 48)
 RandomLabel.BackgroundTransparency = 1
 RandomLabel.Text = "Random Speed"
-RandomLabel.TextColor3 = Color3.fromRGB(230, 230, 235)
-RandomLabel.Font = Enum.Font.GothamMedium
+RandomLabel.TextColor3 = Color3.fromRGB(240, 240, 245)
+RandomLabel.Font = Enum.Font.GothamSemibold
 RandomLabel.TextSize = 14
 RandomLabel.TextXAlignment = Enum.TextXAlignment.Left
 RandomLabel.Parent = SpeedContainer
 
 local RandomToggle = Instance.new("TextButton")
-RandomToggle.Size = UDim2.new(0, 56, 0, 30)
-RandomToggle.Position = UDim2.new(1, -68, 0, 42)
-RandomToggle.BackgroundColor3 = Color3.fromRGB(45, 45, 55)
+RandomToggle.Size = UDim2.new(0, 52, 0, 28)
+RandomToggle.Position = UDim2.new(1, -64, 0, 50)
+RandomToggle.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
 RandomToggle.BorderSizePixel = 0
 RandomToggle.Text = ""
 RandomToggle.AutoButtonColor = false
@@ -247,9 +285,9 @@ RandomToggleCorner.CornerRadius = UDim.new(1, 0)
 RandomToggleCorner.Parent = RandomToggle
 
 local RandomKnob = Instance.new("Frame")
-RandomKnob.Size = UDim2.new(0, 24, 0, 24)
-RandomKnob.Position = UDim2.new(0, 3, 0.5, -12)
-RandomKnob.BackgroundColor3 = Color3.fromRGB(180, 180, 185)
+RandomKnob.Size = UDim2.new(0, 22, 0, 22)
+RandomKnob.Position = UDim2.new(0, 3, 0.5, -11)
+RandomKnob.BackgroundColor3 = Color3.fromRGB(200, 200, 205)
 RandomKnob.BorderSizePixel = 0
 RandomKnob.Parent = RandomToggle
 
@@ -259,37 +297,44 @@ RandomKnobCorner.Parent = RandomKnob
 
 RandomToggle.MouseButton1Click:Connect(function()
     state.randomSpeed = not state.randomSpeed
-    local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
     if state.randomSpeed then
         TweenService:Create(RandomToggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(70, 140, 255)}):Play()
-        TweenService:Create(RandomKnob, tweenInfo, {Position = UDim2.new(1, -27, 0.5, -12), BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+        TweenService:Create(RandomKnob, tweenInfo, {
+            Position = UDim2.new(1, -25, 0.5, -11), 
+            BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        }):Play()
     else
-        TweenService:Create(RandomToggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(45, 45, 55)}):Play()
-        TweenService:Create(RandomKnob, tweenInfo, {Position = UDim2.new(0, 3, 0.5, -12), BackgroundColor3 = Color3.fromRGB(180, 180, 185)}):Play()
+        TweenService:Create(RandomToggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(50, 50, 60)}):Play()
+        TweenService:Create(RandomKnob, tweenInfo, {
+            Position = UDim2.new(0, 3, 0.5, -11), 
+            BackgroundColor3 = Color3.fromRGB(200, 200, 205)
+        }):Play()
     end
 end)
 
 local MinLabel = Instance.new("TextLabel")
-MinLabel.Size = UDim2.new(0.5, 0, 0, 24)
-MinLabel.Position = UDim2.new(0, 18, 0, 78)
+MinLabel.Size = UDim2.new(0.4, 0, 0, 26)
+MinLabel.Position = UDim2.new(0, 16, 0, 86)
 MinLabel.BackgroundTransparency = 1
-MinLabel.Text = "Min Speed"
-MinLabel.TextColor3 = Color3.fromRGB(210, 210, 215)
+MinLabel.Text = "Min"
+MinLabel.TextColor3 = Color3.fromRGB(210, 210, 220)
 MinLabel.Font = Enum.Font.Gotham
 MinLabel.TextSize = 13
 MinLabel.TextXAlignment = Enum.TextXAlignment.Left
 MinLabel.Parent = SpeedContainer
 
 local MinInput = Instance.new("TextBox")
-MinInput.Size = UDim2.new(0, 90, 0, 26)
-MinInput.Position = UDim2.new(1, -100, 0, 76)
-MinInput.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
+MinInput.Size = UDim2.new(0, 85, 0, 28)
+MinInput.Position = UDim2.new(1, -95, 0, 85)
+MinInput.BackgroundColor3 = Color3.fromRGB(45, 45, 52)
 MinInput.BorderSizePixel = 0
 MinInput.Text = tostring(state.minSpeed)
 MinInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 MinInput.Font = Enum.Font.Gotham
 MinInput.TextSize = 13
 MinInput.Parent = SpeedContainer
+
 local MinInputCorner = Instance.new("UICorner")
 MinInputCorner.CornerRadius = UDim.new(0, 8)
 MinInputCorner.Parent = MinInput
@@ -300,26 +345,27 @@ MinInput.FocusLost:Connect(function()
 end)
 
 local MaxLabel = Instance.new("TextLabel")
-MaxLabel.Size = UDim2.new(0.5, 0, 0, 24)
-MaxLabel.Position = UDim2.new(0, 18, 0, 104)
+MaxLabel.Size = UDim2.new(0.4, 0, 0, 26)
+MaxLabel.Position = UDim2.new(0, 16, 0, 116)
 MaxLabel.BackgroundTransparency = 1
-MaxLabel.Text = "Max Speed"
-MaxLabel.TextColor3 = Color3.fromRGB(210, 210, 215)
+MaxLabel.Text = "Max"
+MaxLabel.TextColor3 = Color3.fromRGB(210, 210, 220)
 MaxLabel.Font = Enum.Font.Gotham
 MaxLabel.TextSize = 13
 MaxLabel.TextXAlignment = Enum.TextXAlignment.Left
 MaxLabel.Parent = SpeedContainer
 
 local MaxInput = Instance.new("TextBox")
-MaxInput.Size = UDim2.new(0, 90, 0, 26)
-MaxInput.Position = UDim2.new(1, -100, 0, 102)
-MaxInput.BackgroundColor3 = Color3.fromRGB(40, 40, 48)
+MaxInput.Size = UDim2.new(0, 85, 0, 28)
+MaxInput.Position = UDim2.new(1, -95, 0, 115)
+MaxInput.BackgroundColor3 = Color3.fromRGB(45, 45, 52)
 MaxInput.BorderSizePixel = 0
 MaxInput.Text = tostring(state.maxSpeed)
 MaxInput.TextColor3 = Color3.fromRGB(255, 255, 255)
 MaxInput.Font = Enum.Font.Gotham
 MaxInput.TextSize = 13
 MaxInput.Parent = SpeedContainer
+
 local MaxInputCorner = Instance.new("UICorner")
 MaxInputCorner.CornerRadius = UDim.new(0, 8)
 MaxInputCorner.Parent = MaxInput
@@ -330,77 +376,128 @@ MaxInput.FocusLost:Connect(function()
 end)
 
 local Console = Instance.new("Frame")
-Console.Size = UDim2.new(1, 0, 0, 140)
-Console.Position = UDim2.new(0, 0, 0, 288)
-Console.BackgroundColor3 = Color3.fromRGB(15, 15, 18)
+Console.Size = UDim2.new(1, 0, 0, 120)
+Console.Position = UDim2.new(0, 0, 0, 282)
+Console.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
 Console.BorderSizePixel = 0
 Console.Parent = Content
+
 local ConsoleCorner = Instance.new("UICorner")
-ConsoleCorner.CornerRadius = UDim.new(0, 12)
+ConsoleCorner.CornerRadius = UDim.new(0, 10)
 ConsoleCorner.Parent = Console
 
+local ConsoleStroke = Instance.new("UIStroke")
+ConsoleStroke.Color = Color3.fromRGB(70, 140, 255)
+ConsoleStroke.Thickness = 1
+ConsoleStroke.Transparency = 0.7
+ConsoleStroke.Parent = Console
+
+local ConsoleTitle = Instance.new("TextLabel")
+ConsoleTitle.Size = UDim2.new(1, -20, 0, 24)
+ConsoleTitle.Position = UDim2.new(0, 10, 0, 8)
+ConsoleTitle.BackgroundTransparency = 1
+ConsoleTitle.Text = "CURRENT WORD"
+ConsoleTitle.TextColor3 = Color3.fromRGB(120, 120, 130)
+ConsoleTitle.Font = Enum.Font.GothamBold
+ConsoleTitle.TextSize = 11
+ConsoleTitle.TextXAlignment = Enum.TextXAlignment.Left
+ConsoleTitle.Parent = Console
+
 local ConsoleText = Instance.new("TextLabel")
-ConsoleText.Size = UDim2.new(1, -30, 1, -48)
-ConsoleText.Position = UDim2.new(0, 15, 0, 40)
+ConsoleText.Size = UDim2.new(1, -24, 1, -48)
+ConsoleText.Position = UDim2.new(0, 12, 0, 36)
 ConsoleText.BackgroundTransparency = 1
 ConsoleText.Text = "Waiting..."
 ConsoleText.TextColor3 = Color3.fromRGB(70, 140, 255)
 ConsoleText.Font = Enum.Font.GothamBold
-ConsoleText.TextSize = 26
+ConsoleText.TextSize = 28
 ConsoleText.TextWrapped = true
 ConsoleText.TextYAlignment = Enum.TextYAlignment.Top
 ConsoleText.Parent = Console
 
+local StatusLabel = Instance.new("TextLabel")
+StatusLabel.Size = UDim2.new(1, -20, 0, 18)
+StatusLabel.Position = UDim2.new(0, 10, 1, -26)
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Text = "● Ready"
+StatusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+StatusLabel.Font = Enum.Font.Gotham
+StatusLabel.TextSize = 12
+StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+StatusLabel.Parent = Console
+
+-- CMD Terminal
 local CmdFrame = Instance.new("Frame")
-CmdFrame.Size = UDim2.new(0, 500, 0, 300)
-CmdFrame.Position = UDim2.new(0.5, -250, 0.5, -150)
-CmdFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
-CmdFrame.BorderSizePixel = 2
-CmdFrame.BorderColor3 = Color3.fromRGB(200, 200, 200)
+CmdFrame.Size = UDim2.new(0, 520, 0, 320)
+CmdFrame.Position = UDim2.new(0.5, -260, 0.5, -160)
+CmdFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 14)
+CmdFrame.BorderSizePixel = 0
 CmdFrame.Visible = false
 CmdFrame.Active = true
 CmdFrame.Draggable = true
 CmdFrame.Parent = ScreenGui
 
+local CmdCorner = Instance.new("UICorner")
+CmdCorner.CornerRadius = UDim.new(0, 8)
+CmdCorner.Parent = CmdFrame
+
+local CmdStroke = Instance.new("UIStroke")
+CmdStroke.Color = Color3.fromRGB(70, 140, 255)
+CmdStroke.Thickness = 2
+CmdStroke.Parent = CmdFrame
+
 local CmdTitle = Instance.new("TextLabel")
-CmdTitle.Size = UDim2.new(1, 0, 0, 25)
-CmdTitle.BackgroundColor3 = Color3.fromRGB(240, 240, 240)
-CmdTitle.Text = " Command Prompt - Lunar X"
-CmdTitle.TextColor3 = Color3.fromRGB(0,0,0)
+CmdTitle.Size = UDim2.new(1, 0, 0, 30)
+CmdTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+CmdTitle.Text = "  Command Prompt - Lunar X"
+CmdTitle.TextColor3 = Color3.fromRGB(240, 240, 245)
 CmdTitle.Font = Enum.Font.Code
 CmdTitle.TextSize = 14
 CmdTitle.TextXAlignment = Enum.TextXAlignment.Left
 CmdTitle.Parent = CmdFrame
 
+local CmdTitleCorner = Instance.new("UICorner")
+CmdTitleCorner.CornerRadius = UDim.new(0, 8)
+CmdTitleCorner.Parent = CmdTitle
+
+local CmdTitleBlock = Instance.new("Frame")
+CmdTitleBlock.Size = UDim2.new(1, 0, 0, 8)
+CmdTitleBlock.Position = UDim2.new(0, 0, 1, -8)
+CmdTitleBlock.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+CmdTitleBlock.BorderSizePixel = 0
+CmdTitleBlock.Parent = CmdTitle
+
 local CmdScroll = Instance.new("ScrollingFrame")
-CmdScroll.Size = UDim2.new(1, -10, 1, -60)
-CmdScroll.Position = UDim2.new(0, 5, 0, 30)
+CmdScroll.Size = UDim2.new(1, -16, 1, -70)
+CmdScroll.Position = UDim2.new(0, 8, 0, 36)
 CmdScroll.BackgroundTransparency = 1
 CmdScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
-CmdScroll.ScrollBarThickness = 4
+CmdScroll.ScrollBarThickness = 5
 CmdScroll.Parent = CmdFrame
-local CmdList = Instance.new("UIListLayout", CmdScroll)
+
+local CmdList = Instance.new("UIListLayout")
+CmdList.Parent = CmdScroll
 
 local CmdInputBox = Instance.new("TextBox")
-CmdInputBox.Size = UDim2.new(1, -10, 0, 20)
-CmdInputBox.Position = UDim2.new(0, 5, 1, -25)
+CmdInputBox.Size = UDim2.new(1, -16, 0, 24)
+CmdInputBox.Position = UDim2.new(0, 8, 1, -30)
 CmdInputBox.BackgroundTransparency = 1
 CmdInputBox.Text = ""
 CmdInputBox.PlaceholderText = "C:\\Users\\" .. player.DisplayName .. "> "
-CmdInputBox.PlaceholderColor3 = Color3.fromRGB(200, 200, 200)
-CmdInputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+CmdInputBox.PlaceholderColor3 = Color3.fromRGB(120, 120, 130)
+CmdInputBox.TextColor3 = Color3.fromRGB(70, 140, 255)
 CmdInputBox.Font = Enum.Font.Code
 CmdInputBox.TextSize = 14
 CmdInputBox.TextXAlignment = Enum.TextXAlignment.Left
 CmdInputBox.Parent = CmdFrame
 
-local function addCmdLine(txt)
+local function addCmdLine(txt, color)
     local l = Instance.new("TextLabel")
     l.Size = UDim2.new(1, 0, 0, 18)
     l.BackgroundTransparency = 1
-    l.TextColor3 = Color3.fromRGB(255, 255, 255)
+    l.TextColor3 = color or Color3.fromRGB(200, 200, 205)
     l.Font = Enum.Font.Code
-    l.TextSize = 14
+    l.TextSize = 13
     l.Text = txt
     l.TextXAlignment = Enum.TextXAlignment.Left
     l.Parent = CmdScroll
@@ -408,10 +505,11 @@ local function addCmdLine(txt)
     CmdScroll.CanvasPosition = Vector2.new(0, CmdList.AbsoluteContentSize.Y)
 end
 
-addCmdLine("Microsoft Windows [Version 10.0.19045.4291]")
-addCmdLine("(c) Lunar X Corporation. All rights reserved.")
+addCmdLine("Microsoft Windows [Version 10.0.19045.4291]", Color3.fromRGB(150, 150, 160))
+addCmdLine("(c) Lunar X Corporation. All rights reserved.", Color3.fromRGB(150, 150, 160))
 addCmdLine("")
-addCmdLine("type .helpx for help")
+addCmdLine("Type .helpx for help", Color3.fromRGB(100, 255, 100))
+addCmdLine("")
 
 local function handleCommand(msg)
     local args = msg:split(" ")
@@ -426,33 +524,37 @@ local function handleCommand(msg)
     end
 
     if cmd == ".helpx" then
-        addCmdLine("--- AVAILABLE COMMANDS ---")
+        addCmdLine("=== AVAILABLE COMMANDS ===", Color3.fromRGB(70, 140, 255))
         addCmdLine(".typo [true/false] - Toggle typos")
         addCmdLine(".typochance [num] - Set typo chance %")
         addCmdLine(".die [true/false] - Toggle instant fail mode")
         addCmdLine(".diechance [num] - Set fail chance %")
-        addCmdLine(".autotype [true/false] - Toggle AutoType")
         addCmdLine(".cls - Clear console")
     elseif cmd == ".typo" then
         local b = getBool()
         state.typosEnabled = (b ~= nil) and b or not state.typosEnabled
-        addCmdLine(prefix .. "Typos: " .. tostring(state.typosEnabled))
+        addCmdLine(prefix .. "Typos: " .. tostring(state.typosEnabled), Color3.fromRGB(100, 255, 100))
     elseif cmd == ".die" then
         local b = getBool()
         state.dieMode = (b ~= nil) and b or not state.dieMode
-        addCmdLine(prefix .. "Die Mode: " .. tostring(state.dieMode))
-    elseif cmd == ".autotype" then
-        local b = getBool()
-        state.autoType = (b ~= nil) and b or not state.autoType
-        addCmdLine(prefix .. "AutoType: " .. tostring(state.autoType))
+        addCmdLine(prefix .. "Die Mode: " .. tostring(state.dieMode), Color3.fromRGB(100, 255, 100))
     elseif cmd == ".typochance" and args[2] then
         state.typoChance = tonumber(args[2]) or state.typoChance
-        addCmdLine(prefix .. "Typo Chance: " .. state.typoChance .. "%")
+        addCmdLine(prefix .. "Typo Chance: " .. state.typoChance .. "%", Color3.fromRGB(100, 255, 100))
     elseif cmd == ".diechance" and args[2] then
         state.dieChance = tonumber(args[2]) or state.dieChance
-        addCmdLine(prefix .. "Die Chance: " .. state.dieChance .. "%")
+        addCmdLine(prefix .. "Die Chance: " .. state.dieChance .. "%", Color3.fromRGB(100, 255, 100))
     elseif cmd == ".cls" then
-        for _, v in pairs(CmdScroll:GetChildren()) do if v:IsA("TextLabel") then v:Destroy() end end
+        for _, v in pairs(CmdScroll:GetChildren()) do 
+            if v:IsA("TextLabel") then 
+                v:Destroy() 
+            end 
+        end
+        -- Re-add the UIListLayout after clearing
+        if not CmdScroll:FindFirstChildOfClass("UIListLayout") then
+            CmdList = Instance.new("UIListLayout")
+            CmdList.Parent = CmdScroll
+        end
     end
 end
 
@@ -460,7 +562,7 @@ CmdInputBox.FocusLost:Connect(function(enter)
     if enter then
         local t = CmdInputBox.Text
         if t ~= "" then
-            addCmdLine("C:\\Users\\" .. player.DisplayName .. "> " .. t)
+            addCmdLine("C:\\Users\\" .. player.DisplayName .. "> " .. t, Color3.fromRGB(70, 140, 255))
             handleCommand(t)
         end
         CmdInputBox.Text = ""
@@ -470,7 +572,11 @@ CmdInputBox.FocusLost:Connect(function(enter)
 end)
 
 if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-    TextChatService.MessageReceived:Connect(function(m) if m.TextSource and m.TextSource.UserId == player.UserId then handleCommand(m.Text) end end)
+    TextChatService.MessageReceived:Connect(function(m) 
+        if m.TextSource and m.TextSource.UserId == player.UserId then 
+            handleCommand(m.Text) 
+        end 
+    end)
 else
     player.Chatted:Connect(handleCommand)
 end
@@ -486,102 +592,270 @@ UserInputService.InputBegan:Connect(function(io, gp)
     end
 end)
 
-local function getPlayerTextbox()
-    for _, d in ipairs(playerGui:GetDescendants()) do
-        if d:IsA("TextBox") and d.Visible and d.Active then
-            return d
+-- IMPROVED TEXTBOX DETECTION
+local function findValidTextbox()
+    -- Priority 1: Check dedicated Textbox GUI - MUST be enabled
+    local textboxGui = playerGui:FindFirstChild("Textbox")
+    if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
+        return nil
+    end
+    
+    -- Now search for the actual TextBox inside the enabled GUI
+    for _, v in ipairs(textboxGui:GetDescendants()) do
+        if v:IsA("TextBox") and v.Visible and v.Active then
+            return v
         end
     end
+    
     return nil
 end
 
+-- Continuous textbox monitoring
+local textboxCache = nil
+local lastTextboxCheck = 0
+
+RunService.Heartbeat:Connect(function()
+    local now = tick()
+    if now - lastTextboxCheck > 0.1 then  -- Check every 0.1 seconds
+        lastTextboxCheck = now
+        local found = findValidTextbox()
+        if found ~= textboxCache then
+            textboxCache = found
+            state.currentTextbox = found
+        end
+    end
+end)
+
 local function getTypoChar(char)
-    local lc = char:lower()
-    if nearbyKeys[lc] then
-        return nearbyKeys[lc][math.random(1, #nearbyKeys[lc])]
+    local lowerChar = string.lower(char)
+    if nearbyKeys[lowerChar] then
+        local nearby = nearbyKeys[lowerChar]
+        return nearby[math.random(1, #nearby)]
     end
     return char
 end
 
-wordValue:GetPropertyChangedSignal("Value"):Connect(function()
-    local val = wordValue.Value
-    ConsoleText.Text = (val ~= "") and val or "Waiting..."
-    if val == "" or not state.autoType or state.isTyping then return end
+local function shouldMakeTypo()
+    return state.typosEnabled and math.random(1, 100) <= state.typoChance
+end
 
-    state.isTyping = true
-    task.spawn(function()
-        local intended = val
-
-        while state.autoType and wordValue.Value == intended do
-            local tb = getPlayerTextbox()
-            if not tb then
-                task.wait(0.1)
-                continue
+local function sayWord(word)
+    local msg = "word : " .. word
+    pcall(function()
+        if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+            local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+            if channel then channel:SendAsync(msg) end
+        else
+            local chatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+            if chatEvent and chatEvent:FindFirstChild("SayMessageRequest") then
+                chatEvent:FindFirstChild("SayMessageRequest"):FireServer(msg, "All")
             end
+        end
+    end)
+end
 
-            if not state.randomSpeed and state.speed == 0 then
-                tb.Text = intended
-                ReplicatedStorage.SpelledCorrectly:FireServer()
+local function completeWord(textbox)
+    pcall(function()
+        textbox:ReleaseFocus()
+    end)
+    task.wait(0.05)
+    pcall(function()
+        local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") 
+            or ReplicatedStorage:FindFirstChild("CorrectSpelling")
+        if remote then 
+            remote:FireServer() 
+        end
+    end)
+end
+
+-- MAIN AUTO-TYPE ENGINE
+wordValue:GetPropertyChangedSignal("Value"):Connect(function()
+    local newWord = wordValue.Value
+    
+    -- Update console display
+    if newWord ~= "" then
+        ConsoleText.Text = newWord
+    else
+        ConsoleText.Text = "Waiting..."
+    end
+    
+    if newWord == "" then return end
+    
+    state.lastWord = newWord
+    
+    -- Auto say
+    if state.autoSay then
+        task.spawn(function() 
+            sayWord(newWord) 
+        end)
+    end
+    
+    -- Auto type
+    if not state.autoType then return end
+    if state.isTyping then return end
+    
+    state.isTyping = true
+    StatusLabel.Text = "● Typing..."
+    StatusLabel.TextColor3 = Color3.fromRGB(255, 200, 100)
+    
+    task.spawn(function()
+        local targetWord = newWord
+        local success = false
+        
+        -- Wait 1 second before starting to type
+        task.wait(1)
+        
+        -- Check if conditions are still valid after delay
+        if not state.autoType or wordValue.Value ~= targetWord then
+            state.isTyping = false
+            StatusLabel.Text = "● Ready"
+            StatusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+            return
+        end
+        
+        -- Wait for Textbox GUI to be enabled (check multiple times)
+        local textboxGui = nil
+        local guiWaitStart = tick()
+        while tick() - guiWaitStart < 3 do
+            textboxGui = playerGui:FindFirstChild("Textbox")
+            if textboxGui and textboxGui:IsA("ScreenGui") and textboxGui.Enabled then
                 break
             end
-
-            local cur = ""
-            local isDie = state.dieMode and math.random(1,100) <= state.dieChance
-            local dieIdx = isDie and math.random(1, #intended) or nil
-
-            for i = 1, #intended do
-                if not state.autoType or wordValue.Value ~= intended then
-                    state.isTyping = false
-                    return
-                end
-
-                tb = getPlayerTextbox()
-                if not tb then
-                    state.isTyping = false
-                    return
-                end
-
-                local ch = intended:sub(i,i)
-
-                if isDie and i == dieIdx then
-                    cur = cur .. getTypoChar(ch)
-                    tb.Text = cur
-                    state.isTyping = false
-                    return
-                end
-
-                if state.typosEnabled and math.random(1,100) <= state.typoChance and i < #intended then
-                    tb.Text = cur .. getTypoChar(ch)
-                    task.wait(0.12)
-                    tb = getPlayerTextbox()
-                    if not tb then
+            task.wait(0.1)
+        end
+        
+        if not textboxGui or not textboxGui.Enabled then
+            state.isTyping = false
+            StatusLabel.Text = "● Textbox Disabled"
+            StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+            return
+        end
+        
+        -- Wait for valid textbox inside the enabled GUI
+        local waitStart = tick()
+        while not textboxCache and tick() - waitStart < 2 do
+            task.wait(0.05)
+        end
+        
+        if not textboxCache then
+            state.isTyping = false
+            StatusLabel.Text = "● No Textbox Found"
+            StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+            return
+        end
+        
+        -- Instant complete if speed is 0 and not random
+        if not state.randomSpeed and state.speed == 0 then
+            if textboxCache and wordValue.Value == targetWord then
+                textboxCache.Text = targetWord
+                completeWord(textboxCache)
+                success = true
+            end
+            state.isTyping = false
+            StatusLabel.Text = "● Complete"
+            StatusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+            return
+        end
+        
+        -- Character-by-character typing
+        local wordLength = #targetWord
+        
+        for i = 1, wordLength do
+            -- Abort if conditions change
+            if not state.autoType or wordValue.Value ~= targetWord then
+                state.isTyping = false
+                StatusLabel.Text = "● Aborted"
+                StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                return
+            end
+            
+            -- Re-check if Textbox GUI is still enabled every few characters
+            if i % 3 == 0 then  -- Check every 3 characters
+                local textboxGui = playerGui:FindFirstChild("Textbox")
+                if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
+                    -- Wait a moment and check again before giving up
+                    task.wait(0.1)
+                    textboxGui = playerGui:FindFirstChild("Textbox")
+                    if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
                         state.isTyping = false
+                        StatusLabel.Text = "● Textbox Disabled"
+                        StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
                         return
                     end
                 end
-
-                cur = cur .. ch
-                tb.Text = cur
-
-                local delay = state.speed
-                if state.randomSpeed then
-                    delay = state.minSpeed + math.random() * (state.maxSpeed - state.minSpeed)
-                end
-
-                if delay > 0 then
-                    task.wait(delay)
-                else
-                    task.wait()
+            end
+            
+            -- Check textbox still valid
+            if not textboxCache or not textboxCache.Parent or not textboxCache.Visible then
+                textboxCache = findValidTextbox()
+                if not textboxCache then
+                    state.isTyping = false
+                    StatusLabel.Text = "● Lost Textbox"
+                    StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                    return
                 end
             end
-
-            tb = getPlayerTextbox()
-            if tb and tb.Text == intended then
-                ReplicatedStorage.SpelledCorrectly:FireServer()
+            
+            -- Die mode: instant fail
+            if state.dieMode and math.random(1, 100) <= state.dieChance then
+                local ch = targetWord:sub(i, i)
+                textboxCache.Text = textboxCache.Text .. getTypoChar(ch)
+                state.isTyping = false
+                StatusLabel.Text = "● Failed (Die Mode)"
+                StatusLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
+                return
             end
-            break
+            
+            -- Calculate delay with random speed support
+            local delay = 0
+            if state.randomSpeed then
+                local min, max = state.minSpeed, state.maxSpeed
+                if min > max then min, max = max, min end
+                local rf = math.random() ^ 0.5
+                delay = min + (rf * (max - min))
+                if math.random(1, 100) <= 8 then 
+                    delay = delay * (2 + math.random()) 
+                end
+            else
+                delay = state.speed
+            end
+            
+            if delay > 0 then
+                task.wait(delay)
+            else
+                task.wait()
+            end
+            
+            -- Typo handling
+            if shouldMakeTypo() and i < wordLength then
+                local char = targetWord:sub(i, i)
+                local typo = getTypoChar(char)
+                
+                if textboxCache then
+                    textboxCache.Text = targetWord:sub(1, i - 1) .. typo
+                    task.wait(0.1 + (math.random() * 0.2))
+                    
+                    if textboxCache then
+                        textboxCache.Text = targetWord:sub(1, i - 1)
+                        task.wait(0.05 + (math.random() * 0.1))
+                    end
+                end
+            end
+            
+            -- Write correct character
+            if textboxCache then
+                textboxCache.Text = targetWord:sub(1, i)
+            end
         end
-
+        
+        -- Complete the word
+        if wordValue.Value == targetWord and textboxCache then
+            completeWord(textboxCache)
+            success = true
+        end
+        
         state.isTyping = false
+        StatusLabel.Text = success and "● Complete" or "● Failed"
+        StatusLabel.TextColor3 = success and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
     end)
 end)
