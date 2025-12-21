@@ -12,7 +12,7 @@ local wordValue = ReplicatedStorage:WaitForChild("WordValue", 10)
 local state = {
     autoType = false,
     autoSay = false,
-    speed = 0, 
+    speed = 0,
     randomSpeed = false,
     minSpeed = 0.01,
     maxSpeed = 0.04,
@@ -53,6 +53,7 @@ local nearbyKeys = {
     ["z"] = {"a", "s", "x"}
 }
 
+-- ---------- UI (UNCHANGED) ----------
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "ModernAutoType"
 ScreenGui.ResetOnSpawn = false
@@ -391,6 +392,7 @@ Version.Font = Enum.Font.Gotham
 Version.TextSize = 10
 Version.Parent = Content
 
+-- ---------- Chat commands listener (unchanged) ----------
 local function setupChatListener()
     if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
         TextChatService.MessageReceived:Connect(function(message)
@@ -436,6 +438,7 @@ end
 
 setupChatListener()
 
+-- ---------- menu toggle (unchanged) ----------
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
     if input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl then
@@ -450,12 +453,15 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         end
     end
 end)
+
+-- ---------- STRICT getPlayerTextbox: returns a TextBox only if PlayerGui.Textbox exists AND Enabled == true ----------
 local function getPlayerTextbox()
     if not playerGui then return nil end
     local textboxGui = playerGui:FindFirstChild("Textbox")
     if not textboxGui or not textboxGui.Enabled then
         return nil
     end
+    -- find a TextBox inside the Textbox GUI (search recursively)
     local tb = textboxGui:FindFirstChildWhichIsA("TextBox", true)
     if tb and tb:IsA("TextBox") then
         return tb
@@ -463,6 +469,7 @@ local function getPlayerTextbox()
     return nil
 end
 
+-- ---------- support functions ----------
 local function sayWord(word)
     local msg = "word : " .. word
     pcall(function()
@@ -502,6 +509,7 @@ local function shouldMakeTypo()
     return state.typosEnabled and math.random(1, 100) <= state.typoChance
 end
 
+-- ---------- main reaction to WordValue changes (now re-checks Textbox.Enabled repeatedly) ----------
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local newWord = wordValue.Value
 
@@ -524,17 +532,21 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
 
     if not state.autoType then return end
 
+    -- initial check: ensure Textbox exists and is enabled
     local targetTextbox = getPlayerTextbox()
     if not targetTextbox then
-       return
+        return
     end
-
-    local textboxGui = playerGui:FindFirstChild("Textbox")
-    if not textboxGui or not textboxGui.Enabled then return end
 
     state.isTyping = true
 
+    -- instant type (no delay)
     if state.randomSpeed == false and state.speed == 0 then
+        -- before committing, double-check Textbox is still enabled
+        if not getPlayerTextbox() then
+            state.isTyping = false
+            return
+        end
         targetTextbox.Text = newWord
         completeWord(targetTextbox)
         state.isTyping = false
@@ -545,16 +557,18 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local count = 0
 
     for i = 1, wordLength do
+        -- STOP conditions checked each iteration:
         if not state.autoType or wordValue.Value ~= newWord then
             break
         end
 
-        targetTextbox = getPlayerTextbox()
-        if not targetTextbox then break end
+        -- Re-fetch the TextBox and ensure the parent GUI is still Enabled == true
+        local currentTextbox = getPlayerTextbox()
+        if not currentTextbox then
+            break
+        end
 
-        local textboxGuiCheck = playerGui:FindFirstChild("Textbox")
-        if not textboxGuiCheck or not textboxGuiCheck.Enabled then break end
-
+        -- compute delay
         local currentDelay = state.speed
         if state.randomSpeed then
             local min = state.minSpeed
@@ -573,25 +587,40 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             task.wait(currentDelay)
         end
 
+        -- BEFORE writing the character, ensure textbox is still valid/enabled
+        currentTextbox = getPlayerTextbox()
+        if not currentTextbox then
+            break
+        end
+
         count = count + 1
         local currentChar = string.sub(newWord, i, i)
         local displayText = string.sub(newWord, 1, count)
 
         if shouldMakeTypo() and i < wordLength then
             local typoChar = getTypoChar(currentChar)
-            targetTextbox.Text = string.sub(newWord, 1, count - 1) .. typoChar
+            currentTextbox.Text = string.sub(newWord, 1, count - 1) .. typoChar
             local typoDelay = 0.1 + (math.random() * 0.2)
             task.wait(typoDelay)
-            targetTextbox.Text = string.sub(newWord, 1, count - 1)
+            -- check again after typo delay
+            if not getPlayerTextbox() then
+                break
+            end
+            currentTextbox = getPlayerTextbox()
+            currentTextbox.Text = string.sub(newWord, 1, count - 1)
             task.wait(0.05 + (math.random() * 0.1))
+            if not getPlayerTextbox() then
+                break
+            end
+            currentTextbox = getPlayerTextbox()
             displayText = string.sub(newWord, 1, count)
-            targetTextbox.Text = displayText
+            currentTextbox.Text = displayText
         else
-            targetTextbox.Text = displayText
+            currentTextbox.Text = displayText
         end
 
         if i == wordLength then
-            completeWord(targetTextbox)
+            completeWord(currentTextbox)
             break
         end
     end
