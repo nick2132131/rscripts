@@ -452,11 +452,16 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
 end)
 
 local function getPlayerTextbox()
-    if not playerGui then return nil end
-    local success, gui = pcall(function() return playerGui:FindFirstChild("Textbox") end)
-    if success and gui then
-        local tb = gui:FindFirstChild("TextBox")
-        if tb and tb:IsA("TextBox") and tb.Visible then return tb end
+    local ok, screen = pcall(function() return playerGui:FindFirstChild("Textbox") end)
+    if ok and screen and screen:IsA("ScreenGui") then
+        if screen.Enabled then
+            for _, d in ipairs(screen:GetDescendants()) do
+                if d:IsA("TextBox") and d.Visible and d.Active then return d end
+            end
+            return nil
+        else
+            return nil
+        end
     end
     for _, d in ipairs(playerGui:GetDescendants()) do
         if d:IsA("TextBox") and d.Visible and d.Active then return d end
@@ -472,14 +477,18 @@ local function sayWord(word)
             if channel then channel:SendAsync(msg) end
         else
             local chatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
-            if chatEvent then chatEvent:FindFirstChild("SayMessageRequest"):FireServer(msg, "All") end
+            if chatEvent and chatEvent:FindFirstChild("SayMessageRequest") then
+                chatEvent:FindFirstChild("SayMessageRequest"):FireServer(msg, "All")
+            end
         end
     end)
 end
 
 local function completeWord(targetTextbox)
-    targetTextbox:ReleaseFocus()
-    local success, err = pcall(function()
+    pcall(function()
+        targetTextbox:ReleaseFocus()
+    end)
+    pcall(function()
         local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") or ReplicatedStorage:FindFirstChild("CorrectSpelling")
         if remote then remote:FireServer() end
     end)
@@ -494,112 +503,98 @@ local function getTypoChar(char)
     return char
 end
 
-local function killPlayer()
-    if player.Character then
-        local humanoid = player.Character:FindFirstChild("Humanoid")
-        if humanoid then
-            humanoid.Health = 0
-        end
-    end
-end
-
 local function shouldMakeTypo()
     return state.typosEnabled and math.random(1, 100) <= state.typoChance
 end
 
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local newWord = wordValue.Value
-    
     if newWord ~= "" then
         ConsoleText.Text = newWord
     else
         ConsoleText.Text = "Waiting..."
     end
-    
     if newWord == "" then return end
-    if state.isTyping then return end
-    
     state.lastWord = newWord
+    if state.autoSay then task.spawn(function() sayWord(newWord) end) end
+    if not state.autoType then return end
+    if state.isTyping then return end
 
-    if state.autoSay then
-        task.spawn(function() sayWord(newWord) end)
-    end
-
-    task.wait(1)
-
-    if state.autoType then
-        local targetTextbox = getPlayerTextbox()
-        
-        if not targetTextbox or not targetTextbox.Visible then 
-            return 
-        end
-        
-        state.isTyping = true
-        
-        if state.randomSpeed == false and state.speed == 0 then
-            targetTextbox.Text = newWord
-            completeWord(targetTextbox)
-            state.isTyping = false
-            return
-        end
-
-        local wordLength = string.len(newWord)
-        local count = 0
-        
-        for i = 1, wordLength do
-            if not state.autoType or wordValue.Value ~= newWord then 
-                state.isTyping = false
-                break 
+    state.isTyping = true
+    task.spawn(function()
+        local intended = newWord
+        while state.autoType and wordValue.Value == intended do
+            local tb = getPlayerTextbox()
+            if not tb then
+                task.wait(0.08)
+                if not state.autoType or wordValue.Value ~= intended then
+                    state.isTyping = false
+                    return
+                end
+                continue
             end
-            
-            if not targetTextbox or not targetTextbox.Visible then
+
+            if not state.randomSpeed and state.speed == 0 then
+                if wordValue.Value == intended then
+                    tb.Text = intended
+                    completeWord(tb)
+                end
                 state.isTyping = false
                 return
             end
-            
-            local currentDelay = state.speed
-            
-            if state.randomSpeed then
-                local min = state.minSpeed
-                local max = state.maxSpeed
-                if min > max then min, max = max, min end
-                
-                local randomFactor = math.random() ^ 0.5
-                currentDelay = min + (randomFactor * (max - min))
-                
-                if math.random(1, 100) <= 8 then
-                    currentDelay = currentDelay * (2 + math.random())
+
+            local length = #intended
+            for i = 1, length do
+                if not state.autoType or wordValue.Value ~= intended then
+                    state.isTyping = false
+                    return
+                end
+
+                local screenOk, screenNow = pcall(function() return playerGui:FindFirstChild("Textbox") end)
+                if screenOk and screenNow and screenNow:IsA("ScreenGui") and not screenNow.Enabled then
+                    state.isTyping = false
+                    return
+                end
+
+                local tbNow = getPlayerTextbox()
+                if not tbNow then
+                    break
+                end
+
+                local currentDelay = state.speed
+                if state.randomSpeed then
+                    local min = state.minSpeed
+                    local max = state.maxSpeed
+                    if min > max then min, max = max, min end
+                    local rf = math.random() ^ 0.5
+                    currentDelay = min + (rf * (max - min))
+                    if math.random(1, 100) <= 8 then currentDelay = currentDelay * (2 + math.random()) end
+                end
+
+                if currentDelay > 0 then task.wait(currentDelay) else task.wait() end
+
+                if shouldMakeTypo() and i < length then
+                    local c = string.sub(intended, i, i)
+                    local typo = getTypoChar(c)
+                    tbNow.Text = string.sub(intended, 1, i - 1) .. typo
+                    task.wait(0.1 + (math.random() * 0.2))
+                    tbNow.Text = string.sub(intended, 1, i - 1)
+                    task.wait(0.05 + (math.random() * 0.1))
+                end
+
+                tbNow.Text = string.sub(intended, 1, i)
+            end
+
+            if wordValue.Value == intended then
+                local finalTb = getPlayerTextbox()
+                if finalTb then
+                    completeWord(finalTb)
                 end
             end
-            
-            if currentDelay > 0 then
-                task.wait(currentDelay)
-            end
-            
-            count = count + 1
-            local currentChar = string.sub(newWord, i, i)
-            local displayText = string.sub(newWord, 1, count)
-            
-            if shouldMakeTypo() and i < wordLength then
-                local typoChar = getTypoChar(currentChar)
-                targetTextbox.Text = string.sub(newWord, 1, count - 1) .. typoChar
-                local typoDelay = 0.1 + (math.random() * 0.2)
-                task.wait(typoDelay)
-                targetTextbox.Text = string.sub(newWord, 1, count - 1)
-                task.wait(0.05 + (math.random() * 0.1))
-                displayText = string.sub(newWord, 1, count)
-                targetTextbox.Text = displayText
-            else
-                targetTextbox.Text = displayText
-            end
-            
-            if i == wordLength then
-                completeWord(targetTextbox)
-                state.isTyping = false
-                break
-            end
+
+            state.isTyping = false
+            return
         end
-        
         state.isTyping = false
-    end
+    end)
 end)
