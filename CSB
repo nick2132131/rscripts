@@ -453,21 +453,11 @@ end)
 
 local function getPlayerTextbox()
     if not playerGui then return nil end
-    local success, gui = pcall(function() return playerGui:FindFirstChild("Textbox") end)
-    if success and gui and gui.Visible then
-        local tb = gui:FindFirstChild("TextBox")
-        if tb and tb:IsA("TextBox") and tb.Visible then return tb end
-    end
-    for _, d in ipairs(playerGui:GetDescendants()) do
-        if d:IsA("TextBox") and d.Visible and d.Active then 
-            local parent = d.Parent
-            while parent and parent ~= playerGui do
-                if not parent.Visible then
-                    return nil
-                end
-                parent = parent.Parent
-            end
-            return d
+    local textboxGui = playerGui:FindFirstChild("Textbox")
+    if textboxGui and textboxGui.Enabled then
+        local tb = textboxGui:FindFirstChild("TextBox")
+        if tb and tb:IsA("TextBox") then 
+            return tb 
         end
     end
     return nil
@@ -544,13 +534,10 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             return 
         end
         
-        local textboxGui = targetTextbox
-        while textboxGui and textboxGui ~= playerGui do
-            if not textboxGui.Visible then
-                state.isTyping = false
-                return
-            end
-            textboxGui = textboxGui.Parent
+        local textboxGui = playerGui:FindFirstChild("Textbox")
+        if not textboxGui or not textboxGui.Enabled then
+            state.isTyping = false
+            return
         end
         
         state.isTyping = true
@@ -576,13 +563,10 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                 return
             end
             
-            local checkGui = targetTextbox
-            while checkGui and checkGui ~= playerGui do
-                if not checkGui.Visible then
-                    state.isTyping = false
-                    return
-                end
-                checkGui = checkGui.Parent
+            local textboxGui = playerGui:FindFirstChild("Textbox")
+            if not textboxGui or not textboxGui.Enabled then
+                state.isTyping = false
+                return
             end
             
             local currentDelay = state.speed
