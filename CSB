@@ -39,7 +39,6 @@ local nearbyKeys = {
     ["y"] = {"t", "u", "h", "g"}, ["z"] = {"a", "s", "x"}
 }
 
--- UI Creation with cleaner design
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "LunarX_UI"
 ScreenGui.ResetOnSpawn = false
@@ -93,26 +92,15 @@ Title.TextSize = 20
 Title.TextXAlignment = Enum.TextXAlignment.Left
 Title.Parent = Header
 
-local Version = Instance.new("TextLabel")
-Version.Size = UDim2.new(1, -80, 0, 20)
-Version.Position = UDim2.new(0, 24, 1, -24)
-Version.BackgroundTransparency = 1
-Version.Text = "v2.0 Auto"
-Version.TextColor3 = Color3.fromRGB(150, 150, 160)
-Version.Font = Enum.Font.Gotham
-Version.TextSize = 12
-Version.TextXAlignment = Enum.TextXAlignment.Left
-Version.Parent = Header
-
 local CloseBtn = Instance.new("TextButton")
-CloseBtn.Size = UDim2.new(0, 44, 0, 44)
-CloseBtn.Position = UDim2.new(1, -54, 0.5, -22)
+CloseBtn.Size = UDim2.new(0, 50, 0, 50)
+CloseBtn.Position = UDim2.new(1, -58, 0.5, -25)
 CloseBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 52)
 CloseBtn.BorderSizePixel = 0
 CloseBtn.Text = "×"
 CloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
 CloseBtn.Font = Enum.Font.GothamBold
-CloseBtn.TextSize = 26
+CloseBtn.TextSize = 32
 CloseBtn.AutoButtonColor = false
 CloseBtn.Parent = Header
 
@@ -376,7 +364,7 @@ MaxInput.FocusLost:Connect(function()
 end)
 
 local Console = Instance.new("Frame")
-Console.Size = UDim2.new(1, 0, 0, 120)
+Console.Size = UDim2.new(1, 0, 0, 125)
 Console.Position = UDim2.new(0, 0, 0, 282)
 Console.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
 Console.BorderSizePixel = 0
@@ -426,7 +414,6 @@ StatusLabel.TextSize = 12
 StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
 StatusLabel.Parent = Console
 
--- CMD Terminal
 local CmdFrame = Instance.new("Frame")
 CmdFrame.Size = UDim2.new(0, 520, 0, 320)
 CmdFrame.Position = UDim2.new(0.5, -260, 0.5, -160)
@@ -449,7 +436,7 @@ CmdStroke.Parent = CmdFrame
 local CmdTitle = Instance.new("TextLabel")
 CmdTitle.Size = UDim2.new(1, 0, 0, 30)
 CmdTitle.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
-CmdTitle.Text = "  Command Prompt - Lunar X"
+CmdTitle.Text = "  🌙 Command Prompt - Lunar X"
 CmdTitle.TextColor3 = Color3.fromRGB(240, 240, 245)
 CmdTitle.Font = Enum.Font.Code
 CmdTitle.TextSize = 14
@@ -550,7 +537,6 @@ local function handleCommand(msg)
                 v:Destroy() 
             end 
         end
-        -- Re-add the UIListLayout after clearing
         if not CmdScroll:FindFirstChildOfClass("UIListLayout") then
             CmdList = Instance.new("UIListLayout")
             CmdList.Parent = CmdScroll
@@ -562,12 +548,10 @@ CmdInputBox.FocusLost:Connect(function(enter)
     if enter then
         local t = CmdInputBox.Text
         if t ~= "" then
-            addCmdLine("C:\\Users\\" .. player.DisplayName .. "> " .. t, Color3.fromRGB(70, 140, 255))
+            addCmdLine("C:\\Users\\" .. player.Name .. "> " .. t, Color3.fromRGB(70, 140, 255))
             handleCommand(t)
         end
         CmdInputBox.Text = ""
-        task.wait()
-        CmdInputBox:CaptureFocus()
     end
 end)
 
@@ -583,26 +567,27 @@ end
 
 UserInputService.InputBegan:Connect(function(io, gp)
     if gp then return end
-    if io.KeyCode == Enum.KeyCode.Q and UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then
+    if io.KeyCode == Enum.KeyCode.E and UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
         CmdFrame.Visible = not CmdFrame.Visible
-        if CmdFrame.Visible then CmdInputBox:CaptureFocus() end
+        if CmdFrame.Visible then 
+            task.wait()
+            CmdInputBox:CaptureFocus() 
+        end
     elseif io.KeyCode == Enum.KeyCode.LeftControl then
         menuVisible = not menuVisible
         Main.Visible = menuVisible
     end
 end)
 
--- IMPROVED TEXTBOX DETECTION
 local function findValidTextbox()
-    -- Priority 1: Check dedicated Textbox GUI - MUST be enabled
+
     local textboxGui = playerGui:FindFirstChild("Textbox")
     if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
         return nil
     end
     
-    -- Now search for the actual TextBox inside the enabled GUI
     for _, v in ipairs(textboxGui:GetDescendants()) do
-        if v:IsA("TextBox") and v.Visible and v.Active then
+        if v:IsA("TextBox") and v.Visible then
             return v
         end
     end
@@ -610,13 +595,12 @@ local function findValidTextbox()
     return nil
 end
 
--- Continuous textbox monitoring
 local textboxCache = nil
 local lastTextboxCheck = 0
 
 RunService.Heartbeat:Connect(function()
     local now = tick()
-    if now - lastTextboxCheck > 0.1 then  -- Check every 0.1 seconds
+    if now - lastTextboxCheck > 0.1 then  
         lastTextboxCheck = now
         local found = findValidTextbox()
         if found ~= textboxCache then
@@ -668,11 +652,9 @@ local function completeWord(textbox)
     end)
 end
 
--- MAIN AUTO-TYPE ENGINE
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local newWord = wordValue.Value
     
-    -- Update console display
     if newWord ~= "" then
         ConsoleText.Text = newWord
     else
@@ -680,19 +662,20 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     end
     
     if newWord == "" then return end
+ 
+    if state.isTyping and state.lastWord == newWord then
+        return
+    end
     
     state.lastWord = newWord
     
-    -- Auto say
     if state.autoSay then
         task.spawn(function() 
             sayWord(newWord) 
         end)
     end
     
-    -- Auto type
     if not state.autoType then return end
-    if state.isTyping then return end
     
     state.isTyping = true
     StatusLabel.Text = "● Typing..."
@@ -702,10 +685,8 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
         local targetWord = newWord
         local success = false
         
-        -- Wait 1 second before starting to type
         task.wait(1)
         
-        -- Check if conditions are still valid after delay
         if not state.autoType or wordValue.Value ~= targetWord then
             state.isTyping = false
             StatusLabel.Text = "● Ready"
@@ -713,7 +694,6 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             return
         end
         
-        -- Wait for Textbox GUI to be enabled (check multiple times)
         local textboxGui = nil
         local guiWaitStart = tick()
         while tick() - guiWaitStart < 3 do
@@ -726,12 +706,11 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
         
         if not textboxGui or not textboxGui.Enabled then
             state.isTyping = false
-            StatusLabel.Text = "● Textbox Disabled"
+            StatusLabel.Text = "● Waiting for Textbox.."
             StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
             return
         end
         
-        -- Wait for valid textbox inside the enabled GUI
         local waitStart = tick()
         while not textboxCache and tick() - waitStart < 2 do
             task.wait(0.05)
@@ -744,7 +723,6 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             return
         end
         
-        -- Instant complete if speed is 0 and not random
         if not state.randomSpeed and state.speed == 0 then
             if textboxCache and wordValue.Value == targetWord then
                 textboxCache.Text = targetWord
@@ -757,11 +735,10 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             return
         end
         
-        -- Character-by-character typing
         local wordLength = #targetWord
         
         for i = 1, wordLength do
-            -- Abort if conditions change
+
             if not state.autoType or wordValue.Value ~= targetWord then
                 state.isTyping = false
                 StatusLabel.Text = "● Aborted"
@@ -769,11 +746,9 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                 return
             end
             
-            -- Re-check if Textbox GUI is still enabled every few characters
-            if i % 3 == 0 then  -- Check every 3 characters
+            if i % 3 == 0 then 
                 local textboxGui = playerGui:FindFirstChild("Textbox")
                 if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
-                    -- Wait a moment and check again before giving up
                     task.wait(0.1)
                     textboxGui = playerGui:FindFirstChild("Textbox")
                     if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
@@ -785,7 +760,6 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                 end
             end
             
-            -- Check textbox still valid
             if not textboxCache or not textboxCache.Parent or not textboxCache.Visible then
                 textboxCache = findValidTextbox()
                 if not textboxCache then
@@ -795,18 +769,36 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                     return
                 end
             end
-            
-            -- Die mode: instant fail
+
             if state.dieMode and math.random(1, 100) <= state.dieChance then
                 local ch = targetWord:sub(i, i)
-                textboxCache.Text = textboxCache.Text .. getTypoChar(ch)
-                state.isTyping = false
-                StatusLabel.Text = "● Failed (Die Mode)"
-                StatusLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
-                return
+                local wrongChar = getTypoChar(ch)
+                
+                if textboxCache then
+                    textboxCache.Text = textboxCache.Text .. wrongChar
+                    
+                    for j = i + 1, wordLength do
+                        if delay > 0 then
+                            task.wait(delay)
+                        else
+                            task.wait()
+                        end
+                        
+                        if textboxCache then
+                            textboxCache.Text = textboxCache.Text .. targetWord:sub(j, j)
+                        end
+                    end
+                 
+                    task.wait(0.1)
+                    completeWord(textboxCache)
+                    
+                    state.isTyping = false
+                    StatusLabel.Text = "● Failed (Die Mode)"
+                    StatusLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
+                    return
+                end
             end
             
-            -- Calculate delay with random speed support
             local delay = 0
             if state.randomSpeed then
                 local min, max = state.minSpeed, state.maxSpeed
@@ -826,7 +818,6 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                 task.wait()
             end
             
-            -- Typo handling
             if shouldMakeTypo() and i < wordLength then
                 local char = targetWord:sub(i, i)
                 local typo = getTypoChar(char)
@@ -842,13 +833,11 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
                 end
             end
             
-            -- Write correct character
             if textboxCache then
                 textboxCache.Text = targetWord:sub(1, i)
             end
         end
         
-        -- Complete the word
         if wordValue.Value == targetWord and textboxCache then
             completeWord(textboxCache)
             success = true
