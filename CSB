@@ -19,7 +19,9 @@ local state = {
     lastWord = "",
     typosEnabled = false,
     isTyping = false,
-    typoChance = 15
+    typoChance = 15,
+    dieMode = false,
+    dieChance = 15
 }
 
 local menuVisible = true
@@ -402,11 +404,25 @@ local function setupChatListener()
                     ConsoleText.Text = "Typos " .. status
                     task.wait(2)
                     ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
-                elseif string.sub(msg, 1, 12) == ".typochance " then
-                    local value = tonumber(string.sub(msg, 13))
+                elseif (msg:match("^%.typochance%s+%d+")) then
+                    local value = tonumber(msg:match("^%.typochance%s+(%d+)"))
                     if value and value >= 0 and value <= 100 then
                         state.typoChance = value
                         ConsoleText.Text = "Typo Chance: " .. value .. "%"
+                        task.wait(2)
+                        ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                    end
+                elseif msg == ".die" then
+                    state.dieMode = not state.dieMode
+                    local status = state.dieMode and "enabled" or "disabled"
+                    ConsoleText.Text = "Die " .. status
+                    task.wait(2)
+                    ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                elseif (msg:match("^%.diechance%s+%d+")) then
+                    local v = tonumber(msg:match("^%.diechance%s+(%d+)"))
+                    if v and v >= 0 and v <= 100 then
+                        state.dieChance = v
+                        ConsoleText.Text = "Die Chance: " .. v .. "%"
                         task.wait(2)
                         ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
                     end
@@ -421,11 +437,25 @@ local function setupChatListener()
                 ConsoleText.Text = "Typos " .. status
                 task.wait(2)
                 ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
-            elseif string.sub(msg, 1, 12) == ".typochance " then
-                local value = tonumber(string.sub(msg, 13))
+            elseif (msg:match("^%.typochance%s+%d+")) then
+                local value = tonumber(msg:match("^%.typochance%s+(%d+)"))
                 if value and value >= 0 and value <= 100 then
                     state.typoChance = value
                     ConsoleText.Text = "Typo Chance: " .. value .. "%"
+                    task.wait(2)
+                    ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+                end
+            elseif msg == ".die" then
+                state.dieMode = not state.dieMode
+                local status = state.dieMode and "enabled" or "disabled"
+                ConsoleText.Text = "Die " .. status
+                task.wait(2)
+                ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
+            elseif (msg:match("^%.diechance%s+%d+")) then
+                local v = tonumber(msg:match("^%.diechance%s+(%d+)"))
+                if v and v >= 0 and v <= 100 then
+                    state.dieChance = v
+                    ConsoleText.Text = "Die Chance: " .. v .. "%"
                     task.wait(2)
                     ConsoleText.Text = state.lastWord ~= "" and state.lastWord or "Waiting..."
                 end
@@ -544,6 +574,17 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             end
 
             local length = #intended
+            local dieHappens = state.dieMode and math.random(1,100) <= state.dieChance
+            local dieIndex = nil
+            if dieHappens then
+                if length > 1 then
+                    dieIndex = math.random(1, length)
+                else
+                    dieIndex = 1
+                end
+            end
+
+            local displayText = ""
             for i = 1, length do
                 if not state.autoType or wordValue.Value ~= intended then
                     state.isTyping = false
@@ -573,16 +614,23 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
 
                 if currentDelay > 0 then task.wait(currentDelay) else task.wait() end
 
-                if shouldMakeTypo() and i < length then
-                    local c = string.sub(intended, i, i)
-                    local typo = getTypoChar(c)
-                    tbNow.Text = string.sub(intended, 1, i - 1) .. typo
-                    task.wait(0.1 + (math.random() * 0.2))
-                    tbNow.Text = string.sub(intended, 1, i - 1)
-                    task.wait(0.05 + (math.random() * 0.1))
-                end
+                local ch = string.sub(intended, i, i)
 
-                tbNow.Text = string.sub(intended, 1, i)
+                if dieHappens and i == dieIndex then
+                    local typo = getTypoChar(ch)
+                    displayText = displayText .. typo
+                    tbNow.Text = displayText
+                else
+                    if shouldMakeTypo() and i < length then
+                        local typoChar = getTypoChar(ch)
+                        tbNow.Text = string.sub(intended, 1, i - 1) .. typoChar
+                        task.wait(0.1 + (math.random() * 0.2))
+                        tbNow.Text = string.sub(intended, 1, i - 1)
+                        task.wait(0.05 + (math.random() * 0.1))
+                    end
+                    displayText = displayText .. ch
+                    tbNow.Text = displayText
+                end
             end
 
             if wordValue.Value == intended then
@@ -597,4 +645,9 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
         end
         state.isTyping = false
     end)
+end)
+
+playerGui.ChildAdded:Connect(function(child)
+    if child and child:IsA("ScreenGui") and child.Name == "Textbox" then
+    end
 end)
