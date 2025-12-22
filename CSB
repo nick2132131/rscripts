@@ -25,8 +25,14 @@ local state = {
     currentTextbox = nil
 }
 
+local typingProgress = {
+    current = 0,
+    total = 0
+}
+
 local menuVisible = true
 
+-- [UPDATED] Exact nearbyKeys table requested
 local nearbyKeys = {
     ["a"] = {"s", "q", "w", "z"}, ["b"] = {"v", "g", "h", "n"}, ["c"] = {"x", "v", "d", "f"},
     ["d"] = {"s", "f", "e", "r", "c", "x"}, ["e"] = {"w", "r", "d", "s"}, ["f"] = {"d", "g", "r", "t", "v", "c"},
@@ -183,13 +189,13 @@ local function createToggle(name, position, callback)
         if isOn then
             TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(70, 140, 255)}):Play()
             TweenService:Create(Knob, tweenInfo, {
-                Position = UDim2.new(1, -25, 0.5, -11), 
+                Position = UDim2.new(1, -25, 0.5, -11),
                 BackgroundColor3 = Color3.fromRGB(255, 255, 255)
             }):Play()
         else
             TweenService:Create(Toggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(50, 50, 60)}):Play()
             TweenService:Create(Knob, tweenInfo, {
-                Position = UDim2.new(0, 3, 0.5, -11), 
+                Position = UDim2.new(0, 3, 0.5, -11),
                 BackgroundColor3 = Color3.fromRGB(200, 200, 205)
             }):Play()
         end
@@ -283,19 +289,31 @@ local RandomKnobCorner = Instance.new("UICorner")
 RandomKnobCorner.CornerRadius = UDim.new(1, 0)
 RandomKnobCorner.Parent = RandomKnob
 
+do
+    if state.randomSpeed then
+        RandomToggle.BackgroundColor3 = Color3.fromRGB(70, 140, 255)
+        RandomKnob.Position = UDim2.new(1, -25, 0.5, -11)
+        RandomKnob.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    else
+        RandomToggle.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+        RandomKnob.Position = UDim2.new(0, 3, 0.5, -11)
+        RandomKnob.BackgroundColor3 = Color3.fromRGB(200, 200, 205)
+    end
+end
+
 RandomToggle.MouseButton1Click:Connect(function()
     state.randomSpeed = not state.randomSpeed
     local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
     if state.randomSpeed then
         TweenService:Create(RandomToggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(70, 140, 255)}):Play()
         TweenService:Create(RandomKnob, tweenInfo, {
-            Position = UDim2.new(1, -25, 0.5, -11), 
+            Position = UDim2.new(1, -25, 0.5, -11),
             BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         }):Play()
     else
         TweenService:Create(RandomToggle, tweenInfo, {BackgroundColor3 = Color3.fromRGB(50, 50, 60)}):Play()
         TweenService:Create(RandomKnob, tweenInfo, {
-            Position = UDim2.new(0, 3, 0.5, -11), 
+            Position = UDim2.new(0, 3, 0.5, -11),
             BackgroundColor3 = Color3.fromRGB(200, 200, 205)
         }):Play()
     end
@@ -414,6 +432,18 @@ StatusLabel.TextSize = 12
 StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
 StatusLabel.Parent = Console
 
+local LetterLabel = Instance.new("TextLabel")
+LetterLabel.Size = UDim2.new(0, 80, 0, 16)
+LetterLabel.AnchorPoint = Vector2.new(1, 1)
+LetterLabel.Position = UDim2.new(1, -10, 1, -8)
+LetterLabel.BackgroundTransparency = 1
+LetterLabel.Text = "0/0"
+LetterLabel.TextColor3 = Color3.fromRGB(160, 160, 170)
+LetterLabel.Font = Enum.Font.Gotham
+LetterLabel.TextSize = 12
+LetterLabel.TextXAlignment = Enum.TextXAlignment.Right
+LetterLabel.Parent = Console
+
 local CmdFrame = Instance.new("Frame")
 CmdFrame.Size = UDim2.new(0, 520, 0, 320)
 CmdFrame.Position = UDim2.new(0.5, -260, 0.5, -160)
@@ -478,6 +508,48 @@ CmdInputBox.TextSize = 14
 CmdInputBox.TextXAlignment = Enum.TextXAlignment.Left
 CmdInputBox.Parent = CmdFrame
 
+local function setLetterCount(current, total)
+    LetterLabel.Text = current .. "/" .. total
+    typingProgress.current = current
+    typingProgress.total = total
+end
+
+local dotRunning = false
+local dotBaseText = ""
+
+local function startDots(baseText, color)
+    dotBaseText = baseText
+    if dotRunning then return end
+    dotRunning = true
+    if color then
+        StatusLabel.TextColor3 = color
+    end
+    task.spawn(function()
+        local d = 1
+        while dotRunning do
+            StatusLabel.Text = "● " .. dotBaseText .. string.rep(".", d)
+            d = d % 3 + 1
+            task.wait(0.45)
+        end
+    end)
+end
+
+local function stopDots(text, color)
+    dotRunning = false
+    StatusLabel.Text = text
+    if color then
+        StatusLabel.TextColor3 = color
+    end
+end
+
+local function startTypingAnimator()
+    startDots("Typing", Color3.fromRGB(70, 140, 255))
+end
+
+local function stopTypingAnimator(text, color)
+    stopDots(text, color)
+end
+
 local function addCmdLine(txt, color)
     local l = Instance.new("TextLabel")
     l.Size = UDim2.new(1, 0, 0, 18)
@@ -498,6 +570,21 @@ addCmdLine("")
 addCmdLine("Type .helpx for help", Color3.fromRGB(100, 255, 100))
 addCmdLine("")
 
+local function sayWord(word)
+    local msg = "word : " .. word
+    pcall(function()
+        if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
+            local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+            if channel then channel:SendAsync(msg) end
+        else
+            local chatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+            if chatEvent and chatEvent:FindFirstChild("SayMessageRequest") then
+                chatEvent:FindFirstChild("SayMessageRequest"):FireServer(msg, "All")
+            end
+        end
+    end)
+end
+
 local function handleCommand(msg)
     local args = msg:split(" ")
     local cmd = args[1] and args[1]:lower() or ""
@@ -517,6 +604,8 @@ local function handleCommand(msg)
         addCmdLine(".die [true/false] - Toggle instant fail mode")
         addCmdLine(".diechance [num] - Set fail chance %")
         addCmdLine(".cls - Clear console")
+        addCmdLine(".checkplayers - Check other players for LunarX_UI")
+        addCmdLine(".checkword - Show current word")
     elseif cmd == ".typo" then
         local b = getBool()
         state.typosEnabled = (b ~= nil) and b or not state.typosEnabled
@@ -532,15 +621,40 @@ local function handleCommand(msg)
         state.dieChance = tonumber(args[2]) or state.dieChance
         addCmdLine(prefix .. "Die Chance: " .. state.dieChance .. "%", Color3.fromRGB(100, 255, 100))
     elseif cmd == ".cls" then
-        for _, v in pairs(CmdScroll:GetChildren()) do 
-            if v:IsA("TextLabel") then 
-                v:Destroy() 
-            end 
+        for _, v in pairs(CmdScroll:GetChildren()) do
+            if v:IsA("TextLabel") then
+                v:Destroy()
+            end
         end
         if not CmdScroll:FindFirstChildOfClass("UIListLayout") then
             CmdList = Instance.new("UIListLayout")
             CmdList.Parent = CmdScroll
         end
+    elseif cmd == ".checkplayers" then
+        startDots("Scanning", Color3.fromRGB(70,140,255))
+        local found = {}
+        local conn
+        conn = TextChatService.MessageReceived:Connect(function(m)
+            if m.Text == "[lxp]" then
+                table.insert(found, m.TextSource.Name)
+            end
+        end)
+        sayWord("[lxp]")
+        task.wait(1)
+        conn:Disconnect()
+        stopDots("● Ready", Color3.fromRGB(100,255,100))
+        if #found == 0 then
+            addCmdLine("No Lunar X users detected.", Color3.fromRGB(150,150,160))
+        else
+            addCmdLine("Detected Lunar X users:", Color3.fromRGB(70,140,255))
+            for _, name in ipairs(found) do
+                addCmdLine(" - " .. name)
+            end
+        end
+    elseif cmd == ".checkword" then
+        local cur = wordValue.Value
+        if cur == "" then cur = "Waiting..." end
+        addCmdLine(prefix .. "Current Word: " .. cur, Color3.fromRGB(70, 140, 255))
     end
 end
 
@@ -556,10 +670,10 @@ CmdInputBox.FocusLost:Connect(function(enter)
 end)
 
 if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-    TextChatService.MessageReceived:Connect(function(m) 
-        if m.TextSource and m.TextSource.UserId == player.UserId then 
-            handleCommand(m.Text) 
-        end 
+    TextChatService.MessageReceived:Connect(function(m)
+        if m.TextSource and m.TextSource.UserId == player.UserId then
+            handleCommand(m.Text)
+        end
     end)
 else
     player.Chatted:Connect(handleCommand)
@@ -569,9 +683,9 @@ UserInputService.InputBegan:Connect(function(io, gp)
     if gp then return end
     if io.KeyCode == Enum.KeyCode.E and UserInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
         CmdFrame.Visible = not CmdFrame.Visible
-        if CmdFrame.Visible then 
+        if CmdFrame.Visible then
             task.wait()
-            CmdInputBox:CaptureFocus() 
+            CmdInputBox:CaptureFocus()
         end
     elseif io.KeyCode == Enum.KeyCode.LeftControl then
         menuVisible = not menuVisible
@@ -580,18 +694,15 @@ UserInputService.InputBegan:Connect(function(io, gp)
 end)
 
 local function findValidTextbox()
-
     local textboxGui = playerGui:FindFirstChild("Textbox")
     if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
         return nil
     end
-    
     for _, v in ipairs(textboxGui:GetDescendants()) do
         if v:IsA("TextBox") and v.Visible then
             return v
         end
     end
-    
     return nil
 end
 
@@ -600,7 +711,7 @@ local lastTextboxCheck = 0
 
 RunService.Heartbeat:Connect(function()
     local now = tick()
-    if now - lastTextboxCheck > 0.1 then  
+    if now - lastTextboxCheck > 0.1 then
         lastTextboxCheck = now
         local found = findValidTextbox()
         if found ~= textboxCache then
@@ -610,32 +721,11 @@ RunService.Heartbeat:Connect(function()
     end
 end)
 
+-- [UPDATED] Exact getTypoChar function requested
 local function getTypoChar(char)
-    local lowerChar = string.lower(char)
-    if nearbyKeys[lowerChar] then
-        local nearby = nearbyKeys[lowerChar]
-        return nearby[math.random(1, #nearby)]
-    end
+    local lc = char:lower()
+    if nearbyKeys[lc] then return nearbyKeys[lc][math.random(1, #nearbyKeys[lc])] end
     return char
-end
-
-local function shouldMakeTypo()
-    return state.typosEnabled and math.random(1, 100) <= state.typoChance
-end
-
-local function sayWord(word)
-    local msg = "word : " .. word
-    pcall(function()
-        if TextChatService.ChatVersion == Enum.ChatVersion.TextChatService then
-            local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
-            if channel then channel:SendAsync(msg) end
-        else
-            local chatEvent = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
-            if chatEvent and chatEvent:FindFirstChild("SayMessageRequest") then
-                chatEvent:FindFirstChild("SayMessageRequest"):FireServer(msg, "All")
-            end
-        end
-    end)
 end
 
 local function completeWord(textbox)
@@ -644,56 +734,50 @@ local function completeWord(textbox)
     end)
     task.wait(0.05)
     pcall(function()
-        local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") 
+        local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly")
             or ReplicatedStorage:FindFirstChild("CorrectSpelling")
-        if remote then 
-            remote:FireServer() 
+        if remote then
+            remote:FireServer()
         end
     end)
 end
 
 wordValue:GetPropertyChangedSignal("Value"):Connect(function()
     local newWord = wordValue.Value
-    
     if newWord ~= "" then
         ConsoleText.Text = newWord
     else
         ConsoleText.Text = "Waiting..."
     end
-    
-    if newWord == "" then return end
- 
+    if newWord == "" then
+        setLetterCount(0, 0)
+        return
+    end
     if state.isTyping and state.lastWord == newWord then
         return
     end
-    
     state.lastWord = newWord
-    
     if state.autoSay then
-        task.spawn(function() 
-            sayWord(newWord) 
+        task.spawn(function()
+            sayWord(newWord)
         end)
     end
-    
     if not state.autoType then return end
-    
     state.isTyping = true
-    StatusLabel.Text = "● Typing..."
-    StatusLabel.TextColor3 = Color3.fromRGB(255, 200, 100)
-    
     task.spawn(function()
         local targetWord = newWord
+        local wordLength = #targetWord
+        setLetterCount(0, wordLength)
+        typingProgress.current = 0
+        typingProgress.total = wordLength
+        startTypingAnimator()
         local success = false
-        
         task.wait(1)
-        
         if not state.autoType or wordValue.Value ~= targetWord then
             state.isTyping = false
-            StatusLabel.Text = "● Ready"
-            StatusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+            stopTypingAnimator("● Ready.", Color3.fromRGB(100, 255, 100))
             return
         end
-        
         local textboxGui = nil
         local guiWaitStart = tick()
         while tick() - guiWaitStart < 3 do
@@ -703,148 +787,89 @@ wordValue:GetPropertyChangedSignal("Value"):Connect(function()
             end
             task.wait(0.1)
         end
-        
         if not textboxGui or not textboxGui.Enabled then
             state.isTyping = false
-            StatusLabel.Text = "● Waiting for Textbox.."
-            StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+            stopTypingAnimator("● Waiting for Textbox.", Color3.fromRGB(255, 100, 100))
             return
         end
-        
         local waitStart = tick()
         while not textboxCache and tick() - waitStart < 2 do
             task.wait(0.05)
         end
-        
         if not textboxCache then
             state.isTyping = false
-            StatusLabel.Text = "● No Textbox Found"
-            StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+            stopTypingAnimator("● No Textbox Found.", Color3.fromRGB(255, 100, 100))
             return
         end
-        
         if not state.randomSpeed and state.speed == 0 then
             if textboxCache and wordValue.Value == targetWord then
                 textboxCache.Text = targetWord
                 completeWord(textboxCache)
                 success = true
+                setLetterCount(wordLength, wordLength)
             end
             state.isTyping = false
-            StatusLabel.Text = "● Complete"
-            StatusLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+            stopTypingAnimator(success and "● Complete." or "● Ready.", Color3.fromRGB(100, 255, 100))
             return
         end
-        
-        local wordLength = #targetWord
-        
-        for i = 1, wordLength do
 
+        -- [UPDATED] Exact typo loop logic requested
+        local cur = ""
+        local isDie = state.dieMode and math.random(1,100) <= state.dieChance
+        local dieIdx = isDie and math.random(1, wordLength) or nil
+
+        for i = 1, wordLength do
             if not state.autoType or wordValue.Value ~= targetWord then
                 state.isTyping = false
-                StatusLabel.Text = "● Aborted"
-                StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                stopTypingAnimator("● Aborted.", Color3.fromRGB(255, 100, 100))
                 return
             end
-            
-            if i % 3 == 0 then 
-                local textboxGui = playerGui:FindFirstChild("Textbox")
-                if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
-                    task.wait(0.1)
-                    textboxGui = playerGui:FindFirstChild("Textbox")
-                    if not textboxGui or not textboxGui:IsA("ScreenGui") or not textboxGui.Enabled then
-                        state.isTyping = false
-                        StatusLabel.Text = "● Textbox Disabled"
-                        StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
-                        return
-                    end
-                end
-            end
-            
+
             if not textboxCache or not textboxCache.Parent or not textboxCache.Visible then
                 textboxCache = findValidTextbox()
                 if not textboxCache then
                     state.isTyping = false
-                    StatusLabel.Text = "● Lost Textbox"
-                    StatusLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                    stopTypingAnimator("● Lost Textbox.", Color3.fromRGB(255, 100, 100))
                     return
                 end
             end
 
-            if state.dieMode and math.random(1, 100) <= state.dieChance then
-                local ch = targetWord:sub(i, i)
-                local wrongChar = getTypoChar(ch)
+            local ch = targetWord:sub(i, i)
+            
+            if isDie and i == dieIdx then
+                cur = cur .. getTypoChar(ch)
+                textboxCache.Text = cur
+                -- Break loop to simulate fail
+                -- (Note: The user snippet breaks here, so we follow that exact behavior)
+                local remote = ReplicatedStorage:FindFirstChild("SpelledCorrectly") or ReplicatedStorage:FindFirstChild("CorrectSpelling")
+                if remote then pcall(function() remote:FireServer() end) end
                 
-                if textboxCache then
-                    textboxCache.Text = textboxCache.Text .. wrongChar
-                    
-                    for j = i + 1, wordLength do
-                        if delay > 0 then
-                            task.wait(delay)
-                        else
-                            task.wait()
-                        end
-                        
-                        if textboxCache then
-                            textboxCache.Text = textboxCache.Text .. targetWord:sub(j, j)
-                        end
-                    end
-                 
-                    task.wait(0.1)
-                    completeWord(textboxCache)
-                    
-                    state.isTyping = false
-                    StatusLabel.Text = "● Failed (Die Mode)"
-                    StatusLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
-                    return
-                end
-            end
-            
-            local delay = 0
-            if state.randomSpeed then
-                local min, max = state.minSpeed, state.maxSpeed
-                if min > max then min, max = max, min end
-                local rf = math.random() ^ 0.5
-                delay = min + (rf * (max - min))
-                if math.random(1, 100) <= 8 then 
-                    delay = delay * (2 + math.random()) 
-                end
+                setLetterCount(wordLength, wordLength)
+                state.isTyping = false
+                stopTypingAnimator("● Failed (Die Mode).", Color3.fromRGB(255, 80, 80))
+                return
             else
-                delay = state.speed
-            end
-            
-            if delay > 0 then
-                task.wait(delay)
-            else
-                task.wait()
-            end
-            
-            if shouldMakeTypo() and i < wordLength then
-                local char = targetWord:sub(i, i)
-                local typo = getTypoChar(char)
-                
-                if textboxCache then
-                    textboxCache.Text = targetWord:sub(1, i - 1) .. typo
-                    task.wait(0.1 + (math.random() * 0.2))
-                    
-                    if textboxCache then
-                        textboxCache.Text = targetWord:sub(1, i - 1)
-                        task.wait(0.05 + (math.random() * 0.1))
-                    end
+                if state.typosEnabled and math.random(1,100) <= state.typoChance and i < wordLength then
+                    textboxCache.Text = cur .. getTypoChar(ch)
+                    setLetterCount(#cur + 1, wordLength)
+                    task.wait(0.12)
                 end
+                cur = cur .. ch
             end
             
-            if textboxCache then
-                textboxCache.Text = targetWord:sub(1, i)
-            end
+            textboxCache.Text = cur
+            setLetterCount(i, wordLength)
+            
+            local waitTime = state.randomSpeed and (state.minSpeed + math.random()*(state.maxSpeed-state.minSpeed)) or state.speed
+            task.wait(waitTime)
         end
-        
+
         if wordValue.Value == targetWord and textboxCache then
             completeWord(textboxCache)
             success = true
+            setLetterCount(wordLength, wordLength)
         end
-        
         state.isTyping = false
-        StatusLabel.Text = success and "● Complete" or "● Failed"
-        StatusLabel.TextColor3 = success and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
+        stopTypingAnimator(success and "● Complete." or "● Failed.", Color3.fromRGB(100, 255, 100))
     end)
 end)
