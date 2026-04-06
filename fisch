@@ -173,14 +173,16 @@ local function loadSlots()
 end
 
 local starCraterServerCount = 0
-
+local HOP_FLAG_FILE         = "lunarx_hop.json"
+local STARTUP_DELAY         = 12
+ 
 local function saveFarmCount()
     pcall(function()
         if not writefile then return end
         writefile(FARM_FILE, HTTP:JSONEncode({count=starCraterServerCount}))
     end)
 end
-
+ 
 local function loadFarmCount()
     pcall(function()
         if not readfile then return end
@@ -190,12 +192,27 @@ local function loadFarmCount()
         if d.count then starCraterServerCount=d.count end
     end)
 end
+ 
+local function saveHopFlag(pending)
+    pcall(function()
+        if writefile then writefile(HOP_FLAG_FILE, HTTP:JSONEncode({pending=pending})) end
+    end)
+end
+ 
+local function popHopFlag()
+    local got=false
+    pcall(function()
+        if not readfile then return end
+        local ok,raw=pcall(readfile,HOP_FLAG_FILE)
+        if not ok then return end
+        local d=HTTP:JSONDecode(raw)
+        if d and d.pending then got=true; saveHopFlag(false) end
+    end)
+    return got
+end
+ 
+loadCfg(); loadSlots(); loadFarmCount()
 
-loadCfg()
-loadSlots()
-loadFarmCount()
-
--- ─── debug log ────────────────────────────────────────────────────────────────
 local debugLog = {}
 local debugLbl = nil
 
@@ -602,86 +619,148 @@ end
 
 local function doServerHop()
     pcall(function()
+        saveHopFlag(true)
+ 
         if queue_on_teleport then
-            queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()')
+            queue_on_teleport(
+                'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()'
+            )
         end
         saveCfg(); saveSlots(); saveFarmCount()
+ 
         local ok,raw=pcall(function()
-            return game:HttpGet("https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100")
+            return game:HttpGet(
+                "https://games.roblox.com/v1/games/"..game.PlaceId..
+                "/servers/Public?sortOrder=Asc&limit=100"
+            )
         end)
-        if not ok then dbg("serverhop: http fail"); return end
+        if not ok then
+            dbg("serverhop: http fail")
+            saveHopFlag(false) 
+            return
+        end
+ 
         local data=HTTP:JSONDecode(raw)
-        if not data or not data.data or #data.data==0 then dbg("serverhop: no servers"); return end
+        if not data or not data.data or #data.data==0 then
+            dbg("serverhop: no servers")
+            saveHopFlag(false)
+            notify("farm","no servers to hop to")
+            return
+        end
+ 
         for _,s in data.data do
             if s.id~=game.JobId and (s.playing or 0)<(s.maxPlayers or 1) then
                 dbg("serverhop → "..s.id:sub(1,8))
-                TeleServ:TeleportToPlaceInstance(game.PlaceId,s.id,lp); return
+                TeleServ:TeleportToPlaceInstance(game.PlaceId,s.id,lp)
+                return   -- script will be killed by the teleport
             end
         end
+ 
+        -- no suitable server found
         dbg("serverhop: no suitable server found")
+        saveHopFlag(false)
         notify("farm","no servers to hop to")
     end)
 end
-
-local starFarmRunning=false
-local starFarmStatus=""
-local starStatusLbl=nil
-local starStatusDot=nil
-
+local starFarmRunning = false
+local starFarmStatus  = ""
+local starStatusLbl   = nil
+local starStatusDot   = nil
+ 
 task.spawn(function()
+ 
+    task.wait(STARTUP_DELAY)
+ 
+    if popHopFlag() then
+        starCraterServerCount = starCraterServerCount + 1
+        saveFarmCount()
+        sendWebhook("autofarm")
+        dbg("arrived on new server — total: "..starCraterServerCount)
+        if starStatusLbl then
+            starStatusLbl.Text = "server #"..starCraterServerCount.." — ready"
+        end
+    end
+ 
     while task.wait(0.5) do
+ 
         if not cfg.AutoStarCrater then
             if starFarmRunning then
-                starFarmRunning=false
-                debugLog={}
-                if debugLbl then debugLbl.Text="[cleared]" end
-                if starStatusLbl then starStatusLbl.Text="idle" end
+                starFarmRunning = false
+                if starStatusLbl then starStatusLbl.Text = "idle" end
+                if starStatusDot then
+                    TS:Create(starStatusDot, TweenInfo.new(0.3),
+                        {BackgroundColor3=T.dim}):Play()
+                end
             end
             continue
         end
+ 
         if starFarmRunning then continue end
-        starFarmRunning=true
-
-        local craters=findStarCraters()
+        starFarmRunning = true
+ 
+        local craters = findStarCraters()
         dbg("starcrater: "..#craters.." craters found")
-
-        if #craters==0 then
-            starFarmStatus="No craters — hopping..."
-            if starStatusLbl then starStatusLbl.Text=starFarmStatus end
-            if starStatusDot then TS:Create(starStatusDot,TweenInfo.new(0.3),{BackgroundColor3=T.yell}):Play() end
-            task.wait(1)
-            if cfg.AutoStarCrater and cfg.StarCraterServerHop then
-                starCraterServerCount=starCraterServerCount+1
-                saveFarmCount(); sendWebhook("autofarm")
-                doServerHop()
+ 
+        if #craters == 0 then
+            starFarmStatus = "no craters — hopping..."
+            if starStatusLbl then starStatusLbl.Text = starFarmStatus end
+            if starStatusDot then
+                TS:Create(starStatusDot, TweenInfo.new(0.3),
+                    {BackgroundColor3=T.yell}):Play()
             end
-            starFarmRunning=false; continue
+            task.wait(1)
+ 
+            if cfg.AutoStarCrater and cfg.StarCraterServerHop then
+                saveHopFlag(false)
+                doServerHop()
+                task.wait(30)
+                dbg("starcrater: empty-server hop timed out")
+            end
+ 
+            starFarmRunning = false
+            continue
         end
-
-        for i,crater in craters do
+ 
+        for i, crater in craters do
             if not cfg.AutoStarCrater then break end
-            starFarmStatus="Crater "..i.."/"..#craters
-            if starStatusLbl then starStatusLbl.Text=starFarmStatus end
-            dbg("starcrater: farming #"..i.." "..crater.Name)
+            starFarmStatus = "crater "..i.."/"..#craters
+            if starStatusLbl then starStatusLbl.Text = starFarmStatus end
+            if starStatusDot then
+                TS:Create(starStatusDot, TweenInfo.new(0.3),
+                    {BackgroundColor3=T.green}):Play()
+            end
+            dbg("starcrater: farming #"..i.."  "..crater.Name)
             fireCrater(crater)
         end
-
-        if not cfg.AutoStarCrater then starFarmRunning=false; continue end
-
-        starFarmStatus="Done — hopping..."
-        if starStatusLbl then starStatusLbl.Text=starFarmStatus end
-        starCraterServerCount=starCraterServerCount+1
-        saveFarmCount(); sendWebhook("autofarm")
-        dbg("starcrater: cycle done, hop #"..starCraterServerCount)
+ 
+        if not cfg.AutoStarCrater then
+            starFarmRunning = false
+            continue
+        end
+ 
+        starFarmStatus = "done — hopping..."
+        if starStatusLbl then starStatusLbl.Text = starFarmStatus end
+        dbg("starcrater: cycle done, hopping...")
         task.wait(1)
-        if cfg.StarCraterServerHop then doServerHop() end
-        starFarmRunning=false
+ 
+        if cfg.StarCraterServerHop then
+            doServerHop()
+            task.wait(30)
+            saveHopFlag(false)
+            dbg("starcrater: hop timed out, retrying next cycle")
+            notify("farm","server hop failed — retrying")
+        else
+            starCraterServerCount = starCraterServerCount + 1
+            saveFarmCount()
+            sendWebhook("autofarm")
+            dbg("starcrater: cycle credited (no hop) — total: "
+                ..starCraterServerCount)
+        end
+ 
+        starFarmRunning = false
     end
 end)
 
--- ─────────────────────────────────────────────────────────────────────────────
---  GUI
--- ─────────────────────────────────────────────────────────────────────────────
 if pgui:FindFirstChild("LunarX") then pgui.LunarX:Destroy() end
 
 local gui=Instance.new("ScreenGui",pgui)
