@@ -638,8 +638,8 @@ local function doServerHop()
             end
 
             for _, s in pairs(data.data) do
-                if s.id ~= game.JobId and (s.playing or 0) < (s.maxPlayers or 1) then
-                    dbg("serverhop → " .. s.id:sub(1, 8))
+                if s.id ~= game.JobId and (s.playing or 0) < 17 then
+                    dbg("serverhop → " .. s.id:sub(1, 8) .. " | Players: " .. tostring(s.playing))
                     TeleServ:TeleportToPlaceInstance(game.PlaceId, s.id, lp)
                     foundServer = true
                     return
