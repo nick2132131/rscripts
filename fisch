@@ -626,26 +626,40 @@ local function doServerHop()
             return nil
         end
 
-        local data = GetNextPage()
-        if not data or not data.data or #data.data == 0 then
-            dbg("serverhop: no servers found on first page")
-            saveHopFlag(false)
-            notify("farm", "no servers to hop to")
-            return
-        end
+        local cursor = nil
+        local foundServer = false
 
-        -- Try to find a server that isn't full and isn't the current one
-        for _, s in pairs(data.data) do
-            if s.id ~= game.JobId and (s.playing or 0) < (s.maxPlayers or 1) then
-                dbg("serverhop → " .. s.id:sub(1, 8))
-                TeleServ:TeleportToPlaceInstance(game.PlaceId, s.id, lp)
-                return
+        while not foundServer do
+            local data = GetNextPage(cursor)
+            
+            if not data or not data.data or #data.data == 0 then
+                dbg("serverhop: no more servers found or API rate limited")
+                break
             end
+
+            for _, s in pairs(data.data) do
+                if s.id ~= game.JobId and (s.playing or 0) < (s.maxPlayers or 1) then
+                    dbg("serverhop → " .. s.id:sub(1, 8))
+                    TeleServ:TeleportToPlaceInstance(game.PlaceId, s.id, lp)
+                    foundServer = true
+                    return
+                end
+            end
+
+            cursor = data.nextPageCursor
+            
+            if not cursor then
+                break 
+            end
+            
+            task.wait(0.2)
         end
 
-        -- If no server found on the first page, try a random teleport as a fallback
-        dbg("serverhop: fallback to random server")
-        TeleServ:Teleport(game.PlaceId, lp)
+        if not foundServer then
+            dbg("serverhop: fallback to random server")
+            saveHopFlag(false)
+            TeleServ:Teleport(game.PlaceId, lp)
+        end
     end)
 end
 
