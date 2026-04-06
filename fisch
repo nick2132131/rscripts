@@ -53,13 +53,9 @@ local EVENTS = {
     {name="Great White Shark",        zone="Great White Shark",        hunt=true },
     {name="Whale Shark",              zone="Whale Shark",              hunt=true },
     {name="Great Hammerhead Shark",   zone="Great Hammerhead Shark",   hunt=true },
-    {name="Megalodon",                zone="Megalodon",                hunt=true },
-    {name="Ancient Megalodon",        zone="Ancient Megalodon",        hunt=true },
-    {name="Phantom Megalodon",        zone="Phantom Megalodon",        hunt=true },
+    {name="Megalodon",                zone="Megalodon Default",                hunt=true },
     {name="Shamrock Megalodon",       zone="Shamrock Megalodon",       hunt=true },
     {name="Scylla",                   zone="Forsaken Veil - Scylla",   hunt=true },
-    {name="Scylla Shiny",             zone="Scylla Shiny",             hunt=true },
-    {name="Shamrock Scylla",          zone="Shamrock Scylla",          hunt=true },
     {name="Leviathan",                zone="Leviathan",                hunt=true },
     {name="Skeletal Leviathan",       zone="Skeletal Leviathan Hunt",  hunt=false},
     {name="Shamrock Leviathan",       zone="Shamrock Leviathan",       hunt=true },
@@ -72,7 +68,6 @@ local EVENTS = {
     {name="Frostwyrm",                zone="Frostwyrm",                hunt=true },
     {name="Flower Guardian",          zone="Flower Guardian",          hunt=true },
     {name="Omnithal",                 zone="Omnithal",                 hunt=true },
-    {name="Awakened Omnithal",        zone="Awakened Omnithal",        hunt=true },
     {name="Plesiosaur",               zone="Plesiosaur",               hunt=true },
     {name="Rotbloom",                 zone="Rotbloom",                 hunt=true },
     {name="Kraken",                   zone="Kraken",                   hunt=true },
@@ -80,6 +75,7 @@ local EVENTS = {
     {name="Whale",                    zone="Whale",                    hunt=true },
     {name="Isonade",                  zone="Isonade",                  hunt=true },
     {name="Baby Bloop Fish",          zone="Baby Bloop Fish",          hunt=false},
+    {name="Bloop Fish",          zone="Bloop Fish",          hunt=true},
 }
 -- events that need higher Y offset
 local HIGH_Y    = {["Omnithal"]=true,["Awakened Omnithal"]=true,["Scylla"]=true}
