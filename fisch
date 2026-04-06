@@ -78,7 +78,7 @@ local EVENTS = {
 -- events that need higher Y offset
 local HIGH_Y    = {["Omnithal"]=true,["Awakened Omnithal"]=true,["Scylla"]=true}
 -- events that need extra forward (negative Z) offset because creature is far back
-local FORWARD_Z = {["Orca"]=true, ["Whale"]=true, ["Whale Shark"]=true}
+local FORWARD_Z = {["Orca"]=true, ["Whale"]=true}
 
 local eventEnabled = {}
 for _,e in EVENTS do eventEnabled[e.name]=false end
@@ -472,11 +472,11 @@ task.spawn(function()
             local cf=getEventCF(activeEvent)
             if cf then
                 local np=cf.Position; local first=not lastEventPos
-                local moved=not first and (np-lastEventPos).Magnitude>5
+                local moved=not first and (np-lastEventPos).Magnitude>1.5
                 if first or moved then
-                    local yOff=HIGH_Y[activeEvent.name] and 100 or 40
+                    local yOff=HIGH_Y[activeEvent.name] and 150 or 40
                     -- extra forward offset for surface creatures
-                    local zOff=FORWARD_Z[activeEvent.name] and -60 or 0
+                    local zOff=FORWARD_Z[activeEvent.name] and 700 or 0
                     local dest=CFrame.new(np.X, np.Y+yOff, np.Z+zOff)
                     local h=hrp()
                     if h then h.CFrame=dest; frozenCF=dest; if not cfg.Frozen then cfg.Frozen=true; setFrozen(true) end end
