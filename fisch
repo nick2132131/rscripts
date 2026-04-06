@@ -627,36 +627,33 @@ local function doServerHop()
         end
 
         local cursor = nil
-        local foundServer = false
+        local possibleServers = {} -- Store valid servers here
 
-        while not foundServer do
+        -- Loop through pages to find a bunch of options
+        for i = 1, 5 do -- Checks up to 500 servers to keep it fast but random
             local data = GetNextPage(cursor)
-            
-            if not data or not data.data or #data.data == 0 then
-                dbg("serverhop: no more servers found or API rate limited")
-                break
-            end
+            if not data or not data.data then break end
 
             for _, s in pairs(data.data) do
+                -- Must be a different server AND under 17 players
                 if s.id ~= game.JobId and (s.playing or 0) < 17 then
-                    dbg("serverhop → " .. s.id:sub(1, 8) .. " | Players: " .. tostring(s.playing))
-                    TeleServ:TeleportToPlaceInstance(game.PlaceId, s.id, lp)
-                    foundServer = true
-                    return
+                    table.insert(possibleServers, s.id)
                 end
             end
 
             cursor = data.nextPageCursor
-            
-            if not cursor then
-                break 
-            end
-            
-            task.wait(0.2)
+            if not cursor then break end
+            task.wait(0.1)
         end
 
-        if not foundServer then
-            dbg("serverhop: fallback to random server")
+        -- Pick a RANDOM server from our list of valid ones
+        if #possibleServers > 0 then
+            local randomId = possibleServers[math.random(1, #possibleServers)]
+            dbg("serverhop → " .. randomId:sub(1, 8) .. " (Randomly picked from " .. #possibleServers .. " options)")
+            TeleServ:TeleportToPlaceInstance(game.PlaceId, randomId, lp)
+        else
+            -- If no specific low-player servers found, just do a normal teleport
+            dbg("serverhop: no specific servers found, falling back")
             saveHopFlag(false)
             TeleServ:Teleport(game.PlaceId, lp)
         end
