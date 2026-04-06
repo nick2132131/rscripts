@@ -1,3 +1,4 @@
+-- lunar x  v5  |  fisch  |
 local Players    = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local RepStore   = game:GetService("ReplicatedStorage")
@@ -14,6 +15,7 @@ local pgui = lp:WaitForChild("PlayerGui")
 if _G.__lx then _G.__lx = false task.wait(0.1) end
 _G.__lx = true
 
+-- ── remotes ───────────────────────────────────────────────────────────────────
 local RC, castRemote
 pcall(function() RC = require(RepStore.client.legacyControllers.ReelController) end)
 pcall(function()
@@ -22,6 +24,7 @@ end)
 
 local function rgb(r,g,b) return Color3.fromRGB(r,g,b) end
 
+-- ── themes ───────────────────────────────────────────────────────────────────
 local THEMES = {
     Default  = {bg=rgb(13,13,18),  panel=rgb(9,9,13),   el=rgb(20,20,30),  elh=rgb(27,27,40),  bord=rgb(36,34,54), acc=rgb(88,125,255), atxt=rgb(255,255,255),txt=rgb(230,228,250),sub=rgb(108,106,138),dim=rgb(48,46,70),  green=rgb(46,196,96), red=rgb(215,55,55), yell=rgb(240,185,50),cyan=rgb(30,200,245), purp=rgb(160,90,255)},
     Midnight = {bg=rgb(8,8,12),    panel=rgb(5,5,9),    el=rgb(14,14,22),  elh=rgb(20,20,30),  bord=rgb(28,26,44), acc=rgb(145,90,255), atxt=rgb(255,255,255),txt=rgb(228,225,255),sub=rgb(98,96,138),  dim=rgb(38,36,62), green=rgb(46,196,96), red=rgb(215,55,55), yell=rgb(240,185,50),cyan=rgb(30,200,245), purp=rgb(190,100,255)},
@@ -38,14 +41,14 @@ local function reg(inst,key,prop)
     return inst
 end
 local function applyTheme(name)
-    local th=THEMES[name];
-    if not th then return end
+    local th=THEMES[name]; if not th then return end
     for k,v in th do T[k]=v end
     for _,r in colorRegs do
         if T[r.key] then TS:Create(r.inst,TweenInfo.new(0.3,Enum.EasingStyle.Quart),{[r.prop]=T[r.key]}):Play() end
     end
 end
 
+-- ── events list ───────────────────────────────────────────────────────────────
 local EVENTS = {
     {name="Great White Shark",        zone="Great White Shark",        hunt=true },
     {name="Whale Shark",              zone="Whale Shark",              hunt=true },
@@ -72,27 +75,31 @@ local EVENTS = {
     {name="Awakened Omnithal",        zone="Awakened Omnithal",        hunt=true },
     {name="Plesiosaur",               zone="Plesiosaur",               hunt=true },
     {name="Rotbloom",                 zone="Rotbloom",                 hunt=true },
-    {name="Witherbloom",              zone="Witherbloom",              hunt=true },
     {name="Kraken",                   zone="Kraken",                   hunt=true },
     {name="Orca",                     zone="Orca",                     hunt=true },
     {name="Whale",                    zone="Whale",                    hunt=true },
-    {name="Octophant",                zone="Octophant",                hunt=true },
     {name="Isonade",                  zone="Isonade",                  hunt=true },
-    {name="Nessie",                   zone="Nessie",                   hunt=true },
-    {name="Baby Nessie",              zone="Baby Nessie",              hunt=true },
-    {name="Skeletal Nessie",          zone="Skeletal Nessie",          hunt=true },
-    {name="Baby Bloop Fish",          zone="Baby Bloop Fish",          Project=false},
+    {name="Baby Bloop Fish",          zone="Baby Bloop Fish",          hunt=false},
 }
-local HIGH_Y = {["Omnithal"]=true,["Awakened Omnithal"]=true,["Scylla"]=true}
+-- events that need higher Y offset
+local HIGH_Y    = {["Omnithal"]=true,["Awakened Omnithal"]=true,["Scylla"]=true}
+-- events that need extra forward (negative Z) offset because creature is far back
+local FORWARD_Z = {["Orca"]=true, ["Whale"]=true, ["Whale Shark"]=true}
 
 local eventEnabled = {}
 for _,e in EVENTS do eventEnabled[e.name]=false end
 
-local CFG_FILE    = "lunarx_v5_cfg.json"
-local SLOTS_FILE  = "lunarx_v5_slots.json"
-local EVENTS_FILE = "lunarx_v5_events.json"
-local FARM_FILE   = "lunarx_v5_farm.json"
+-- ── file paths  (all in lunarx/ folder) ──────────────────────────────────────
+local FOLDER      = "lunarx"
+local CFG_FILE    = FOLDER.."/cfg.json"
+local SLOTS_FILE  = FOLDER.."/slots.json"
+local EVENTS_FILE = FOLDER.."/events.json"
+local FARM_FILE   = FOLDER.."/farm.json"
+local HOP_FILE    = FOLDER.."/hop.json"
 
+pcall(function() if makefolder and not isfolder(FOLDER) then makefolder(FOLDER) end end)
+
+-- ── config ────────────────────────────────────────────────────────────────────
 local slots, slotNames, slotCount = {}, {}, 5
 
 local cfg = {
@@ -101,6 +108,9 @@ local cfg = {
     WalkSpeed=16, JumpPower=50, WalkOnWater=false, NoClip=false,
     Frozen=false, GodMode=false, AntiVoid=false, AntiAFK=false,
     AutoStarCrater=false, StarCraterServerHop=true,
+    FarmSpeed=1.0,    -- multiplier: lower = faster (0.1 to 3.0)
+    FarmDelay=0.2,    -- wait between craters in seconds
+    StartDelay=2,     -- seconds before farm loop starts on script load
     AutoEvent=false, EventReturnSlot=nil,
     BoatFly=false, BoatFlySpeed=80, BoatNoClip=false, BoatFreeze=false,
     WebhookURL="", WHEnabled=false, WHShowCatch=true, WHShowLevel=true,
@@ -111,8 +121,7 @@ local cfg = {
 local function saveCfg()
     pcall(function()
         if not writefile then return end
-        local t={}
-        for k,v in cfg do if type(v)~="nil" then t[k]=v end end
+        local t={}; for k,v in cfg do if type(v)~="nil" then t[k]=v end end
         writefile(CFG_FILE, HTTP:JSONEncode(t))
     end)
     pcall(function()
@@ -120,19 +129,16 @@ local function saveCfg()
         writefile(EVENTS_FILE, HTTP:JSONEncode(eventEnabled))
     end)
 end
-
 local function loadCfg()
     pcall(function()
         if not readfile then return end
-        local ok,raw=pcall(readfile,CFG_FILE)
-        if not ok then return end
+        local ok,raw=pcall(readfile,CFG_FILE); if not ok then return end
         local d=HTTP:JSONDecode(raw)
         for k,v in d do if cfg[k]~=nil then cfg[k]=v end end
     end)
     pcall(function()
         if not readfile then return end
-        local ok,raw=pcall(readfile,EVENTS_FILE)
-        if not ok then return end
+        local ok,raw=pcall(readfile,EVENTS_FILE); if not ok then return end
         local d=HTTP:JSONDecode(raw)
         for k,v in d do if eventEnabled[k]~=nil then eventEnabled[k]=v end end
     end)
@@ -152,12 +158,10 @@ local function saveSlots()
         writefile(SLOTS_FILE, HTTP:JSONEncode(t))
     end)
 end
-
 local function loadSlots()
     pcall(function()
         if not readfile then return end
-        local ok,raw=pcall(readfile,SLOTS_FILE)
-        if not ok then return end
+        local ok,raw=pcall(readfile,SLOTS_FILE); if not ok then return end
         local d=HTTP:JSONDecode(raw)
         if d.count then slotCount=math.max(5,d.count) end
         for i=1,slotCount do
@@ -173,49 +177,35 @@ local function loadSlots()
 end
 
 local starCraterServerCount = 0
-local HOP_FLAG_FILE          = "lunarx_hop.json"
-local STARTUP_DELAY         = 2
-
 local function saveFarmCount()
-    pcall(function()
-        if not writefile then return end
-        writefile(FARM_FILE, HTTP:JSONEncode({count=starCraterServerCount}))
-    end)
+    pcall(function() if writefile then writefile(FARM_FILE, HTTP:JSONEncode({count=starCraterServerCount})) end end)
 end
-
 local function loadFarmCount()
     pcall(function()
         if not readfile then return end
-        local ok,raw=pcall(readfile,FARM_FILE)
-        if not ok then return end
+        local ok,raw=pcall(readfile,FARM_FILE); if not ok then return end
         local d=HTTP:JSONDecode(raw)
         if d.count then starCraterServerCount=d.count end
     end)
 end
-
 local function saveHopFlag(pending)
-    pcall(function()
-        if writefile then writefile(HOP_FLAG_FILE, HTTP:JSONEncode({pending=pending})) end
-    end)
+    pcall(function() if writefile then writefile(HOP_FILE, HTTP:JSONEncode({pending=pending,farmOn=cfg.AutoStarCrater})) end end)
 end
-
 local function popHopFlag()
-    local got=false
+    local got, farmWasOn = false, false
     pcall(function()
         if not readfile then return end
-        local ok,raw=pcall(readfile,HOP_FLAG_FILE)
-        if not ok then return end
+        local ok,raw=pcall(readfile,HOP_FILE); if not ok then return end
         local d=HTTP:JSONDecode(raw)
-        if d and d.pending then got=true; saveHopFlag(false) end
+        if d and d.pending then got=true; farmWasOn=d.farmOn; saveHopFlag(false) end
     end)
-    return got
+    return got, farmWasOn
 end
 
 loadCfg(); loadSlots(); loadFarmCount()
 
-local debugLog = {}
-local debugLbl = nil
-
+-- ── debug ─────────────────────────────────────────────────────────────────────
+local debugLog={}; local debugLbl=nil
 local function dbg(msg)
     local t=os.date("%H:%M:%S")
     table.insert(debugLog,1,"["..t.."] "..tostring(msg))
@@ -223,45 +213,37 @@ local function dbg(msg)
     if debugLbl then debugLbl.Text=table.concat(debugLog,"\n") end
 end
 
+-- ── helpers ───────────────────────────────────────────────────────────────────
 local function hrp()      return lp.Character and lp.Character:FindFirstChild("HumanoidRootPart") end
 local function hum()      return lp.Character and lp.Character:FindFirstChildOfClass("Humanoid") end
 local function swimming() local h=hum(); return h and h:GetState()==Enum.HumanoidStateType.Swimming end
 local function chatOpen() return UIS:GetFocusedTextBox()~=nil end
-
-local function notify(t,b)
-    pcall(function() SGui:SetCore("SendNotification",{Title=t,Text=b,Duration=4}) end)
-end
-
+local function notify(t,b) pcall(function() SGui:SetCore("SendNotification",{Title=t,Text=b,Duration=4}) end) end
 local function getCF(obj)
     if not obj then return nil end
-    if obj:IsA("Model")    then return obj:GetPivot() end
+    if obj:IsA("Model") then return obj:GetPivot() end
     if obj:IsA("BasePart") then return obj.CFrame end
-    local p=obj:FindFirstChildWhichIsA("BasePart")
-    return p and p.CFrame
+    local p=obj:FindFirstChildWhichIsA("BasePart"); return p and p.CFrame
 end
 
-local catchCount  = 0
-local levelUpTime = tick()
-
+-- ── webhook ───────────────────────────────────────────────────────────────────
+local catchCount=0; local levelUpTime=tick()
 local function httpPost(url,body)
     if request              then return request({Url=url,Method="POST",Headers={["Content-Type"]="application/json"},Body=body})
     elseif http_request     then return http_request({Url=url,Method="POST",Headers={["Content-Type"]="application/json"},Body=body})
     elseif syn and syn.request then return syn.request({Url=url,Method="POST",Headers={["Content-Type"]="application/json"},Body=body})
     else error("no http") end
 end
-
 local function fmtTime(s)
     s=math.floor(s)
     if s<60   then return s.."s" end
     if s<3600 then return math.floor(s/60).."m "..s%60 .."s" end
     return math.floor(s/3600).."h "..math.floor(s%3600/60).."m"
 end
-
 local function sendWebhook(kind,extra)
     if not cfg.WHEnabled or cfg.WebhookURL=="" then return end
     task.spawn(function()
-        local ls=lp:FindFirstChild("leaderstats")
-        local lv=ls and ls:FindFirstChild("Level")
+        local ls=lp:FindFirstChild("leaderstats"); local lv=ls and ls:FindFirstChild("Level")
         local fields={}
         if cfg.WHShowPlayer then table.insert(fields,{name="Player",value=lp.Name,inline=true}) end
         if cfg.WHShowLevel  then table.insert(fields,{name="Level", value=tostring(lv and lv.Value or "?"),inline=true}) end
@@ -269,56 +251,40 @@ local function sendWebhook(kind,extra)
         local colors={levelup=0x4163E8,event=0x9055F0,test=0x22C55E,autofarm=0xFFD700}
         if kind=="levelup" then
             if cfg.WHShowCatch then table.insert(fields,{name="Catch #",value=tostring(catchCount),inline=true}) end
-            if cfg.WHShowTime  then table.insert(fields,{name="Time", value=fmtTime(tick()-levelUpTime),inline=true}) end
-        elseif kind=="event" then
-            table.insert(fields,{name="Event",value=tostring(extra),inline=true})
-        elseif kind=="autofarm" then
-            table.insert(fields,{name="Servers",value=tostring(starCraterServerCount),inline=true})
-        end
-        pcall(httpPost,cfg.WebhookURL,HTTP:JSONEncode({
-            username="lunar x",
-            embeds={{
-                title=titles[kind] or "ping",
-                color=colors[kind] or 0x4163E8,
-                fields=fields,
-                footer={text="lunar x  ·  "..game.PlaceId}
-            }}
-        }))
+            if cfg.WHShowTime  then table.insert(fields,{name="Time",  value=fmtTime(tick()-levelUpTime),inline=true}) end
+        elseif kind=="event" then table.insert(fields,{name="Event",value=tostring(extra),inline=true})
+        elseif kind=="autofarm" then table.insert(fields,{name="Servers",value=tostring(starCraterServerCount),inline=true}) end
+        pcall(httpPost,cfg.WebhookURL,HTTP:JSONEncode({username="lunar x",embeds={{title=titles[kind] or "ping",color=colors[kind] or 0x4163E8,fields=fields,footer={text="lunar x  ·  "..game.PlaceId}}}}))
     end)
 end
 
 task.spawn(function()
-    local ls=lp:WaitForChild("leaderstats",15) if not ls then return end
-    local lv=ls:WaitForChild("Level",15) if not lv then return end
-    local lastLevel = tonumber(lv.Value) or 0
+    local ls=lp:WaitForChild("leaderstats",15); if not ls then return end
+    local lv=ls:WaitForChild("Level",15); if not lv then return end
+    local lastLv=tonumber(lv.Value) or 0
     local c; c=lv:GetPropertyChangedSignal("Value"):Connect(function()
         if not _G.__lx then c:Disconnect(); return end
-        local currentLevel = tonumber(lv.Value) or 0
-        if currentLevel > lastLevel then
-            lastLevel = currentLevel
-            sendWebhook("levelup"); levelUpTime=tick(); dbg("levelup: "..tostring(currentLevel))
-        end
+        local cur=tonumber(lv.Value) or 0
+        if cur>lastLv then lastLv=cur; sendWebhook("levelup"); levelUpTime=tick(); dbg("levelup: "..cur) end
     end)
 end)
 
+-- ── god mode (metatable hook) ─────────────────────────────────────────────────
 pcall(function()
-    local mt=getrawmetatable(game)
-    local oldNI=mt.__newindex
+    local mt=getrawmetatable(game); local oldNI=mt.__newindex
     setreadonly(mt,false)
     mt.__newindex=function(t,k,v)
         if cfg.GodMode then
             local h=hum()
-            if h and t==h and k=="Health" and type(v)=="number" and v<h.MaxHealth then
-                return rawset(t,k,h.MaxHealth)
-            end
+            if h and t==h and k=="Health" and type(v)=="number" and v<h.MaxHealth then return rawset(t,k,h.MaxHealth) end
         end
         return oldNI(t,k,v)
     end
     setreadonly(mt,true)
 end)
 
+-- ── walk on water ─────────────────────────────────────────────────────────────
 local waterPart,walkConn,waterY
-
 local function enableWater()
     if waterPart then return end
     waterPart=Instance.new("Part"); waterPart.Name="_lxW"
@@ -334,15 +300,13 @@ local function enableWater()
         waterPart.CFrame=CFrame.new(h.Position.X,waterY,h.Position.Z)
     end)
 end
-
 local function disableWater()
-    if walkConn  then walkConn:Disconnect(); walkConn=nil end
-    if waterPart then waterPart:Destroy(); waterPart=nil end
-    waterY=nil
+    if walkConn then walkConn:Disconnect(); walkConn=nil end
+    if waterPart then waterPart:Destroy(); waterPart=nil end; waterY=nil
 end
 
-local noclipConn, origCollide=nil,{}
-
+-- ── no clip ───────────────────────────────────────────────────────────────────
+local noclipConn,origCollide=nil,{}
 local function setNoClip(v)
     if noclipConn then noclipConn:Disconnect(); noclipConn=nil end
     if not v then
@@ -350,22 +314,16 @@ local function setNoClip(v)
         origCollide={}; return
     end
     origCollide={}
-    if lp.Character then
-        for _,p in lp.Character:GetDescendants() do
-            if p:IsA("BasePart") and not p.Anchored then origCollide[p]=p.CanCollide end
-        end
-    end
+    if lp.Character then for _,p in lp.Character:GetDescendants() do if p:IsA("BasePart") and not p.Anchored then origCollide[p]=p.CanCollide end end end
     noclipConn=RunService.Stepped:Connect(function()
         if not lp.Character or swimming() then return end
-        for _,p in lp.Character:GetDescendants() do
-            if p:IsA("BasePart") and not p.Anchored then p.CanCollide=false end
-        end
+        for _,p in lp.Character:GetDescendants() do if p:IsA("BasePart") and not p.Anchored then p.CanCollide=false end end
     end)
 end
 
+-- ── freeze (legs + arms only) ─────────────────────────────────────────────────
 local frozenCF,freezeConn=nil,nil
 local FLIMBS={"LeftFoot","RightFoot","LeftLowerLeg","RightLowerLeg","LeftHand","RightHand","LeftLowerArm","RightLowerArm"}
-
 local function setFrozen(v)
     if freezeConn then freezeConn:Disconnect(); freezeConn=nil end
     if not v then return end
@@ -377,80 +335,62 @@ local function setFrozen(v)
             h2.CFrame=CFrame.new(frozenCF.Position)*(h2.CFrame-h2.CFrame.Position)
             for _,n in FLIMBS do
                 local p=lp.Character and lp.Character:FindFirstChild(n)
-                if p and p:IsA("BasePart") then
-                    p.AssemblyLinearVelocity=Vector3.zero
-                    p.AssemblyAngularVelocity=Vector3.zero
-                end
+                if p and p:IsA("BasePart") then p.AssemblyLinearVelocity=Vector3.zero; p.AssemblyAngularVelocity=Vector3.zero end
             end
         end
     end)
 end
 
+-- ── god mode heartbeat ────────────────────────────────────────────────────────
 local godConn
-
 local function setGodMode(v)
     if godConn then godConn:Disconnect(); godConn=nil end
     if not v then return end
-    godConn=RunService.Heartbeat:Connect(function()
-        local h=hum(); if h then rawset(h,"Health",h.MaxHealth) end
-    end)
+    godConn=RunService.Heartbeat:Connect(function() local h=hum(); if h then rawset(h,"Health",h.MaxHealth) end end)
 end
 
+-- ── anti void ─────────────────────────────────────────────────────────────────
 local lastSafe=nil
 RunService.Heartbeat:Connect(function()
     local h=hrp(); if not h then return end
     if h.Position.Y>5 and not swimming() then lastSafe=h.Position end
     if cfg.AntiVoid and h.Position.Y<-60 then
-        h.CFrame=CFrame.new(lastSafe and lastSafe+Vector3.new(0,25,0) or Vector3.new(0,50,0))
-        dbg("antivoid")
+        h.CFrame=CFrame.new(lastSafe and lastSafe+Vector3.new(0,25,0) or Vector3.new(0,50,0)); dbg("antivoid")
     end
 end)
 
+-- ── anti afk ─────────────────────────────────────────────────────────────────
 task.spawn(function()
     while _G.__lx and task.wait(55) do
         if cfg.AntiAFK then
-            pcall(function()
-                VIM:SendKeyEvent(true,Enum.KeyCode.LeftAlt,false,game)
-                task.wait(0.08)
-                VIM:SendKeyEvent(false,Enum.KeyCode.LeftAlt,false,game)
-            end)
+            pcall(function() VIM:SendKeyEvent(true,Enum.KeyCode.LeftAlt,false,game); task.wait(0.08); VIM:SendKeyEvent(false,Enum.KeyCode.LeftAlt,false,game) end)
         end
     end
 end)
 
+-- ── boat ──────────────────────────────────────────────────────────────────────
 local lastBoatModel,boatOrigAnchor,boatPreAnchor={},{},{}
 local boatFlyConn,boatNcConn,boatFrConn; local boatFrozenCF=nil
-
 local function getBoat()
     local h=hum(); if not h then return nil end
     local seat=h.SeatPart; if not seat then return nil end
     local m=seat:FindFirstAncestorWhichIsA("Model")
     return (m and m~=workspace) and m or nil
 end
-
 local function getBoatRoot(b)
-    if not b then return nil end
-    if b.PrimaryPart then return b.PrimaryPart end
+    if not b then return nil end; if b.PrimaryPart then return b.PrimaryPart end
     local best,bv=nil,0
-    for _,p in b:GetDescendants() do
-        if p:IsA("BasePart") then local v=p.Size.X*p.Size.Y*p.Size.Z; if v>bv then best=p;bv=v end end
-    end
+    for _,p in b:GetDescendants() do if p:IsA("BasePart") then local v=p.Size.X*p.Size.Y*p.Size.Z; if v>bv then best=p;bv=v end end end
     return best
 end
-
 task.spawn(function()
     while task.wait(0.5) do
         local boat=getBoat()
-        if boat and boat~=lastBoatModel then
-            lastBoatModel=boat; boatOrigAnchor={}
-            for _,p in boat:GetDescendants() do if p:IsA("BasePart") then boatOrigAnchor[p]=p.Anchored end end
-        end
+        if boat and boat~=lastBoatModel then lastBoatModel=boat; boatOrigAnchor={}; for _,p in boat:GetDescendants() do if p:IsA("BasePart") then boatOrigAnchor[p]=p.Anchored end end end
     end
 end)
-
 local function setBoatFly(v)
-    if boatFlyConn then boatFlyConn:Disconnect(); boatFlyConn=nil end
-    if not v then return end
+    if boatFlyConn then boatFlyConn:Disconnect(); boatFlyConn=nil end; if not v then return end
     boatFlyConn=RunService.Heartbeat:Connect(function(dt)
         if not cfg.BoatFly then return end
         local boat=getBoat(); local root=getBoatRoot(boat); if not root then return end
@@ -465,22 +405,17 @@ local function setBoatFly(v)
         if UIS:IsKeyDown(Enum.KeyCode.Q) then mv=mv-Vector3.new(0,1,0) end
         if mv.Magnitude>0 then root.CFrame=CFrame.new(cf.Position+mv.Unit*cfg.BoatFlySpeed*dt)*(cf-cf.Position) end
         root.AssemblyLinearVelocity=Vector3.zero; root.AssemblyAngularVelocity=Vector3.zero
-        for _,p in boat:GetDescendants() do
-            if p:IsA("BasePart") and p~=root then p.AssemblyLinearVelocity=Vector3.zero; p.AssemblyAngularVelocity=Vector3.zero end
-        end
+        for _,p in boat:GetDescendants() do if p:IsA("BasePart") and p~=root then p.AssemblyLinearVelocity=Vector3.zero; p.AssemblyAngularVelocity=Vector3.zero end end
     end)
 end
-
 local function setBoatNoClip(v)
-    if boatNcConn then boatNcConn:Disconnect(); boatNcConn=nil end
-    if not v then return end
+    if boatNcConn then boatNcConn:Disconnect(); boatNcConn=nil end; if not v then return end
     boatNcConn=RunService.Stepped:Connect(function()
         if not cfg.BoatNoClip then return end
         local b=getBoat(); if not b then return end
         for _,p in b:GetDescendants() do if p:IsA("BasePart") and not p.Anchored then p.CanCollide=false end end
     end)
 end
-
 local function setBoatFreeze(v)
     if boatFrConn then boatFrConn:Disconnect(); boatFrConn=nil end
     boatFrozenCF=nil; if not v then return end
@@ -492,6 +427,7 @@ local function setBoatFreeze(v)
     end)
 end
 
+-- ── event CF lookup ───────────────────────────────────────────────────────────
 local function getEventCF(ev)
     local zn=ev.hunt and (ev.zone.." Hunt") or ev.zone
     local fz=workspace:FindFirstChild("zones") and workspace.zones:FindFirstChild("fishing")
@@ -518,7 +454,20 @@ local function getEventCF(ev)
     return scan(workspace,0)
 end
 
+-- ── event auto-TP loop ────────────────────────────────────────────────────────
 local activeEvent,lastEventPos=nil,nil
+local cancelledEvent=nil   -- name of event to skip ONCE
+
+local function cancelCurrentEvent()
+    if activeEvent then
+        cancelledEvent=activeEvent.name
+        cfg.Frozen=false
+        if freezeConn then freezeConn:Disconnect(); freezeConn=nil end
+        notify("event","skipped "..activeEvent.name.." — will re-enable next time")
+        activeEvent=nil; lastEventPos=nil
+    end
+end
+
 task.spawn(function()
     while task.wait(2) do
         if not cfg.AutoEvent then
@@ -532,7 +481,10 @@ task.spawn(function()
                 local moved=not first and (np-lastEventPos).Magnitude>5
                 if first or moved then
                     local yOff=HIGH_Y[activeEvent.name] and 50 or 30
-                    local dest=CFrame.new(np.X,np.Y+yOff,np.Z); local h=hrp()
+                    -- extra forward offset for surface creatures
+                    local zOff=FORWARD_Z[activeEvent.name] and -35 or 0
+                    local dest=CFrame.new(np.X, np.Y+yOff, np.Z+zOff)
+                    local h=hrp()
                     if h then h.CFrame=dest; frozenCF=dest; if not cfg.Frozen then cfg.Frozen=true; setFrozen(true) end end
                     lastEventPos=np
                 end
@@ -548,46 +500,44 @@ task.spawn(function()
             continue
         end
         for _,ev in EVENTS do
-            if eventEnabled[ev.name] then
-                local cf=getEventCF(ev)
-                if cf then
-                    activeEvent=ev; lastEventPos=nil
-                    notify("event",ev.name); sendWebhook("event",ev.name); dbg("event: "..ev.name); break
-                end
+            if not eventEnabled[ev.name] then continue end
+            if ev.name==cancelledEvent then continue end  -- skip once
+            local cf=getEventCF(ev)
+            if cf then
+                activeEvent=ev; lastEventPos=nil
+                cancelledEvent=nil  -- clear cancel once a NEW event is found
+                notify("event",ev.name); sendWebhook("event",ev.name); dbg("event: "..ev.name); break
             end
         end
     end
 end)
 
+-- ── shop / interactable ───────────────────────────────────────────────────────
 local returnCF=nil; local returnBtnRef=nil
-
 local function findInteractable(name)
     local world=workspace:FindFirstChild("world")
     local ints=world and world:FindFirstChild("interactables")
     if ints then local r=ints:FindFirstChild(name); if r then return r end end
     return workspace:FindFirstChild(name)
 end
-
 local function useInteractable(name)
     local h=hrp(); if not h then return end
-    local model=findInteractable(name)
-    if not model then notify("shop",name.." not found"); return end
-    local cf=getCF(model); if not cf then notify("shop","no cf"); return end
+    local model=findInteractable(name); if not model then notify("shop",name.." not found"); return end
+    local cf=getCF(model); if not cf then return end
     returnCF=h.CFrame
     if returnBtnRef then returnBtnRef.Visible=true end
     h.CFrame=cf*CFrame.new(0,4,5); task.wait(0.5)
-    VIM:SendKeyEvent(true, Enum.KeyCode.E,false,game); task.wait(0.15)
+    VIM:SendKeyEvent(true,Enum.KeyCode.E,false,game); task.wait(0.15)
     VIM:SendKeyEvent(false,Enum.KeyCode.E,false,game)
 end
 
+-- ── star crater farm ──────────────────────────────────────────────────────────
 local function findStarCraters()
     local found={}
     local function scanParent(p)
         for _,v in p:GetChildren() do
             local n=v.Name:lower()
-            if n:find("star crater",1,true) or n:find("starcrater",1,true) then
-                table.insert(found,v)
-            end
+            if n:find("star crater",1,true) or n:find("starcrater",1,true) then table.insert(found,v) end
             if v:IsA("Model") or v:IsA("Folder") then scanParent(v) end
         end
     end
@@ -600,159 +550,149 @@ end
 
 local function fireCrater(model)
     local h=hrp(); if not h or not model or not model.Parent then return end
-    local cf = getCF(model); if not cf then return end
-    h.CFrame = cf * CFrame.new(0, 2, 2)
-    task.wait(0.2) -- minimal wait for position to sync
-    
-    local prompt = nil
-    for _,d in model:GetDescendants() do
-        if d:IsA("ProximityPrompt") then prompt = d; break end
-    end
-    
-    if prompt then
-        if fireproximityprompt then
-            pcall(fireproximityprompt, prompt)
-            task.wait(0.3)
-            return
-        end
-    end
-
-    -- Spam E loop
-    local startTime = tick()
-    while (tick() - startTime) < 0.8 and model.Parent do
-        VIM:SendKeyEvent(true, Enum.KeyCode.E, false, game)
-        task.wait(0.05)
-        VIM:SendKeyEvent(false, Enum.KeyCode.E, false, game)
-        task.wait(0.05)
+    local cf=getCF(model); if not cf then return end
+    h.CFrame=cf*CFrame.new(0,2,2); task.wait(0.15)
+    local prompt=nil
+    for _,d in model:GetDescendants() do if d:IsA("ProximityPrompt") then prompt=d; break end end
+    if prompt and fireproximityprompt then pcall(fireproximityprompt,prompt); task.wait(0.2); return end
+    local t0=tick()
+    while (tick()-t0)<0.8 and model.Parent do
+        VIM:SendKeyEvent(true,Enum.KeyCode.E,false,game); task.wait(0.05)
+        VIM:SendKeyEvent(false,Enum.KeyCode.E,false,game); task.wait(0.05)
     end
 end
 
+-- ── server hop ────────────────────────────────────────────────────────────────
 local function doServerHop()
     pcall(function()
         saveHopFlag(true)
         saveCfg(); saveSlots(); saveFarmCount()
 
-        local HttpParent = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Desc&limit=100"
-        local function GetNextPage(cursor)
-            local url = HttpParent .. (cursor and "&cursor=" .. cursor or "")
-            local ok, raw = pcall(game.HttpGet, game, url)
-            if ok then return HTTP:JSONDecode(raw) end
-            return nil
+        -- QOT — try every known variant
+        local qot = queue_on_teleport or queueonteleport
+            or (syn and (syn.queue_on_teleport or syn.queueonteleport))
+            or (fluxus and fluxus.queue_on_teleport)
+            or (getgenv and getgenv().queue_on_teleport)
+        if qot then
+            pcall(qot, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()')
+            task.wait(0.5)
+            dbg("QOT queued")
+        else
+            dbg("QOT not available — will not auto-restart")
         end
 
-        local cursor = nil
-        local possibleServers = {}
+        -- find a server with room
+        local function getPage(cursor)
+            local url="https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Desc&limit=100"
+            if cursor then url=url.."&cursor="..cursor end
+            local ok,raw=pcall(game.HttpGet,game,url)
+            return ok and HTTP:JSONDecode(raw) or nil
+        end
 
-        for i = 1, 5 do 
-            local data = GetNextPage(cursor)
-            if not data or not data.data then break end
-
-            for _, s in pairs(data.data) do
-                if s.id ~= game.JobId and (s.playing or 0) < 17 then
-                    table.insert(possibleServers, s.id)
-                end
+        local cursor=nil; local servers={}
+        for _=1,5 do
+            local data=getPage(cursor); if not data or not data.data then break end
+            for _,s in pairs(data.data) do
+                if s.id~=game.JobId and (s.playing or 0)<17 then table.insert(servers,s.id) end
             end
-
-            cursor = data.nextPageCursor
-            if not cursor then break end
+            cursor=data.nextPageCursor; if not cursor then break end
             task.wait(0.05)
         end
 
-        local qot = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
-        local function executeQOT()
-            if qot then
-                pcall(qot, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()')
-                task.wait(1) 
-            end
-        end
-
-        if #possibleServers > 0 then
-            local randomId = possibleServers[math.random(1, #possibleServers)]
-            dbg("serverhop → " .. randomId:sub(1, 8))
-            executeQOT()
-            TeleServ:TeleportToPlaceInstance(game.PlaceId, randomId, lp)
+        if #servers>0 then
+            local id=servers[math.random(1,#servers)]
+            dbg("hop → "..id:sub(1,8))
+            TeleServ:TeleportToPlaceInstance(game.PlaceId,id,lp)
         else
-            dbg("serverhop: fallback")
+            dbg("hop: fallback rejoin")
             saveHopFlag(false)
-            executeQOT()
-            TeleServ:Teleport(game.PlaceId, lp)
+            TeleServ:Teleport(game.PlaceId,lp)
         end
     end)
 end
 
-local starFarmRunning = false
-local starFarmStatus  = ""
-local starStatusLbl   = nil
-local starStatusDot   = nil
+-- ── farm loop ─────────────────────────────────────────────────────────────────
+local starFarmRunning=false
+local starFarmStatus=""
+local starStatusLbl=nil; local starStatusDot=nil
+local farmHudLbl=nil     -- set after GUI
 
 task.spawn(function()
-    task.wait(STARTUP_DELAY)
-    if popHopFlag() then
-        starCraterServerCount = starCraterServerCount + 1
-        saveFarmCount()
-        sendWebhook("autofarm")
-        dbg("arrived — total: "..starCraterServerCount)
-        if starStatusLbl then starStatusLbl.Text = "server #"..starCraterServerCount.." — ready" end
+    task.wait(cfg.StartDelay)
+    local arrivedFromHop, farmWasOn = popHopFlag()
+    if arrivedFromHop then
+        starCraterServerCount=starCraterServerCount+1; saveFarmCount()
+        sendWebhook("autofarm"); dbg("arrived — total: "..starCraterServerCount)
+        if starStatusLbl then starStatusLbl.Text="server #"..starCraterServerCount.." — ready" end
+        -- restore auto farm if it was on
+        if farmWasOn then cfg.AutoStarCrater=true end
     end
+
     while _G.__lx and task.wait(0.3) do
         if not cfg.AutoStarCrater then
             if starFarmRunning then
-                starFarmRunning = false
-                if starStatusLbl then starStatusLbl.Text = "idle" end
+                starFarmRunning=false
+                if starStatusLbl then starStatusLbl.Text="idle" end
                 if starStatusDot then TS:Create(starStatusDot,TweenInfo.new(0.3),{BackgroundColor3=T.dim}):Play() end
+                if farmHudLbl    then farmHudLbl.Text="auto farm: off" end
             end
             continue
         end
         if starFarmRunning then continue end
-        starFarmRunning = true
-        local craters = findStarCraters()
-        if #craters == 0 then
-            starFarmStatus = "no craters — hopping..."
-            if starStatusLbl then starStatusLbl.Text = starFarmStatus end
+        starFarmRunning=true
+
+        if farmHudLbl then farmHudLbl.Text="auto farm: scanning..." end
+        local craters=findStarCraters()
+        dbg("craters: "..#craters)
+
+        if #craters==0 then
+            starFarmStatus="no craters — hopping..."
+            if starStatusLbl then starStatusLbl.Text=starFarmStatus end
             if starStatusDot then TS:Create(starStatusDot,TweenInfo.new(0.3),{BackgroundColor3=T.yell}):Play() end
+            if farmHudLbl    then farmHudLbl.Text="auto farm: hopping..." end
             task.wait(0.1)
             if cfg.AutoStarCrater and cfg.StarCraterServerHop then
-                saveHopFlag(false)
-                doServerHop()
-                task.wait(20)
+                doServerHop(); task.wait(20)
             end
-            starFarmRunning = false
-            continue
+            starFarmRunning=false; continue
         end
+
         for i,crater in craters do
             if not cfg.AutoStarCrater or not _G.__lx or not crater.Parent then break end
-            starFarmStatus = "crater "..i.."/"..#craters
-            if starStatusLbl then starStatusLbl.Text = starFarmStatus end
+            starFarmStatus="crater "..i.."/"..#craters
+            if starStatusLbl then starStatusLbl.Text=starFarmStatus end
             if starStatusDot then TS:Create(starStatusDot,TweenInfo.new(0.3),{BackgroundColor3=T.green}):Play() end
+            if farmHudLbl    then farmHudLbl.Text="auto farm: "..i.."/"..#craters end
             fireCrater(crater)
-            task.wait(0.1)
+            task.wait(cfg.FarmDelay * cfg.FarmSpeed)
         end
-        if not cfg.AutoStarCrater or not _G.__lx then starFarmRunning = false; continue end
-        starFarmStatus = "done — hopping..."
-        if starStatusLbl then starStatusLbl.Text = starFarmStatus end
-        task.wait(0.1)
+
+        if not cfg.AutoStarCrater or not _G.__lx then starFarmRunning=false; continue end
+
+        starFarmStatus="done — hopping..."
+        if starStatusLbl then starStatusLbl.Text=starFarmStatus end
+        if farmHudLbl    then farmHudLbl.Text="auto farm: done, hopping..." end
+
         if cfg.StarCraterServerHop then
-            doServerHop()
-            task.wait(20)
-            saveHopFlag(false)
+            doServerHop(); task.wait(20); saveHopFlag(false)
         else
-            starCraterServerCount = starCraterServerCount + 1
-            saveFarmCount()
-            sendWebhook("autofarm")
+            starCraterServerCount=starCraterServerCount+1; saveFarmCount(); sendWebhook("autofarm")
         end
-        starFarmRunning = false
+        starFarmRunning=false
     end
 end)
 
+-- ══════════════════════════════════════════════════════
+--  GUI
+-- ══════════════════════════════════════════════════════
 if pgui:FindFirstChild("LunarX") then pgui.LunarX:Destroy() end
-
 local gui=Instance.new("ScreenGui",pgui)
 gui.Name="LunarX"; gui.ResetOnSpawn=false; gui.IgnoreGuiInset=true
 gui.ZIndexBehavior=Enum.ZIndexBehavior.Sibling; gui.DisplayOrder=999
 
 local W,H=580,440
 
-local function cr(i,r) local uc=Instance.new("UICorner",i); uc.CornerRadius=UDim.new(0,r or 6); return uc end
+local function cr(i,r)  local uc=Instance.new("UICorner",i); uc.CornerRadius=UDim.new(0,r or 6); return uc end
 local function mkStroke(i,c,t) local s=Instance.new("UIStroke",i); s.Color=c or T.bord; s.Thickness=t or 1; return s end
 local function pd(i,a,b,cc,d)
     local p=Instance.new("UIPadding",i)
@@ -762,33 +702,59 @@ end
 local function vl(i,g) local l=Instance.new("UIListLayout",i); l.Padding=UDim.new(0,g or 4); l.SortOrder=Enum.SortOrder.LayoutOrder; return l end
 local function hl(i,g)
     local l=Instance.new("UIListLayout",i); l.FillDirection=Enum.FillDirection.Horizontal
-    l.Padding=UDim.new(0,g or 4); l.SortOrder=Enum.SortOrder.LayoutOrder
-    l.VerticalAlignment=Enum.VerticalAlignment.Center; return l
+    l.Padding=UDim.new(0,g or 4); l.SortOrder=Enum.SortOrder.LayoutOrder; l.VerticalAlignment=Enum.VerticalAlignment.Center; return l
 end
 local function tw(inst,t2,props) TS:Create(inst,TweenInfo.new(t2,Enum.EasingStyle.Quart),props):Play() end
 
+-- ── floating "return to position" button ─────────────────────────────────────
 local retF=Instance.new("Frame",gui)
-retF.Size=UDim2.new(0,168,0,34); retF.Position=UDim2.new(0.5,-84,1,-54)
+retF.Size=UDim2.new(0,170,0,34); retF.Position=UDim2.new(0.5,-84,1,-54)
 retF.BackgroundColor3=T.acc; retF.BorderSizePixel=0; retF.Visible=false; retF.ZIndex=1000
-cr(retF,8); reg(retF,"acc")
-returnBtnRef=retF
+cr(retF,8); reg(retF,"acc"); returnBtnRef=retF
 local retB=Instance.new("TextButton",retF)
 retB.Size=UDim2.new(1,0,1,0); retB.BackgroundTransparency=1
 retB.Text="[ return to position ]"; retB.Font=Enum.Font.GothamBold; retB.TextSize=12
 retB.TextColor3=T.atxt; retB.AutoButtonColor=false; retB.BorderSizePixel=0
 reg(retB,"atxt","TextColor3")
 retB.MouseButton1Click:Connect(function()
-    local h=hrp()
-    if h and returnCF then h.CFrame=returnCF; returnCF=nil; retF.Visible=false end
+    local h=hrp(); if h and returnCF then h.CFrame=returnCF; returnCF=nil; retF.Visible=false end
 end)
 
+-- ── floating auto farm HUD (bottom centre, above any return button) ───────────
+local farmHud=Instance.new("TextButton",gui)
+farmHud.Size=UDim2.new(0,200,0,30); farmHud.Position=UDim2.new(0.5,-100,1,-96)
+farmHud.BackgroundColor3=T.panel; farmHud.BorderSizePixel=0
+farmHud.Font=Enum.Font.GothamBold; farmHud.TextSize=11
+farmHud.Text="auto farm: off"; farmHud.TextColor3=T.sub
+farmHud.AutoButtonColor=false; farmHud.ZIndex=999
+cr(farmHud,8); reg(farmHud,"panel"); reg(farmHud,"sub","TextColor3")
+local farmHudStroke=mkStroke(farmHud,T.bord); reg(farmHudStroke,"bord","Color")
+farmHudLbl=farmHud  -- we reuse the button's Text as the label
+
+farmHud.MouseButton1Click:Connect(function()
+    cfg.AutoStarCrater=not cfg.AutoStarCrater
+    farmHud.Text=cfg.AutoStarCrater and "auto farm: on  ●" or "auto farm: off"
+    TS:Create(farmHud,.2,{TextColor3=cfg.AutoStarCrater and T.green or T.sub}):Play()
+end)
+
+-- keep hud text fresh
+task.spawn(function()
+    while _G.__lx and task.wait(1) do
+        if not cfg.AutoStarCrater then
+            farmHud.Text="auto farm: off"
+            TS:Create(farmHud,.2,{TextColor3=T.sub}):Play()
+        end
+    end
+end)
+
+-- ── root window ───────────────────────────────────────────────────────────────
 local root=Instance.new("Frame",gui)
 root.Size=UDim2.new(0,W,0,H); root.Position=UDim2.new(0.5,-W/2,0.45,-H/2)
 root.BackgroundColor3=T.bg; root.Active=true; root.Draggable=true
 root.ClipsDescendants=true; root.BorderSizePixel=0
-local rootStroke=mkStroke(root,T.bord); reg(rootStroke,"bord","Color")
-reg(root,"bg")
+local rootStroke=mkStroke(root,T.bord); reg(rootStroke,"bord","Color"); reg(root,"bg")
 
+-- gradient accent strip
 local strip=Instance.new("Frame",root)
 strip.Size=UDim2.new(1,0,0,2); strip.BorderSizePixel=0
 local sg=Instance.new("UIGradient",strip)
@@ -818,8 +784,7 @@ local function mkWinBtn(xoff,sym,hcol)
     local b=Instance.new("TextButton",tbar)
     b.Size=UDim2.new(0,28,0,28); b.Position=UDim2.new(1,xoff,0.5,-14)
     b.BackgroundColor3=T.el; b.Text=sym; b.TextSize=13; b.Font=Enum.Font.GothamBold
-    b.TextColor3=T.sub; b.AutoButtonColor=false; b.BorderSizePixel=0; cr(b,5)
-    reg(b,"el")
+    b.TextColor3=T.sub; b.AutoButtonColor=false; b.BorderSizePixel=0; cr(b,5); reg(b,"el")
     b.MouseEnter:Connect(function() tw(b,.12,{BackgroundColor3=hcol,TextColor3=T.atxt}) end)
     b.MouseLeave:Connect(function() tw(b,.12,{BackgroundColor3=T.el,TextColor3=T.sub}) end)
     return b
@@ -840,8 +805,7 @@ end
 minB.MouseButton1Click:Connect(function() setMinimised(not minimised) end)
 
 local side=Instance.new("Frame",body)
-side.Size=UDim2.new(0,130,1,0); side.BackgroundColor3=T.panel; side.BorderSizePixel=0
-reg(side,"panel")
+side.Size=UDim2.new(0,130,1,0); side.BackgroundColor3=T.panel; side.BorderSizePixel=0; reg(side,"panel")
 local sideDiv=Instance.new("Frame",body)
 sideDiv.Position=UDim2.new(0,130,0,0); sideDiv.Size=UDim2.new(0,1,1,0)
 sideDiv.BackgroundColor3=T.bord; sideDiv.BorderSizePixel=0; reg(sideDiv,"bord")
@@ -850,6 +814,7 @@ local tabList=Instance.new("Frame",side)
 tabList.Size=UDim2.new(1,0,1,-44); tabList.BackgroundTransparency=1
 vl(tabList,1); pd(tabList,6,0,5,5)
 
+-- theme dots
 local themeArea=Instance.new("Frame",side)
 themeArea.Size=UDim2.new(1,0,0,40); themeArea.Position=UDim2.new(0,0,1,-40)
 themeArea.BackgroundColor3=T.panel; themeArea.BorderSizePixel=0; reg(themeArea,"panel")
@@ -880,12 +845,13 @@ local pHolder=Instance.new("Frame",body)
 pHolder.Position=UDim2.new(0,131,0,0); pHolder.Size=UDim2.new(1,-131,1,0)
 pHolder.BackgroundTransparency=1; pHolder.ClipsDescendants=true
 
-local tabs={} local activeTabIdx=0
+-- ── tab system ────────────────────────────────────────────────────────────────
+local tabs={}; local activeTabIdx=0
 local TAB_LIST={
-    {n="fishing",  idx=0},{n="auto farm",idx=1},{n="player",  idx=2},
-    {n="teleport", idx=3},{n="positions",idx=4},{n="events",  idx=5},
-    {n="boat",     idx=6},{n="shop",     idx=7},{n="webhook", idx=8},
-    {n="settings", idx=9},{n="options",  idx=10},{n="debug",  idx=11},
+    {n="fishing",   idx=0},{n="auto farm", idx=1},{n="player",   idx=2},
+    {n="teleport",  idx=3},{n="positions", idx=4},{n="events",   idx=5},
+    {n="boat",      idx=6},{n="shop",      idx=7},{n="webhook",  idx=8},
+    {n="settings",  idx=9},{n="options",   idx=10},{n="debug",   idx=11},
 }
 
 local function switchTab(idx)
@@ -904,15 +870,13 @@ local function newTab(def)
     frame.Size=UDim2.new(1,0,0,28); frame.BackgroundTransparency=1; frame.LayoutOrder=def.idx
     local ind=Instance.new("Frame",frame)
     ind.Size=UDim2.new(0,3,0,16); ind.Position=UDim2.new(0,0,0.5,-8)
-    ind.BackgroundColor3=T.acc; ind.BorderSizePixel=0; ind.BackgroundTransparency=1; cr(ind,2)
-    reg(ind,"acc")
+    ind.BackgroundColor3=T.acc; ind.BorderSizePixel=0; ind.BackgroundTransparency=1; cr(ind,2); reg(ind,"acc")
     local btn=Instance.new("TextButton",frame)
     btn.Size=UDim2.new(1,-4,1,0); btn.Position=UDim2.new(0,4,0,0)
     btn.BackgroundColor3=T.panel; btn.BackgroundTransparency=1
     btn.Text=def.n; btn.Font=Enum.Font.GothamMedium; btn.TextSize=11
     btn.TextColor3=T.sub; btn.AutoButtonColor=false; btn.BorderSizePixel=0
-    btn.TextXAlignment=Enum.TextXAlignment.Left; cr(btn,5); pd(btn,0,0,8)
-    reg(btn,"panel")
+    btn.TextXAlignment=Enum.TextXAlignment.Left; cr(btn,5); pd(btn,0,0,8); reg(btn,"panel")
     local page=Instance.new("ScrollingFrame",pHolder)
     page.Size=UDim2.new(1,0,1,0); page.BackgroundTransparency=1
     page.Visible=def.idx==0; page.ScrollBarThickness=2
@@ -931,6 +895,9 @@ local pages={}
 for _,def in TAB_LIST do pages[def.n]=newTab(def) end
 switchTab(0)
 
+-- ══════════════════════════════════════════════════════
+--  COMPONENT BUILDERS
+-- ══════════════════════════════════════════════════════
 local function secLabel(parent,text)
     local f=Instance.new("Frame",parent)
     f.Size=UDim2.new(1,0,0,18); f.BackgroundTransparency=1
@@ -945,45 +912,50 @@ end
 
 local function mkRow(parent,h)
     local f=Instance.new("Frame",parent)
-    f.Size=UDim2.new(1,0,0,h or 36); f.BackgroundColor3=T.el; f.BorderSizePixel=0; cr(f,7)
-    reg(f,"el"); return f
+    f.Size=UDim2.new(1,0,0,h or 36); f.BackgroundColor3=T.el; f.BorderSizePixel=0; cr(f,7); reg(f,"el"); return f
 end
 
+-- toggle: knob and track use full theme colors
 local function mkToggle(parent,label,sublabel,def,cb,ac)
     ac=ac or T.acc
     local row=mkRow(parent,sublabel and 44 or 36)
     local lf=Instance.new("Frame",row)
-    lf.Size=UDim2.new(1,-60,1,0); lf.Position=UDim2.new(0,12,0,0); lf.BackgroundTransparency=1
+    lf.Size=UDim2.new(1,-62,1,0); lf.Position=UDim2.new(0,12,0,0); lf.BackgroundTransparency=1
     local ml=Instance.new("TextLabel",lf)
     ml.BackgroundTransparency=1; ml.Text=label
-    ml.Font=Enum.Font.GothamMedium; ml.TextSize=12; ml.TextColor3=T.txt
-    ml.TextXAlignment=Enum.TextXAlignment.Left; reg(ml,"txt","TextColor3")
+    ml.Font=Enum.Font.GothamMedium; ml.TextSize=12; ml.TextColor3=T.txt; ml.TextXAlignment=Enum.TextXAlignment.Left
+    reg(ml,"txt","TextColor3")
     if sublabel then
         ml.Size=UDim2.new(1,0,0,18); ml.Position=UDim2.new(0,0,0,4)
         local sl=Instance.new("TextLabel",lf)
         sl.Size=UDim2.new(1,0,0,13); sl.Position=UDim2.new(0,0,0,21)
         sl.BackgroundTransparency=1; sl.Text=sublabel
-        sl.Font=Enum.Font.Gotham; sl.TextSize=10; sl.TextColor3=T.sub
-        sl.TextXAlignment=Enum.TextXAlignment.Left; reg(sl,"sub","TextColor3")
+        sl.Font=Enum.Font.Gotham; sl.TextSize=10; sl.TextColor3=T.sub; sl.TextXAlignment=Enum.TextXAlignment.Left
+        reg(sl,"sub","TextColor3")
     else ml.Size=UDim2.new(1,0,1,0) end
 
+    -- track uses T.dim when off (theme-aware)
     local track=Instance.new("Frame",row)
-    track.Size=UDim2.new(0,40,0,22)
-    track.Position=UDim2.new(1,-50,0.5,-11)  
-    track.BackgroundColor3=def and ac or T.dim
-    track.BorderSizePixel=0; cr(track,11)
-    if not def then reg(track,"dim") end
+    track.Size=UDim2.new(0,40,0,22); track.Position=UDim2.new(1,-52,0.5,-11)
+    track.BackgroundColor3=def and ac or T.dim; track.BorderSizePixel=0; cr(track,11)
+    -- register off-state separately so theme updates it
+    local function updateTrackReg(on)
+        for i,r in colorRegs do
+            if r.inst==track then table.remove(colorRegs,i); break end
+        end
+        table.insert(colorRegs,{inst=track,key=on and "acc" or "dim"})
+    end
+    updateTrackReg(def)
 
+    -- knob uses T.atxt so it contrasts on any theme
     local knob=Instance.new("Frame",track)
     knob.Size=UDim2.new(0,16,0,16)
-    knob.Position=def and UDim2.new(0,21,0,3) or UDim2.new(0,3,0,3)  
-    knob.BackgroundColor3=T.txt; knob.BorderSizePixel=0; cr(knob,8)
-    reg(knob,"txt")
+    knob.Position=def and UDim2.new(0,21,0,3) or UDim2.new(0,3,0,3)
+    knob.BackgroundColor3=T.atxt; knob.BorderSizePixel=0; cr(knob,8)
+    reg(knob,"atxt")
 
     local hit=Instance.new("TextButton",row)
-    hit.Size=UDim2.new(1,0,1,0); hit.BackgroundTransparency=1
-    hit.Text=""; hit.AutoButtonColor=false; hit.BorderSizePixel=0
-
+    hit.Size=UDim2.new(1,0,1,0); hit.BackgroundTransparency=1; hit.Text=""; hit.AutoButtonColor=false; hit.BorderSizePixel=0
     row.MouseEnter:Connect(function() tw(row,.08,{BackgroundColor3=T.elh}) end)
     row.MouseLeave:Connect(function() tw(row,.08,{BackgroundColor3=T.el}) end)
 
@@ -992,12 +964,13 @@ local function mkToggle(parent,label,sublabel,def,cb,ac)
         state=not state; cb(state)
         tw(track,.25,{BackgroundColor3=state and ac or T.dim})
         tw(knob, .25,{Position=state and UDim2.new(0,21,0,3) or UDim2.new(0,3,0,3)})
+        updateTrackReg(state)
     end)
-
-    return function(force)
+    return function(force)  -- refresh fn
         state=force
         tw(track,.25,{BackgroundColor3=state and ac or T.dim})
         tw(knob, .25,{Position=state and UDim2.new(0,21,0,3) or UDim2.new(0,3,0,3)})
+        updateTrackReg(state)
     end
 end
 
@@ -1005,10 +978,10 @@ local function mkSlider(parent,label,mn,mx,def,cb,ac)
     ac=ac or T.acc
     local f=mkRow(parent,54)
     local hf=Instance.new("Frame",f); hf.Size=UDim2.new(1,-24,0,18); hf.Position=UDim2.new(0,12,0,7); hf.BackgroundTransparency=1
-    local ll=Instance.new("TextLabel",hf); ll.Size=UDim2.new(1,-48,1,0); ll.BackgroundTransparency=1
+    local ll=Instance.new("TextLabel",hf); ll.Size=UDim2.new(1,-52,1,0); ll.BackgroundTransparency=1
     ll.Text=label; ll.Font=Enum.Font.GothamMedium; ll.TextSize=12; ll.TextColor3=T.txt; ll.TextXAlignment=Enum.TextXAlignment.Left
     reg(ll,"txt","TextColor3")
-    local vl2=Instance.new("TextLabel",hf); vl2.Size=UDim2.new(0,42,1,0); vl2.Position=UDim2.new(1,-42,0,0)
+    local vl2=Instance.new("TextLabel",hf); vl2.Size=UDim2.new(0,46,1,0); vl2.Position=UDim2.new(1,-46,0,0)
     vl2.BackgroundTransparency=1; vl2.Text=tostring(def); vl2.Font=Enum.Font.GothamBold; vl2.TextSize=12
     vl2.TextColor3=ac; vl2.TextXAlignment=Enum.TextXAlignment.Right
     local trackBG=Instance.new("TextButton",f)
@@ -1019,7 +992,7 @@ local function mkSlider(parent,label,mn,mx,def,cb,ac)
     local thumb=Instance.new("Frame",trackBG)
     thumb.Size=UDim2.new(0,11,0,11); thumb.AnchorPoint=Vector2.new(.5,.5)
     thumb.Position=UDim2.new((def-mn)/(mx-mn),0,.5,0)
-    thumb.BackgroundColor3=T.txt; thumb.BorderSizePixel=0; cr(thumb,6); reg(thumb,"txt")
+    thumb.BackgroundColor3=T.atxt; thumb.BorderSizePixel=0; cr(thumb,6); reg(thumb,"atxt")
     local drag=false
     local function upd()
         local pct=math.clamp((UIS:GetMouseLocation().X-trackBG.AbsolutePosition.X)/trackBG.AbsoluteSize.X,0,1)
@@ -1054,7 +1027,7 @@ local function mkInput(parent,ph,def)
     tb.PlaceholderColor3=T.sub; tb.Font=Enum.Font.Gotham; tb.TextSize=12
     tb.TextColor3=T.txt; tb.ClearTextOnFocus=false; tb.BorderSizePixel=0
     reg(tb,"txt","TextColor3"); reg(tb,"sub","PlaceholderColor3")
-    tb.Focused:Connect(function()  tw(brd,.1,{Color=T.acc}) end)
+    tb.Focused:Connect(function() tw(brd,.1,{Color=T.acc}) end)
     tb.FocusLost:Connect(function() tw(brd,.1,{Color=T.bord}) end)
     return w,tb
 end
@@ -1107,16 +1080,22 @@ local function mkInfoRow(parent,label,val)
     return vl3
 end
 
+-- ══════════════════════════════════════════════════════
+--  PAGES
+-- ══════════════════════════════════════════════════════
+
+-- ── fishing ───────────────────────────────────────────────────────────────────
 local fp=pages["fishing"]
 secLabel(fp,"automation")
-mkToggle(fp,"Auto Cast",     "casts rod when idle",         cfg.AutoCast,    function(v) cfg.AutoCast=v     end,T.green)
-mkToggle(fp,"Auto Shake",    "taps shake button",           cfg.AutoShake,   function(v) cfg.AutoShake=v    end,T.green)
-mkToggle(fp,"Instant Bite",  "forces bite on your bobber",  cfg.InstantBite, function(v) cfg.InstantBite=v  end,T.green)
-mkToggle(fp,"Auto Win",      "locks bar to fish position",  cfg.AutoWin,     function(v) cfg.AutoWin=v      end,T.green)
-mkToggle(fp,"Perfect Catch", "forces perfect each reel",    cfg.PerfectCatch,function(v) cfg.PerfectCatch=v end,T.green)
+mkToggle(fp,"Auto Cast",     "casts rod when idle",        cfg.AutoCast,    function(v) cfg.AutoCast=v     end,T.green)
+mkToggle(fp,"Auto Shake",    "taps shake button",          cfg.AutoShake,   function(v) cfg.AutoShake=v    end,T.green)
+mkToggle(fp,"Instant Bite",  "forces bite on bobber",      cfg.InstantBite, function(v) cfg.InstantBite=v  end,T.green)
+mkToggle(fp,"Auto Win",      "locks bar to fish position", cfg.AutoWin,     function(v) cfg.AutoWin=v      end,T.green)
+mkToggle(fp,"Perfect Catch", "forces perfect each reel",   cfg.PerfectCatch,function(v) cfg.PerfectCatch=v end,T.green)
 secLabel(fp,"tuning")
 mkSlider(fp,"Progress Speed",0,200,cfg.ProgressSpeed,function(v) cfg.ProgressSpeed=v end,T.green)
 
+-- ── auto farm ─────────────────────────────────────────────────────────────────
 local afp=pages["auto farm"]
 secLabel(afp,"star crater farm")
 
@@ -1129,49 +1108,56 @@ local statusLbl=Instance.new("TextLabel",statusRow)
 statusLbl.Size=UDim2.new(1,-28,1,0); statusLbl.Position=UDim2.new(0,26,0,0)
 statusLbl.BackgroundTransparency=1; statusLbl.Font=Enum.Font.Gotham; statusLbl.TextSize=11
 statusLbl.TextColor3=T.sub; statusLbl.TextXAlignment=Enum.TextXAlignment.Left; statusLbl.Text="idle"
-reg(statusLbl,"sub","TextColor3")
-starStatusLbl=statusLbl
+reg(statusLbl,"sub","TextColor3"); starStatusLbl=statusLbl
 
 task.spawn(function()
     while _G.__lx and task.wait(1) do
-        if cfg.AutoStarCrater then
-            tw(statusDot,.3,{BackgroundColor3=T.green}); statusLbl.TextColor3=T.green
-        else
-            tw(statusDot,.3,{BackgroundColor3=T.dim}); statusLbl.TextColor3=T.sub
-        end
+        if cfg.AutoStarCrater then tw(statusDot,.3,{BackgroundColor3=T.green}); statusLbl.TextColor3=T.green
+        else tw(statusDot,.3,{BackgroundColor3=T.dim}); statusLbl.TextColor3=T.sub end
     end
 end)
 
-mkToggle(afp,"Auto Farm Star Craters","tps to each crater, always hops after", cfg.AutoStarCrater,    function(v) cfg.AutoStarCrater=v end,T.yell)
-mkToggle(afp,"Server Hop When Done",   "hop to existing server after cycle",   cfg.StarCraterServerHop,function(v) cfg.StarCraterServerHop=v end,T.cyan)
+mkToggle(afp,"Auto Farm Star Craters","tap the button below to toggle or press it in the hud", cfg.AutoStarCrater,function(v) cfg.AutoStarCrater=v end,T.yell)
+mkToggle(afp,"Server Hop When Done",  "hop to a new server after all craters farmed",          cfg.StarCraterServerHop,function(v) cfg.StarCraterServerHop=v end,T.cyan)
+
+secLabel(afp,"farm settings")
+mkSlider(afp,"Farm Speed (lower = faster)",10,300,math.floor(cfg.FarmSpeed*100),function(v) cfg.FarmSpeed=v/100 end,T.yell)
+mkSlider(afp,"Delay Between Craters (×0.1s)",0,30,math.floor(cfg.FarmDelay*10),function(v) cfg.FarmDelay=v/10 end,T.yell)
+mkSlider(afp,"Start Delay (s)",0,30,cfg.StartDelay,function(v) cfg.StartDelay=v end,T.cyan)
+
 secLabel(afp,"stats")
-local srvLbl2=nil
 local srvRow=mkRow(afp,32)
-srvLbl2=Instance.new("TextLabel",srvRow); srvLbl2.Size=UDim2.new(1,-16,1,0); srvLbl2.Position=UDim2.new(0,12,0,0)
+local srvLbl2=Instance.new("TextLabel",srvRow)
+srvLbl2.Size=UDim2.new(1,-16,1,0); srvLbl2.Position=UDim2.new(0,12,0,0)
 srvLbl2.BackgroundTransparency=1; srvLbl2.Font=Enum.Font.Gotham; srvLbl2.TextSize=12; srvLbl2.TextColor3=T.txt
 srvLbl2.TextXAlignment=Enum.TextXAlignment.Left; srvLbl2.Text="Servers farmed: "..starCraterServerCount
 reg(srvLbl2,"txt","TextColor3")
 task.spawn(function() while _G.__lx and task.wait(2) do if srvLbl2 then srvLbl2.Text="Servers farmed: "..starCraterServerCount end end end)
+
 mkButton(afp,"[>] Scan for Craters Now",nil,function()
-    local found=findStarCraters()
-    notify("auto farm",#found.." crater(s) found")
+    local found=findStarCraters(); notify("auto farm",#found.." crater(s) found")
 end)
 mkButton(afp,"[X] Reset Farm Counter",nil,function()
     starCraterServerCount=0; saveFarmCount(); notify("farm","counter reset")
 end)
+mkButton(afp,"[>>] Force Server Hop",T.purp:Lerp(rgb(0,0,0),.5),function()
+    notify("farm","hopping..."); doServerHop()
+end)
 
+-- ── player ────────────────────────────────────────────────────────────────────
 local pp=pages["player"]
 secLabel(pp,"movement")
-mkSlider(pp,"Walk Speed",16,500,cfg.WalkSpeed, function(v) cfg.WalkSpeed=v end)
-mkSlider(pp,"Jump Power",50,500,cfg.JumpPower, function(v) cfg.JumpPower=v end)
-mkToggle(pp,"Walk on Water", "stand on water surface",              cfg.WalkOnWater,function(v) cfg.WalkOnWater=v; if v then enableWater() else disableWater() end end)
-mkToggle(pp,"No Clip",       "pass through walls",                  cfg.NoClip,     function(v) cfg.NoClip=v; setNoClip(v) end)
-mkToggle(pp,"Freeze",        "lock position — arms + legs",         cfg.Frozen,     function(v) cfg.Frozen=v; setFrozen(v) end)
+mkSlider(pp,"Walk Speed",16,500,cfg.WalkSpeed,function(v) cfg.WalkSpeed=v end)
+mkSlider(pp,"Jump Power",50,500,cfg.JumpPower,function(v) cfg.JumpPower=v end)
+mkToggle(pp,"Walk on Water","stand on water surface",         cfg.WalkOnWater,function(v) cfg.WalkOnWater=v; if v then enableWater() else disableWater() end end)
+mkToggle(pp,"No Clip",      "pass through walls",             cfg.NoClip,     function(v) cfg.NoClip=v; setNoClip(v) end)
+mkToggle(pp,"Freeze",       "lock position — legs only",      cfg.Frozen,     function(v) cfg.Frozen=v; setFrozen(v) end)
 secLabel(pp,"survival")
-mkToggle(pp,"God Mode",  "block all damage (metatable + heartbeat)",cfg.GodMode,    function(v) cfg.GodMode=v; setGodMode(v) end,T.yell)
-mkToggle(pp,"Anti Void", "rescue if Y below -60",                   cfg.AntiVoid,   function(v) cfg.AntiVoid=v end,T.yell)
-mkToggle(pp,"Anti AFK",  "alt key ping every 55s",                  cfg.AntiAFK,    function(v) cfg.AntiAFK=v end,T.yell)
+mkToggle(pp,"God Mode",  "block all damage",        cfg.GodMode, function(v) cfg.GodMode=v; setGodMode(v) end,T.yell)
+mkToggle(pp,"Anti Void", "rescue if Y below -60",   cfg.AntiVoid,function(v) cfg.AntiVoid=v end,T.yell)
+mkToggle(pp,"Anti AFK",  "alt key ping every 55s",  cfg.AntiAFK, function(v) cfg.AntiAFK=v end,T.yell)
 
+-- ── teleport ──────────────────────────────────────────────────────────────────
 local tpP=pages["teleport"]
 secLabel(tpP,"zone teleport")
 local _,searchTB=mkInput(tpP,"search zones...")
@@ -1197,8 +1183,7 @@ local function populateZones()
         if pz then for _,z in pz:GetChildren() do addLoc(z.Name,getCF(z),false) end end
         if fz2 then for _,z in fz2:GetChildren() do addLoc(z.Name,getCF(z),true) end end
     end
-    local world=workspace:FindFirstChild("world")
-    local evF=world and world:FindFirstChild("events")
+    local world=workspace:FindFirstChild("world"); local evF=world and world:FindFirstChild("events")
     if evF then for _,e in evF:GetChildren() do addLoc(e.Name,getCF(e),true) end end
 end
 searchTB.FocusLost:Connect(populateZones)
@@ -1208,9 +1193,8 @@ local plF=Instance.new("Frame",tpP); plF.BackgroundTransparency=1
 plF.Size=UDim2.new(1,0,0,0); plF.AutomaticSize=Enum.AutomaticSize.Y; vl(plF,3)
 local function refreshPlayers()
     for _,ch in plF:GetChildren() do if ch:IsA("TextButton") or ch:IsA("TextLabel") then ch:Destroy() end end
-    local n=0
     for _,p in Players:GetPlayers() do
-        if p==lp then continue end; n=n+1
+        if p==lp then continue end
         mkEntry(plF,p.Name,false,function()
             local tgt=p.Character and p.Character:FindFirstChild("HumanoidRootPart"); local h=hrp()
             if h and tgt then h.CFrame=tgt.CFrame+Vector3.new(0,3,0); notify("tp",p.Name) end
@@ -1235,6 +1219,7 @@ mkButton(tpP,"Teleport to Coords",T.acc,function()
     local h=hrp(); if h then h.CFrame=CFrame.new(x,y,z) end
 end)
 
+-- ── positions ─────────────────────────────────────────────────────────────────
 local posp=pages["positions"]
 secLabel(posp,"save slots")
 local slotWrap=Instance.new("Frame",posp); slotWrap.BackgroundTransparency=1
@@ -1244,7 +1229,7 @@ local lastClickT={}; local retSlotRefresh=nil
 local function buildSlot(i)
     local row=mkRow(slotWrap,36); row.LayoutOrder=i
     local nameLbl=Instance.new("TextLabel",row)
-    nameLbl.Size=UDim2.new(1,-165,1,0); nameLbl.Position=UDim2.new(0,12,0,0)
+    nameLbl.Size=UDim2.new(1,-122,1,0); nameLbl.Position=UDim2.new(0,12,0,0)
     nameLbl.BackgroundTransparency=1; nameLbl.Font=Enum.Font.Gotham; nameLbl.TextSize=11
     nameLbl.TextXAlignment=Enum.TextXAlignment.Left; nameLbl.TextTruncate=Enum.TextTruncate.AtEnd
     local function refreshLbl()
@@ -1263,35 +1248,89 @@ local function buildSlot(i)
         b.TextSize=10; b.Text=txt; b.AutoButtonColor=false; b.BorderSizePixel=0; cr(b,6)
         reg(b,"atxt","TextColor3"); b.MouseButton1Click:Connect(fn2); return b
     end
-    smBtn(-116,"[S]",T.green,function()
+    smBtn(-114,"[S]",T.green,function()
         local h=hrp(); if not h then return end
         slots[i]=h.CFrame; refreshLbl(); saveSlots()
+        notify("pos","slot "..i.." saved")
+        if retSlotRefresh then retSlotRefresh() end
     end)
-    smBtn(-76,"[L]",T.cyan:Lerp(rgb(0,0,0),.45),function()
-        if slots[i] then local h=hrp(); if h then h.CFrame=slots[i] end end
+    smBtn(-74,"[L]",T.cyan:Lerp(rgb(0,0,0),.45),function()
+        if slots[i] then local h=hrp(); if h then h.CFrame=slots[i]; notify("pos","slot "..i) end
+        else notify("pos","empty") end
     end)
+    row.MouseEnter:Connect(function() tw(row,.08,{BackgroundColor3=T.elh}) end)
+    row.MouseLeave:Connect(function() tw(row,.08,{BackgroundColor3=T.el}) end)
 end
 for i=1,slotCount do buildSlot(i) end
 mkButton(posp,"[+] Add Slot",nil,function() slotCount=slotCount+1; buildSlot(slotCount); saveSlots() end)
 
+-- ── events ────────────────────────────────────────────────────────────────────
 local evp=pages["events"]
 secLabel(evp,"auto teleport")
-mkToggle(evp,"Auto Event TP","tps + freezes on detected events",cfg.AutoEvent,function(v) cfg.AutoEvent=v end,T.purp)
+mkToggle(evp,"Auto Event TP","tps + freezes when event is detected",cfg.AutoEvent,function(v) cfg.AutoEvent=v end,T.purp)
+mkButton(evp,"[X] Cancel / Skip Current Event",T.red:Lerp(rgb(0,0,0),.55),function()
+    if activeEvent then
+        cancelCurrentEvent()
+        notify("events","skipped "..cancelledEvent)
+    else notify("events","no active event") end
+end)
+secLabel(evp,"return slot after event")
+-- return slot dropdown (rebuilt after slot saves)
+local retWrap=Instance.new("Frame",evp); retWrap.Size=UDim2.new(1,0,0,0)
+retWrap.BackgroundTransparency=1; retWrap.AutomaticSize=Enum.AutomaticSize.Y; vl(retWrap,2)
+local retOpen=false
+local retHdr=Instance.new("TextButton",retWrap)
+retHdr.Size=UDim2.new(1,0,0,32); retHdr.BackgroundColor3=T.elh; retHdr.BorderSizePixel=0
+retHdr.AutoButtonColor=false; cr(retHdr,7); reg(retHdr,"elh")
+local retHdrLbl=Instance.new("TextLabel",retHdr)
+retHdrLbl.Size=UDim2.new(1,-30,1,0); retHdrLbl.Position=UDim2.new(0,12,0,0)
+retHdrLbl.BackgroundTransparency=1; retHdrLbl.Font=Enum.Font.GothamMedium; retHdrLbl.TextSize=12
+retHdrLbl.TextColor3=T.txt; retHdrLbl.TextXAlignment=Enum.TextXAlignment.Left; retHdrLbl.Text="none"; reg(retHdrLbl,"txt","TextColor3")
+local retHdrArr=Instance.new("TextLabel",retHdr)
+retHdrArr.Size=UDim2.new(0,20,1,0); retHdrArr.Position=UDim2.new(1,-24,0,0)
+retHdrArr.BackgroundTransparency=1; retHdrArr.Font=Enum.Font.GothamBold; retHdrArr.TextSize=10; retHdrArr.TextColor3=T.sub; retHdrArr.Text="v"; reg(retHdrArr,"sub","TextColor3")
+local retCnt=Instance.new("Frame",retWrap); retCnt.BackgroundColor3=T.panel; retCnt.BorderSizePixel=0
+retCnt.Size=UDim2.new(1,0,0,0); retCnt.AutomaticSize=Enum.AutomaticSize.Y; retCnt.Visible=false
+cr(retCnt,7); reg(retCnt,"panel"); vl(retCnt,2); pd(retCnt,4,4,4,4)
+retHdr.MouseButton1Click:Connect(function() retOpen=not retOpen; retCnt.Visible=retOpen; retHdrArr.Text=retOpen and "v" or ">" end)
+local function rebuildRetSlots()
+    for _,ch in retCnt:GetChildren() do if ch:IsA("TextButton") then ch:Destroy() end end
+    local function rBtn(txt,fn)
+        local b=Instance.new("TextButton",retCnt)
+        b.Size=UDim2.new(1,0,0,28); b.BackgroundColor3=T.el; b.BorderSizePixel=0
+        b.AutoButtonColor=false; b.TextColor3=T.txt; b.Font=Enum.Font.GothamMedium
+        b.TextSize=12; b.Text=txt; b.TextXAlignment=Enum.TextXAlignment.Left; cr(b,6)
+        reg(b,"el"); reg(b,"txt","TextColor3")
+        b.MouseEnter:Connect(function() tw(b,.08,{BackgroundColor3=T.elh}) end)
+        b.MouseLeave:Connect(function() tw(b,.08,{BackgroundColor3=T.el}) end)
+        b.MouseButton1Click:Connect(fn)
+    end
+    rBtn("  none",function() cfg.EventReturnSlot=nil; retHdrLbl.Text="none"; retOpen=false; retCnt.Visible=false; retHdrArr.Text=">" end)
+    for i=1,slotCount do
+        local name=slotNames[i] or ("slot "..i)
+        local disp="  ["..i.."]  "..name..(slots[i] and "" or "  (empty)")
+        rBtn(disp,function() cfg.EventReturnSlot=i; retHdrLbl.Text="["..i.."] "..name; retOpen=false; retCnt.Visible=false; retHdrArr.Text=">" end)
+    end
+end
+retSlotRefresh=rebuildRetSlots; rebuildRetSlots()
+
 secLabel(evp,"event targets")
 for _,ev in EVENTS do
     mkToggle(evp,ev.name,nil,eventEnabled[ev.name],function(v) eventEnabled[ev.name]=v end,T.purp)
 end
 
+-- ── boat ──────────────────────────────────────────────────────────────────────
 local bp=pages["boat"]
 secLabel(bp,"flight")
-mkToggle(bp,"Boat Fly","WASD = look dir  E/Q = up/down",cfg.BoatFly,    function(v) cfg.BoatFly=v; setBoatFly(v) end,T.cyan)
-mkSlider(bp,"Fly Speed",10,600,cfg.BoatFlySpeed,                              function(v) cfg.BoatFlySpeed=v end,T.cyan)
+mkToggle(bp,"Boat Fly","WASD = move  E/Q = up/down",cfg.BoatFly,    function(v) cfg.BoatFly=v; setBoatFly(v) end,T.cyan)
+mkSlider(bp,"Fly Speed",10,600,cfg.BoatFlySpeed,                    function(v) cfg.BoatFlySpeed=v end,T.cyan)
 secLabel(bp,"utilities")
-mkToggle(bp,"Boat No Clip","disable boat collision", cfg.BoatNoClip,function(v) cfg.BoatNoClip=v; setBoatNoClip(v) end)
-mkToggle(bp,"Freeze Boat", "lock boat CFrame",       cfg.BoatFreeze,function(v) cfg.BoatFreeze=v; setBoatFreeze(v) end)
+mkToggle(bp,"Boat No Clip","disable boat collision",  cfg.BoatNoClip,function(v) cfg.BoatNoClip=v; setBoatNoClip(v) end)
+mkToggle(bp,"Freeze Boat", "lock boat CFrame",        cfg.BoatFreeze,function(v) cfg.BoatFreeze=v; setBoatFreeze(v) end)
 
+-- ── shop ──────────────────────────────────────────────────────────────────────
 local shp=pages["shop"]
-secLabel(shp,"items")
+secLabel(shp,"items — tps + presses E, then [return] appears")
 local crateList=mkCollapse(shp,"bait crates",false,true)
 for _,n in {"Bait Crate","Tropical Bait Crate","Coral Geode"} do
     mkEntry(crateList,n,false,function() task.spawn(useInteractable,n) end)
@@ -1300,39 +1339,92 @@ local totemList=mkCollapse(shp,"totems",false,true)
 for _,n in {"Sundial Totem","Clearcast Totem","Aurora Totem","Blizzard Totem","Meteor Totem","Starfall Totem"} do
     mkEntry(totemList,n,false,function() task.spawn(useInteractable,n) end)
 end
+secLabel(shp,"scan workspace")
+local scanList=mkCollapse(shp,"scan results",false,false)
+mkButton(shp,"[S] Scan world.interactables",nil,function()
+    for _,ch in scanList:GetChildren() do if ch:IsA("TextButton") then ch:Destroy() end end
+    local names={}; local world=workspace:FindFirstChild("world"); local ints=world and world:FindFirstChild("interactables")
+    if ints then for _,v in ints:GetChildren() do if v:IsA("Model") or v:IsA("BasePart") or v:IsA("Folder") then table.insert(names,v.Name) end end end
+    table.sort(names)
+    for _,name in names do mkEntry(scanList,name,false,function() task.spawn(useInteractable,name) end) end
+    scanList.Visible=true; notify("shop",#names.." items")
+end)
 
+-- ── webhook ───────────────────────────────────────────────────────────────────
 local wh=pages["webhook"]
 secLabel(wh,"discord webhook")
 local _,urlTB=mkInput(wh,"paste discord webhook url...",cfg.WebhookURL)
 urlTB.FocusLost:Connect(function() cfg.WebhookURL=urlTB.Text end)
+mkButton(wh,"[>] Send Test Ping",T.acc:Lerp(rgb(0,0,0),.5),function() sendWebhook("test"); notify("webhook","sent") end)
 mkToggle(wh,"Enable Webhook",     nil,cfg.WHEnabled,   function(v) cfg.WHEnabled=v end)
 mkToggle(wh,"Level Up",           nil,cfg.WHShowLevel, function(v) cfg.WHShowLevel=v end)
 mkToggle(wh,"Show Catch Count",   nil,cfg.WHShowCatch, function(v) cfg.WHShowCatch=v end)
+mkToggle(wh,"Show Time to Level", nil,cfg.WHShowTime,  function(v) cfg.WHShowTime=v  end)
+mkToggle(wh,"Ping on Event Found",nil,cfg.WHEventStart,function(v) cfg.WHEventStart=v end)
+mkToggle(wh,"Auto Farm Complete", nil,cfg.WHAutoFarm,  function(v) cfg.WHAutoFarm=v  end)
 
+-- ── settings ──────────────────────────────────────────────────────────────────
 local setp=pages["settings"]
 secLabel(setp,"presets")
 mkButton(setp,"[S] Save Preset",T.green:Lerp(rgb(0,0,0),.55),function()
-    saveCfg(); saveSlots(); notify("settings","preset saved")
+    saveCfg(); saveSlots(); notify("settings","saved to lunarx/cfg.json")
 end)
 mkButton(setp,"[L] Load Preset",T.acc:Lerp(rgb(0,0,0),.55),function()
-    loadCfg(); loadSlots(); notify("settings","preset loaded")
+    loadCfg(); loadSlots(); notify("settings","loaded")
 end)
-mkToggle(setp,"Auto Load on Start","loads preset automatically",cfg.AutoLoadPreset,function(v) cfg.AutoLoadPreset=v; saveCfg() end)
+mkButton(setp,"[X] Export to Clipboard",nil,function()
+    local t={}; for k,v in cfg do if type(v)~="nil" then t[k]=v end end
+    pcall(setclipboard, HTTP:JSONEncode(t)); notify("settings","copied")
+end)
+mkToggle(setp,"Auto Load on Start","loads lunarx/cfg.json when script runs",cfg.AutoLoadPreset,function(v) cfg.AutoLoadPreset=v; saveCfg() end)
+secLabel(setp,"themes")
+for tn,_ in THEMES do
+    mkButton(setp,"Theme: "..tn,nil,function()
+        applyTheme(tn); cfg.Theme=tn
+        local new=THEMES[tn]
+        sg.Color=ColorSequence.new{ColorSequenceKeypoint.new(0,new.acc),ColorSequenceKeypoint.new(0.5,new.purp),ColorSequenceKeypoint.new(1,new.cyan)}
+    end)
+end
 
+-- ── options ───────────────────────────────────────────────────────────────────
 local op=pages["options"]
+secLabel(op,"profile")
+local profileCard=mkRow(op,64)
+local avatar=Instance.new("ImageLabel",profileCard)
+avatar.Size=UDim2.new(0,50,0,50); avatar.Position=UDim2.new(0,8,0.5,-25)
+avatar.BackgroundColor3=T.elh; avatar.BorderSizePixel=0; cr(avatar,6); reg(avatar,"elh")
+avatar.Image="rbxthumb://type=AvatarHeadShot&id="..lp.UserId.."&w=420&h=420"; avatar.ScaleType=Enum.ScaleType.Fit
+local nameStk=Instance.new("Frame",profileCard)
+nameStk.Size=UDim2.new(1,-68,1,0); nameStk.Position=UDim2.new(0,64,0,0); nameStk.BackgroundTransparency=1; vl(nameStk,2); pd(nameStk,10,0,0)
+local dispLbl=Instance.new("TextLabel",nameStk); dispLbl.Size=UDim2.new(1,0,0,20)
+dispLbl.BackgroundTransparency=1; dispLbl.Font=Enum.Font.GothamBold; dispLbl.TextSize=14
+dispLbl.TextColor3=T.txt; dispLbl.TextXAlignment=Enum.TextXAlignment.Left; dispLbl.Text=lp.DisplayName; reg(dispLbl,"txt","TextColor3")
+local userLbl=Instance.new("TextLabel",nameStk); userLbl.Size=UDim2.new(1,0,0,16)
+userLbl.BackgroundTransparency=1; userLbl.Font=Enum.Font.Gotham; userLbl.TextSize=12
+userLbl.TextColor3=T.sub; userLbl.TextXAlignment=Enum.TextXAlignment.Left; userLbl.Text="@"..lp.Name.."  ·  ID: "..lp.UserId; reg(userLbl,"sub","TextColor3")
+secLabel(op,"server")
+mkInfoRow(op,"Place ID",game.PlaceId)
+mkInfoRow(op,"Job ID",game.JobId:sub(1,18).."...")
+local pingRow=mkInfoRow(op,"Ping","--")
+task.spawn(function()
+    while _G.__lx and task.wait(2) do
+        if pingRow and pingRow.Parent then
+            local diff=math.abs((tick()-workspace:GetServerTimeNow())*1000)
+            pingRow.Text=math.floor(diff).."ms"
+        end
+    end
+end)
 secLabel(op,"navigation")
-mkButton(op,"[R] Rejoin Server",T.yell:Lerp(rgb(0,0,0),.55),function()
-    local qot = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
-    if qot then pcall(qot, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()') end
-    task.wait(1)
-    TeleServ:Teleport(game.PlaceId,lp)
+mkButton(op,"[R] Rejoin",T.yell:Lerp(rgb(0,0,0),.55),function()
+    local qot=queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
+    if qot then pcall(qot,'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()') end
+    task.wait(0.5); TeleServ:Teleport(game.PlaceId,lp)
 end)
-mkButton(op,"[>>] Server Hop",T.purp:Lerp(rgb(0,0,0),.5),function()
-    notify("options","server hopping..."); doServerHop()
-end)
+mkButton(op,"[>>] Server Hop",T.purp:Lerp(rgb(0,0,0),.5),function() notify("hop","hopping..."); doServerHop() end)
 
+-- ── debug ─────────────────────────────────────────────────────────────────────
 local dbgP=pages["debug"]
-secLabel(dbgP,"live log")
+secLabel(dbgP,"live log  —  all in lunarx/ folder")
 local dbgFrame=mkRow(dbgP,320); dbgFrame.Size=UDim2.new(1,0,0,320); dbgFrame.BackgroundColor3=T.panel; reg(dbgFrame,"panel")
 debugLbl=Instance.new("TextLabel",dbgFrame)
 debugLbl.Size=UDim2.new(1,-10,1,-8); debugLbl.Position=UDim2.new(0,5,0,4)
@@ -1340,12 +1432,17 @@ debugLbl.BackgroundTransparency=1; debugLbl.Font=Enum.Font.Code; debugLbl.TextSi
 debugLbl.TextColor3=T.green; debugLbl.TextXAlignment=Enum.TextXAlignment.Left
 debugLbl.TextYAlignment=Enum.TextYAlignment.Top; debugLbl.TextWrapped=true; debugLbl.Text="[log ready]"
 reg(debugLbl,"green","TextColor3")
+mkButton(dbgP,"[C] Clear Log",nil,function() debugLog={}; debugLbl.Text="[cleared]" end)
 
+-- ══════════════════════════════════════════════════════
+--  KEYBIND + RUNTIME LOOPS
+-- ══════════════════════════════════════════════════════
 UIS.InputBegan:Connect(function(i,gpe)
     if gpe then return end
     if i.KeyCode==Enum.KeyCode.LeftControl then root.Visible=not root.Visible end
 end)
 
+-- auto shake
 task.spawn(function()
     while _G.__lx and task.wait(0.1) do
         if not cfg.AutoShake then continue end
@@ -1367,6 +1464,7 @@ task.spawn(function()
     end
 end)
 
+-- instant bite
 task.spawn(function()
     while _G.__lx and task.wait(0.05) do
         if cfg.InstantBite then
@@ -1381,6 +1479,7 @@ task.spawn(function()
     end
 end)
 
+-- auto win
 RunService.RenderStepped:Connect(function()
     if cfg.AutoWin and RC and RC.ActiveReel then
         pcall(function()
@@ -1390,6 +1489,7 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
+-- auto cast
 task.spawn(function()
     while _G.__lx and task.wait(0.1) do
         if cfg.AutoCast and castRemote and RC and not RC.ActiveReel and not pgui:FindFirstChild("shakeui") then
@@ -1400,32 +1500,47 @@ task.spawn(function()
     end
 end)
 
+-- speed / jump
 RunService.Heartbeat:Connect(function()
     local h,r=hum(),hrp()
     if h and r and not cfg.Frozen then h.WalkSpeed=cfg.WalkSpeed; h.JumpPower=cfg.JumpPower; h.UseJumpPower=true end
 end)
 
+-- respawn
 lp.CharacterAdded:Connect(function()
     task.wait(1); origCollide={}
     if cfg.WalkOnWater then waterPart=nil; enableWater() end
-    if cfg.NoClip      then setNoClip(true)  end
-    if cfg.GodMode     then setGodMode(true) end
-    if cfg.Frozen      then setFrozen(true)  end
-    if cfg.BoatFly     then setBoatFly(true) end
-    if cfg.BoatNoClip  then setBoatNoClip(true) end
+    if cfg.NoClip      then setNoClip(true)    end
+    if cfg.GodMode     then setGodMode(true)   end
+    if cfg.Frozen      then setFrozen(true)    end
+    if cfg.BoatFly     then setBoatFly(true)   end
+    if cfg.BoatNoClip  then setBoatNoClip(true)end
     dbg("respawned")
 end)
 
+-- apply saved theme
 if cfg.Theme and THEMES[cfg.Theme] then
     applyTheme(cfg.Theme)
     local th=THEMES[cfg.Theme]
     sg.Color=ColorSequence.new{ColorSequenceKeypoint.new(0,th.acc),ColorSequenceKeypoint.new(0.5,th.purp),ColorSequenceKeypoint.new(1,th.cyan)}
 end
 
+local function prdbg(text)
+   if not text ~= nil then
+      print(text)
+      dbg(text)
+    else 
+        return 
+    end
+end
+
+-- restore systems from saved cfg
+if cfg.GodMode     then setGodMode(true)    end
+if cfg.NoClip      then setNoClip(true)     end
+if cfg.Frozen      then setFrozen(true)     end
+if cfg.WalkOnWater then enableWater()       end
+if cfg.BoatFly     then setBoatFly(true)    end
+if cfg.BoatNoClip  then setBoatNoClip(true) end
 if cfg.AutoStarCrater then setMinimised(true) end
-if cfg.GodMode     then setGodMode(true)   end
-if cfg.NoClip      then setNoClip(true)    end
-if cfg.Frozen      then setFrozen(true)    end
-if cfg.WalkOnWater then enableWater()      end
-if cfg.BoatFly     then setBoatFly(true)   end
-if cfg.BoatNoClip  then setBoatNoClip(true)end
+
+prdbg("lunar x v5 loaded")
