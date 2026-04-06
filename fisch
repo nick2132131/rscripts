@@ -174,7 +174,7 @@ end
 
 local starCraterServerCount = 0
 local HOP_FLAG_FILE          = "lunarx_hop.json"
-local STARTUP_DELAY         = 3
+local STARTUP_DELAY         = 15
 
 local function saveFarmCount()
     pcall(function()
@@ -620,13 +620,6 @@ local function doServerHop()
         saveHopFlag(true)
         saveCfg(); saveSlots(); saveFarmCount()
 
-        local qot = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
-        if qot then
-            pcall(qot, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()')
-        else
-            dbg("Warning: queue_on_teleport not supported by this executor")
-        end
-
         local HttpParent = "https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Desc&limit=100"
         local function GetNextPage(cursor)
             local url = HttpParent .. (cursor and "&cursor=" .. cursor or "")
@@ -653,15 +646,23 @@ local function doServerHop()
             task.wait(0.1)
         end
 
+        local qot = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
+        local function executeQOT()
+            if qot then
+                pcall(qot, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()')
+                task.wait(1) 
+            end
+        end
+
         if #possibleServers > 0 then
             local randomId = possibleServers[math.random(1, #possibleServers)]
             dbg("serverhop → " .. randomId:sub(1, 8) .. " (Randomly picked from " .. #possibleServers .. " options)")
-            task.wait(1.5)
+            executeQOT()
             TeleServ:TeleportToPlaceInstance(game.PlaceId, randomId, lp)
         else
             dbg("serverhop: no specific servers found, falling back")
             saveHopFlag(false)
-            task.wait(1.5)
+            executeQOT()
             TeleServ:Teleport(game.PlaceId, lp)
         end
     end)
@@ -1509,7 +1510,9 @@ task.spawn(function()
 end)
 secLabel(op,"navigation")
 mkButton(op,"[R] Rejoin Server",T.yell:Lerp(rgb(0,0,0),.55),function()
-    if queue_on_teleport then queue_on_teleport('loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()') end
+    local qot = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
+    if qot then pcall(qot, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()') end
+    task.wait(1)
     TeleServ:Teleport(game.PlaceId,lp)
 end)
 mkButton(op,"[>>] Server Hop",T.purp:Lerp(rgb(0,0,0),.5),function()
