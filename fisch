@@ -173,8 +173,8 @@ local function loadSlots()
 end
 
 local starCraterServerCount = 0
-local HOP_FLAG_FILE         = "lunarx_hop.json"
-local STARTUP_DELAY         = 12
+local HOP_FLAG_FILE          = "lunarx_hop.json"
+local STARTUP_DELAY         = 15
 
 local function saveFarmCount()
     pcall(function()
@@ -290,9 +290,14 @@ end
 task.spawn(function()
     local ls=lp:WaitForChild("leaderstats",15) if not ls then return end
     local lv=ls:WaitForChild("Level",15) if not lv then return end
+    local lastLevel = tonumber(lv.Value) or 0
     local c; c=lv:GetPropertyChangedSignal("Value"):Connect(function()
         if not _G.__lx then c:Disconnect(); return end
-        sendWebhook("levelup"); levelUpTime=tick(); dbg("levelup: "..tostring(lv.Value))
+        local currentLevel = tonumber(lv.Value) or 0
+        if currentLevel > lastLevel then
+            lastLevel = currentLevel
+            sendWebhook("levelup"); levelUpTime=tick(); dbg("levelup: "..tostring(currentLevel))
+        end
     end)
 end)
 
@@ -596,18 +601,18 @@ end
 local function fireCrater(model)
     local h=hrp(); if not h or not model or not model.Parent then return end
     local cf=getCF(model); if not cf then return end
-    h.CFrame=cf*CFrame.new(0,3,5); task.wait(0.5)
+    h.CFrame=cf*CFrame.new(0,2,2); task.wait(1.5)
     local prompt=nil
     for _,d in model:GetDescendants() do
         if d:IsA("ProximityPrompt") then prompt=d; break end
     end
     if prompt then
         if fireproximityprompt then
-            pcall(fireproximityprompt,prompt); task.wait(0.6); return
+            pcall(fireproximityprompt,prompt); task.wait(2); return
         end
     end
-    VIM:SendKeyEvent(true, Enum.KeyCode.E,false,game); task.wait(0.15)
-    VIM:SendKeyEvent(false,Enum.KeyCode.E,false,game); task.wait(0.8)
+    VIM:SendKeyEvent(true, Enum.KeyCode.E,false,game); task.wait(0.2)
+    VIM:SendKeyEvent(false,Enum.KeyCode.E,false,game); task.wait(2)
 end
 
 local function doServerHop()
@@ -615,10 +620,9 @@ local function doServerHop()
         saveHopFlag(true)
         saveCfg(); saveSlots(); saveFarmCount()
 
-        -- Universal check for the queue function to support all executors
         local qot = queue_on_teleport or queueonteleport or (syn and syn.queue_on_teleport) or (fluxus and fluxus.queue_on_teleport)
         if qot then
-            qot('loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()')
+            pcall(qot, 'loadstring(game:HttpGet("https://raw.githubusercontent.com/nick2132131/rscripts/refs/heads/main/fisch"))()')
         else
             dbg("Warning: queue_on_teleport not supported by this executor")
         end
@@ -652,16 +656,12 @@ local function doServerHop()
         if #possibleServers > 0 then
             local randomId = possibleServers[math.random(1, #possibleServers)]
             dbg("serverhop → " .. randomId:sub(1, 8) .. " (Randomly picked from " .. #possibleServers .. " options)")
-            
-            -- THE FIX: Wait half a second so the executor actually registers the queue_on_teleport
-            task.wait(0.5)
+            task.wait(1.5)
             TeleServ:TeleportToPlaceInstance(game.PlaceId, randomId, lp)
         else
             dbg("serverhop: no specific servers found, falling back")
             saveHopFlag(false)
-            
-            -- Delay here too just in case
-            task.wait(0.5)
+            task.wait(1.5)
             TeleServ:Teleport(game.PlaceId, lp)
         end
     end)
@@ -715,6 +715,7 @@ task.spawn(function()
             if starStatusDot then TS:Create(starStatusDot,TweenInfo.new(0.3),{BackgroundColor3=T.green}):Play() end
             dbg("starcrater: farming #"..i.."  "..crater.Name)
             fireCrater(crater)
+            task.wait(1.5)
         end
         if not cfg.AutoStarCrater or not _G.__lx then starFarmRunning = false; continue end
         starFarmStatus = "done — hopping..."
