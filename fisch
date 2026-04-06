@@ -174,7 +174,7 @@ end
 
 local starCraterServerCount = 0
 local HOP_FLAG_FILE          = "lunarx_hop.json"
-local STARTUP_DELAY         = 15
+local STARTUP_DELAY         = 2
 
 local function saveFarmCount()
     pcall(function()
