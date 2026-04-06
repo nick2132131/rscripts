@@ -474,9 +474,9 @@ task.spawn(function()
                 local np=cf.Position; local first=not lastEventPos
                 local moved=not first and (np-lastEventPos).Magnitude>5
                 if first or moved then
-                    local yOff=HIGH_Y[activeEvent.name] and 50 or 30
+                    local yOff=HIGH_Y[activeEvent.name] and 100 or 40
                     -- extra forward offset for surface creatures
-                    local zOff=FORWARD_Z[activeEvent.name] and -35 or 0
+                    local zOff=FORWARD_Z[activeEvent.name] and -60 or 0
                     local dest=CFrame.new(np.X, np.Y+yOff, np.Z+zOff)
                     local h=hrp()
                     if h then h.CFrame=dest; frozenCF=dest; if not cfg.Frozen then cfg.Frozen=true; setFrozen(true) end end
