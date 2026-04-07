@@ -1501,8 +1501,12 @@ end)
 -- apply theme visually now that all elements are registered
 if cfg.Theme and THEMES[cfg.Theme] then
     applyTheme(cfg.Theme)
-    local th=THEMES[cfg.Theme]
-    sg.Color=ColorSequence.new{ColorSequenceKeypoint.new(0,th.acc),ColorSequenceKeypoint.new(0.5,th.purp),ColorSequenceKeypoint.new(1,th.cyan)}
+    -- Removed 'local th' and referenced the theme directly below
+    sg.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, THEMES[cfg.Theme].acc),
+        ColorSequenceKeypoint.new(0.5, THEMES[cfg.Theme].purp),
+        ColorSequenceKeypoint.new(1, THEMES[cfg.Theme].cyan)
+    }
 end
 
 if cfg.GodMode     then setGodMode(true)    end
