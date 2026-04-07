@@ -79,7 +79,7 @@ local EVENTS = {
 }
 
 local HIGH_Y    = {["Omnithal"]=true,["Great White Shark"]=true,["Scylla"]=true,["Great Hammerhead Shark"]=true,["Whale Shark"]=true}
-local LOW_Y     = {["Colossal Ethereal Dragon"]=true,["Colossal Blue Dragon"]=true,["Colossal Ancient Dragon"]=true}
+local LOW_Y     = {["Colossal Ethereal Dragon"]=true,["Colossal Blue Dragon"]=true,["Colossal Ancient Dragon"]=true,["Mossjaw"]=true}
 local FORWARD_Z = {["Orca"]=true,["Whale"]=true}
 
 local eventEnabled = {}
