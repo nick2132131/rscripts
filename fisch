@@ -79,7 +79,7 @@ local EVENTS = {
     {name="Goldwraith",          zone="Goldwraith",          hunt=true}
 }
 
-local HIGH_Y    = {["Omnithal"]=true,["Awakened Omnithal"]=true,["Scylla"]=true}
+local HIGH_Y    = {["Omnithal"]=true,["Great White Shark"]=true,["Scylla"]=true, ["Great Hammerhead Shark"]=true,["Whale Shark"]=true}
 local FORWARD_Z = {["Orca"]=true, ["Whale"]=true}
 
 local eventEnabled = {}
@@ -450,16 +450,15 @@ local function getEventCF(ev)
     return scan(workspace,0)
 end
 
--- ── event auto-TP loop ────────────────────────────────────────────────────────
 local activeEvent,lastEventPos=nil,nil
-local cancelledEvent=nil   -- name of event to skip ONCE
+local cancelledEvent=nil
 
 local function cancelCurrentEvent()
     if activeEvent then
         cancelledEvent=activeEvent.name
         cfg.Frozen=false
         if freezeConn then freezeConn:Disconnect(); freezeConn=nil end
-        notify("event","skipped "..activeEvent.name.." — will re-enable next time")
+        notify("event","skipped "..activeEvent.name)
         activeEvent=nil; lastEventPos=nil
     end
 end
@@ -476,7 +475,7 @@ task.spawn(function()
                 local np=cf.Position; local first=not lastEventPos
                 local moved=not first and (np-lastEventPos).Magnitude>1.5
                 if first or moved then
-                    local yOff=HIGH_Y[activeEvent.name] and 150 or 40
+                    local yOff=HIGH_Y[activeEvent.name] and 100 or 40
                     -- extra forward offset for surface creatures
                     local zOff=FORWARD_Z[activeEvent.name] and 700 or 0
                     local dest=CFrame.new(np.X, np.Y+yOff, np.Z+zOff)
