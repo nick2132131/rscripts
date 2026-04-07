@@ -55,29 +55,31 @@ local EVENTS = {
     {name="Great Hammerhead Shark",   zone="Great Hammerhead Shark",   hunt=true },
     {name="Megalodon",                zone="Megalodon Default",                hunt=true },
     {name="Scylla",                   zone="Forsaken Veil - Scylla",   hunt=true },
-    {name="Leviathan",                zone="Leviathan",                hunt=true },
-    {name="Skeletal Leviathan",       zone="Skeletal Leviathan Hunt",  hunt=false},
+    {name="Leviathan -- idk",                zone="Leviathan",                hunt=true },
+    {name="Skeletal Leviathan -- will kill you",       zone="Skeletal Leviathan Hunt",  hunt=false},
     {name="Colossal Ethereal Dragon", zone="Colossal Ethereal Dragon", hunt=true },
     {name="Colossal Blue Dragon",     zone="Colossal Blue Dragon",     hunt=true },
     {name="Colossal Ancient Dragon",  zone="Colossal Ancient Dragon",  hunt=true },
     {name="Dreadfin",                 zone="Dreadfin",                 hunt=true },
     {name="Mossjaw",                  zone="Mossjaw",                  hunt=true },
     {name="Elder Mossjaw",            zone="Elder Mossjaw",            hunt=true },
-    {name="Frostwyrm",                zone="Frostwyrm",                hunt=true },
+    {name="Frostwyrm -- idk",                zone="Frostwyrm",                hunt=true },
     {name="Flower Guardian",          zone="Flower Guardian",          hunt=true },
     {name="Omnithal",                 zone="Omnithal",                 hunt=true },
     {name="Plesiosaur",               zone="Plesiosaur",               hunt=true },
-    {name="Rotbloom",                 zone="Rotbloom",                 hunt=true },
+    {name="Rotbloom -- will kill you",                 zone="Rotbloom",                 hunt=true },
     {name="Kraken",                   zone="Kraken",                   hunt=true },
     {name="Orca",                     zone="Orca",                     hunt=true },
     {name="Whale",                    zone="Whale",                    hunt=true },
-    {name="Isonade",                  zone="Isonade",                  hunt=true },
     {name="Baby Bloop Fish",          zone="Baby Bloop Fish",          hunt=false},
     {name="Bloop Fish",          zone="Bloop Fish",          hunt=true},
+    {name="Narwhal",          zone="Narwhal - Sea 1",          hunt=true},
+    {name="Mosslurker",          zone="Mosslurker",          hunt=true},
+    {name="Basketback Tortoise",          zone="Basketback Tortoise",          hunt=true},
+    {name="Goldwraith",          zone="Goldwraith",          hunt=true}
 }
--- events that need higher Y offset
+
 local HIGH_Y    = {["Omnithal"]=true,["Awakened Omnithal"]=true,["Scylla"]=true}
--- events that need extra forward (negative Z) offset because creature is far back
 local FORWARD_Z = {["Orca"]=true, ["Whale"]=true}
 
 local eventEnabled = {}
